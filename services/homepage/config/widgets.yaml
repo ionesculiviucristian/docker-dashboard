@@ -1,0 +1,20 @@
+- resources:
+    cpu: true
+    cputemp: true
+    disk: "/"
+    memory: true
+- search:
+    provider: "google"
+    target: "_blank"
+- datetime:
+    format:
+      dateStyle: short
+      timeStyle: short
+      hour12: true
+- openmeteo:
+    cache: 5
+    label: "Brașov"
+    latitude: 45.657974
+    longitude: 25.601198
+    timezone: "Europe/Bucharest"
+    units: "metric"

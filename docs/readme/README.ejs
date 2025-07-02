@@ -1,0 +1,11 @@
+<%- include('partials/header.ejs'); -%>
+
+## List of available services
+<% services.sort(sortServices).forEach(function(service){ %>
+<%- `- [${service.name}](${service.localdev_url}): ${service.description}` %>
+<%- `  - [Docker Hub](${service.docker_hub_url})` %>
+<%- `  - [Dockerfile](${service.dockerfile_url})` -%>
+<% }); -%>
+
+
+<%- include('partials/footer.ejs'); -%>

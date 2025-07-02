@@ -1,0 +1,18 @@
+background:
+  blur: "md"
+  brightness: 50
+  image: "/images/background.jpg"
+  opacity: 75
+layout:
+  Bookmarks:
+    columns: 3
+    style: "row"
+  Services:
+    columns: 3
+    style: "row"
+  Misc:
+    columns: 3
+    style: "row"
+quicklaunch:
+  searchDescriptions: true
+title: "Docker dashboard"

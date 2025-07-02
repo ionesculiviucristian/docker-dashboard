@@ -1,0 +1,91 @@
+- Services:
+    - cAdvisor:
+        container: "dev-cadvisor-1"
+        description: "Analyzes resource usage and performance characteristics of running containers"
+        href: "https://cadvisor.localdev/"
+        icon: "sh-cadvisor.png"
+        server: "my-docker"
+        showStats: true
+    - IT TOOLS:
+        container: "dev-it-tools-1"
+        description: "Handy tools for developers"
+        href: "https://it-tools.localdev/"
+        icon: "sh-it-tools.png"
+        server: "my-docker"
+        showStats: true
+    - Mailpit:
+        container: "dev-mailpit-1"
+        description: "Mailpit - email & SMTP testing tool with API for developers"
+        href: "https://mailpit.localdev/"
+        icon: "sh-mailpit.png"
+        server: "my-docker"
+        showStats: true
+        widget:
+          mappings:
+            - field: "total"
+              label: "Total"
+            - field: "unread"
+              label: "Unread"
+          password: "{{HOMEPAGE_VAR_SERVICES_USER_PASSWORD}}"
+          type: "customapi"
+          url: "http://mailpit:8025/api/v1/messages"
+          username: "{{HOMEPAGE_VAR_SERVICES_USER}}"
+    - MinIO:
+        container: "dev-minio-1"
+        description: "MinIO is a High Performance Object Storage. It is API compatible with Amazon S3 cloud storage service"
+        href: "https://minio.localdev/"
+        icon: "/icons/minio.png"
+        server: "my-docker"
+        showStats: true
+    - Mongo Express:
+        container: "dev-mongo-mongo-express-1"
+        description: "A web-based MongoDB admin interface written with Node.js, Express, and Bootstrap 5"
+        href: "https://mongo-express.localdev/"
+        icon: "/icons/mongo-express.png"
+        server: "my-docker"
+        showStats: true
+    - pgAdmin4:
+        container: "dev-postgres-pgadmin4-1"
+        description: "pgAdmin is the most popular and feature rich Open Source administration and development platform for PostgreSQL"
+        href: "https://pgadmin4.localdev/"
+        icon: "/icons/pgadmin4.ico"
+        server: "my-docker"
+        showStats: true
+    - phpMyAdmin:
+        container: "dev-mysql-phpmyadmin-1"
+        description: "phpMyAdmin is a free software tool written in PHP, intended to handle the administration of MySQL over the Web"
+        href: "https://phpmyadmin.localdev/"
+        icon: "/icons/phpmyadmin.ico"
+        server: "my-docker"
+        showStats: true
+    - Omni Tools:
+        container: "dev-omni-tools-1"
+        description: "Self-hosted collection of powerful web-based tools for everyday tasks"
+        href: "https://omni-tools.localdev/"
+        icon: "sh-omnitools.png"
+        server: "my-docker"
+        showStats: true
+    - RabbitMQ:
+        container: "dev-rabbitmq-1"
+        description: "RabbitMQ is a reliable and mature messaging and streaming broker, which is easy to deploy on cloud environments, on-premises, and on your local machine"
+        href: "https://rabbitmq.localdev/"
+        icon: "sh-rabbitmq.png"
+        server: "my-docker"
+        showStats: true
+    - Redis Insight:
+        container: "dev-redis-redisinsight-1"
+        description: "Redis Insight is a powerful tool for visualizing and optimizing data in Redis or Redis Stack, making real-time application development easier and more fun than ever before"
+        href: "https://redisinsight.localdev/"
+        icon: "/icons/redisinsight.png"
+        server: "my-docker"
+        showStats: true
+    - What's up Docker?:
+        container: "dev-whatsupdocker-1"
+        description: "Keep your containers up-to-date!"
+        href: "https://whatsupdocker.localdev"
+        icon: "/icons/wud.svg"
+        server: "my-docker"
+        showStats: true
+        widget:
+          type: "whatsupdocker"
+          url: "http://whatsupdocker:3000"

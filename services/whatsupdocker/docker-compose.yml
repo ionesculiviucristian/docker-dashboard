@@ -1,0 +1,21 @@
+networks:
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+services:
+  whatsupdocker:
+    environment:
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${WHATSUPDOCKER_VIRTUAL_HOST:?err}"
+      WUD_REGISTRY_CUSTOM_OSGEO_URL: "${WHATSUPDOCKER_WUD_REGISTRY_CUSTOM_OSGEO_URL}"
+    image: "getwud/wud:${WHATSUPDOCKER_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
+    networks:
+      - "nginx-proxy"
+    restart: "unless-stopped"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "whatsupdocker-data:/store"
+volumes:
+  whatsupdocker-data: null

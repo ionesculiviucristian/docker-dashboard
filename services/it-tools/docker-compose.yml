@@ -1,0 +1,22 @@
+networks:
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+services:
+  it-tools:
+    environment:
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${IT_TOOLS_VIRTUAL_HOST:?err}"
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "60s"
+      test: "wget --no-verbose --tries=1 --spider http://0.0.0.0 || exit 1"
+      timeout: "10s"
+    image: "corentinth/it-tools:${IT_TOOLS_VERSION:?err}"
+    labels:
+      wud.tag.include: "latest"
+      wud.watch.digest: true
+    networks:
+      - "nginx-proxy"
+    restart: "unless-stopped"

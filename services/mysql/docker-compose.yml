@@ -1,0 +1,58 @@
+networks:
+  mysql:
+    external: true
+    name: "${MYSQL_NETWORK:?err}"
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+services:
+  mysql:
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:?err}"
+      TZ: "${TZ:?err}"
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "60s"
+      test: "mysqladmin ping -h localhost -u root -p${MYSQL_ROOT_PASSWORD} || exit 1"
+      timeout: "10s"
+    image: "mysql:${MYSQL_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+$$"
+    networks:
+      - "mysql"
+    restart: "unless-stopped"
+    ulimits:
+      nofile:
+        hard: 102400
+        soft: 102400
+      nproc:
+        hard: 10240
+        soft: 10240
+    volumes:
+      - "mysql-data:/var/lib/mysql"
+  mysql-phpmyadmin:
+    depends_on:
+      - "mysql"
+    environment:
+      PMA_HOSTS: "mysql"
+      TZ: "${TZ:?err}"
+      UPLOAD_LIMIT: "${MYSQL_PHPMYADMIN_PMA_UPLOAD_LIMIT}"
+      VIRTUAL_HOST: "${MYSQL_PHPMYADMIN_VIRTUAL_HOST:?err}"
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "60s"
+      test: "curl --fail http://localhost/robots.txt || exit 1"
+      timeout: "10s"
+    image: "phpmyadmin:${MYSQL_PHPMYADMIN_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
+    networks:
+      - "mysql"
+      - "nginx-proxy"
+    restart: "unless-stopped"
+    volumes:
+      - "${PWD}/services/mysql/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro"
+volumes:
+  mysql-data: null
