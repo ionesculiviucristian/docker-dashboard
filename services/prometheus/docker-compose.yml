@@ -1,0 +1,34 @@
+networks:
+  grafana:
+    external: true
+    name: "${GRAFANA_NETWORK:?err}"
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+  prometheus:
+    driver: "bridge"
+    name: "${PROMETHEUS_NETWORK:?err}"
+services:
+  prometheus:
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--enable-feature=exemplar-storage"
+      - "--enable-feature=otlp-write-receiver"
+      - "--web.enable-lifecycle"
+    environment:
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${PROMETHEUS_VIRTUAL_HOST:?err}"
+      VIRTUAL_PORT: "${PROMETHEUS_VIRTUAL_PORT:?err}"
+    image: "prom/prometheus:${PROMETHEUS_VERSION:?err}"
+    labels:
+      wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
+    networks:
+      - "grafana"
+      - "nginx-proxy"
+      - "prometheus"
+    restart: "unless-stopped"
+    volumes:
+      - "${PWD}/services/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro"
+      - "prometheus-data:/prometheus"
+volumes:
+  prometheus-data: null

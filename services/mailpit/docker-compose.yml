@@ -1,0 +1,25 @@
+networks:
+  mailpit:
+    driver: "bridge"
+    name: "${MAILPIT_NETWORK:?err}"
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+services:
+  mailpit:
+    environment:
+      MP_UI_AUTH: "${MAILPIT_MP_UI_AUTH:?err}"
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${MAILPIT_VIRTUAL_HOST:?err}"
+      VIRTUAL_PORT: "${MAILPIT_VIRTUAL_PORT:?err}"
+    image: "axllent/mailpit:${MAILPIT_VERSION:?err}"
+    labels:
+      wud.tag.include: "^v\\d+\\.\\d+$$"
+    networks:
+      - "mailpit"
+      - "nginx-proxy"
+    restart: "unless-stopped"
+    volumes:
+      - "mailpit-data:/data"
+volumes:
+  mailpit-data: null

@@ -1,0 +1,29 @@
+networks:
+  cadvisor:
+    driver: "bridge"
+    name: "${CADVISOR_NETWORK:?err}"
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+services:
+  cadvisor:
+    devices:
+      - "/dev/kmsg"
+    environment:
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${CADVISOR_VIRTUAL_HOST:?err}"
+      VIRTUAL_PORT: "${CADVISOR_VIRTUAL_PORT:?err}"
+    image: "gcr.io/cadvisor/cadvisor:${CADVISOR_VERSION:?err}"
+    labels:
+      wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
+    networks:
+      - "cadvisor"
+      - "nginx-proxy"
+    privileged: true
+    restart: "unless-stopped"
+    volumes:
+      - "/:/rootfs:ro"
+      - "/dev/disk/:/dev/disk:ro"
+      - "/sys:/sys:ro"
+      - "/var/lib/docker/:/var/lib/docker:ro"
+      - "/var/run:/var/run:ro"

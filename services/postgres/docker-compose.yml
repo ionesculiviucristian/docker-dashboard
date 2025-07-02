@@ -1,0 +1,51 @@
+networks:
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+  postgres:
+    driver: "bridge"
+    name: "${POSTGRES_NETWORK:?err}"
+services:
+  postgres:
+    environment:
+      POSTGRES_DEV_PASSWORD: "/run/secrets/POSTGRES_DEV_PASSWORD"
+      POSTGRES_DEV_USER: "${POSTGRES_DEV_USER:?err}"
+      POSTGRES_PASSWORD_FILE: "/run/secrets/POSTGRES_PASSWORD"
+      TZ: "${TZ:?err}"
+    image: "postgres:${POSTGRES_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+$$"
+    networks:
+      - "postgres"
+    restart: "unless-stopped"
+    secrets:
+      - "POSTGRES_DEV_PASSWORD"
+      - "POSTGRES_PASSWORD"
+    shm_size: "256m"
+    volumes:
+      - "${PWD}/services/postgres/postgres/initdb:/docker-entrypoint-initdb.d:ro"
+      - "postgres-data:/var/lib/postgresql/data"
+  postgres-pgadmin4:
+    depends_on:
+      - "postgres"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "${POSTGRES_PGADMIN4_PGADMIN_DEFAULT_EMAIL:?err}"
+      PGADMIN_DEFAULT_PASSWORD_FILE: "/run/secrets/POSTGRES_DEV_PASSWORD"
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${POSTGRES_PGADMIN4_VIRTUAL_HOST:?err}"
+    image: "dpage/pgadmin4:${POSTGRES_PGADMIN4_PGADMIN_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+$$"
+    networks:
+      - "nginx-proxy"
+      - "postgres"
+    restart: "unless-stopped"
+    secrets:
+      - "POSTGRES_DEV_PASSWORD"
+    volumes:
+      - "${PWD}/services/postgres/pgadmin4/preferences.json:/pgadmin4/preferences.json:ro"
+      - "${PWD}/services/postgres/pgadmin4/servers.json:/pgadmin4/servers.json:ro"
+      - "postgres-pgadmin4-data:/var/lib/pgadmin"
+volumes:
+  postgres-data: null
+  postgres-pgadmin4-data: null

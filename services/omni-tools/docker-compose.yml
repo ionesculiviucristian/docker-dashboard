@@ -1,0 +1,15 @@
+networks:
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+services:
+  omni-tools:
+    environment:
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${OMNI_TOOLS_VIRTUAL_HOST:?err}"
+    image: "iib0011/omni-tools:${OMNI_TOOLS_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
+    networks:
+      - "nginx-proxy"
+    restart: "unless-stopped"

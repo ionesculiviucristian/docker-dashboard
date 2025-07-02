@@ -1,0 +1,19 @@
+# https://grafana.com/docs/grafana/latest/administration/provisioning/#dashboards
+apiVersion: 1
+providers:
+  - allowUiUpdates: false
+    disableDeletion: true
+    folder: ""
+    folderUid: ""
+    name: "default"
+    options:
+      foldersFromFilesStructure: true
+      path: "/etc/grafana/provisioning"
+    orgId: 1
+    type: "file"
+    updateIntervalSeconds: 10
+    inputs:
+      - name: DS_PROMETHEUS
+        type: datasource
+        pluginId: prometheus
+        value: Prometheus

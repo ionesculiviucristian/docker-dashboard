@@ -1,0 +1,30 @@
+networks:
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+  prometheus:
+    external: true
+    name: "${PROMETHEUS_NETWORK:?err}"
+  rabbitmq:
+    driver: "bridge"
+    name: "${RABBITMQ_NETWORK:?err}"
+services:
+  rabbitmq:
+    environment:
+      RABBITMQ_DEFAULT_PASS: "${RABBITMQ_DEFAULT_PASS:?err}"
+      RABBITMQ_DEFAULT_USER: "${RABBITMQ_DEFAULT_USER:?err}"
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${RABBITMQ_VIRTUAL_HOST:?err}"
+      VIRTUAL_PORT: "${RABBITMQ_VIRTUAL_PORT:?err}"
+    hostname: "rabbitmq-dev"
+    image: "rabbitmq:${RABBITMQ_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+-management-alpine$$"
+    networks:
+      - "nginx-proxy"
+      - "rabbitmq"
+    restart: "unless-stopped"
+    volumes:
+      - "rabbitmq-data:/var/lib/rabbitmq"
+volumes:
+  rabbitmq-data: null

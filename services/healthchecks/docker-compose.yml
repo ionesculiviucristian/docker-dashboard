@@ -1,0 +1,47 @@
+networks:
+  healthchecks:
+    driver: "bridge"
+    name: "${HEALTHCHECKS_NETWORK:?err}"
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+services:
+  healthchecks:
+    environment:
+      DB: "${HEALTHCHECKS_DB:?err}"
+      DB_HOST: "${HEALTHCHECKS_DB_HOST:?err}"
+      DB_NAME: "${HEALTHCHECKS_DB_NAME:?err}"
+      DB_PASSWORD: "${HEALTHCHECKS_DB_PASSWORD:?err}"
+      DB_USER: "${HEALTHCHECKS_DB_USER:?err}"
+      DEBUG: "${HEALTHCHECKS_DEBUG}"
+      SECRET_KEY: "${HEALTHCHECKS_SECRET_KEY:?err}"
+      SITE_ROOT: "${HEALTHCHECKS_SITE_ROOT?:err}"
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${HEALTHCHECKS_VIRTUAL_HOST:?err}"
+      VIRTUAL_PORT: "${HEALTHCHECKS_VIRTUAL_PORT:?err}"
+    image: "healthchecks/healthchecks:${HEALTHCHECKS_VERSION:?err}"
+    labels:
+      wud.tag.include: "^v\\d+\\.\\d+$$"
+    networks:
+      - "healthchecks"
+      - "nginx-proxy"
+    restart: "unless-stopped"
+    volumes:
+      - "healthchecks-data:/data"
+  healthchecks-postgres:
+    environment:
+      POSTGRES_DB: "${HEALTHCHECKS_POSTGRES_DB:?err}"
+      POSTGRES_PASSWORD: "${HEALTHCHECKS_POSTGRES_PASSWORD:?err}"
+      POSTGRES_USER: "${HEALTHCHECKS_POSTGRES_USER:?err}"
+      TZ: "${TZ:?err}"
+    image: "postgres:${HEALTHCHECKS_POSTGRES_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+$$"
+    networks:
+      - "healthchecks"
+    restart: "unless-stopped"
+    volumes:
+      - "healthchecks-postgres-data:/var/lib/postgresql/data"
+volumes:
+  healthchecks-data: null
+  healthchecks-postgres-data: null

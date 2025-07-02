@@ -1,0 +1,27 @@
+networks:
+  minio:
+    driver: "bridge"
+    name: "${MINIO_NETWORK:?err}"
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+services:
+  minio:
+    command: "server /data --console-address ':9001'"
+    environment:
+      MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD:?err}"
+      MINIO_ROOT_USER: "${MINIO_ROOT_USER:?err}"
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${MINIO_VIRTUAL_HOST:?err}"
+      VIRTUAL_PORT: "${MINIO_VIRTUAL_PORT:?err}"
+    image: "minio/minio:${MINIO_VERSION:?err}"
+    labels:
+      wud.tag.include: "^RELEASE\\.\\d+-\\d+-\\d+T\\d+-\\d+-\\d+Z$$"
+    networks:
+      - "minio"
+      - "nginx-proxy"
+    restart: "unless-stopped"
+    volumes:
+      - "minio-data:/data"
+volumes:
+  minio-data: null

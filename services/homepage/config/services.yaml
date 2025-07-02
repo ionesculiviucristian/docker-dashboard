@@ -1,0 +1,190 @@
+- Misc:
+    - AdGuard Home:
+        container: "dev-adguardhome-1"
+        description: "AdGuard Home is a network-wide software for blocking ads & tracking"
+        href: "https://adguardhome.localdev/"
+        icon: "sh-adguard-home.png"
+        server: "my-docker"
+        showStats: true
+    - Bitwarden:
+        container: "dev-bitwarden-1"
+        description: "The most trusted password manager"
+        href: "https://bitwarden.localdev/"
+        icon: "sh-bitwarden.png"
+        server: "my-docker"
+        showStats: true
+    - GeoServer:
+        container: "dev-geoserver-1"
+        description: "GeoServer is an open source server for sharing geospatial data"
+        href: "https://geoserver.localdev/"
+        icon: "/icons/geoserver.ico"
+        server: "my-docker"
+        showStats: true
+    - GitLab:
+        - Web UI:
+            container: "dev-gitlab-1"
+            description: "The most-comprehensive AI-powered DevSecOps platform"
+            href: "https://gitlab.localdev/"
+            icon: "sh-gitlab.png"
+            server: "my-docker"
+            showStats: true
+        - Runner:
+            container: "dev-gitlab-runner-1"
+            description: "GitLab Runner is an application that works with GitLab CI/CD to run jobs in a pipeline"
+            icon: "sh-gitlab.png"
+            server: "my-docker"
+            showStats: true
+    - Grafana:
+        container: "dev-grafana-1"
+        description: "The open and composable observability and data visualization platform"
+        href: "https://grafana.localdev/"
+        icon: "sh-grafana.png"
+        server: "my-docker"
+        showStats: true
+    - Healthchecks:
+        container: "dev-healthchecks-1"
+        description: "Healthchecks is a cron job monitoring service"
+        href: "https://healthchecks.localdev/"
+        icon: "/icons/healthchecks.svg"
+        server: "my-docker"
+        showStats: true
+    - Kimai:
+        container: "dev-kimai-1"
+        description: "Time tracking for project-driven teams"
+        href: "https://kimai.localdev/"
+        icon: "sh-kimai.png"
+        server: "my-docker"
+        showStats: true
+    - Linkwarden:
+        container: "dev-linkwarden-1"
+        description: "Self-hosted collaborative bookmark manager to collect, organize, and preserve webpages, articles, and documents"
+        href: "https://linkwarden.localdev/"
+        icon: "sh-linkwarden.png"
+        server: "my-docker"
+        showStats: true
+    - MiroTalk:
+        container: "dev-mirotalk-1"
+        description: "Free browser based Real-time video calls"
+        href: "https://mirotalk.localdev/"
+        icon: "sh-mirotalk.png"
+        server: "my-docker"
+        showStats: true
+    - ownCloud:
+        container: "dev-owncloud-1"
+        description: "ownCloud is an open-source file sync, share and content collaboration software that lets teams work on data easily from anywhere, on any device"
+        href: "https://owncloud.localdev/"
+        icon: "/icons/owncloud.ico"
+        server: "my-docker"
+        showStats: true
+    - Prometheus:
+        container: "dev-prometheus-1"
+        description: "Open source metrics and monitoring for your systems and services"
+        href: "https://prometheus.localdev/"
+        icon: "sh-prometheus.png"
+        server: "my-docker"
+        showStats: true
+    - Uptime Kuma:
+        container: "dev-uptime-kuma-1"
+        description: "Uptime Kuma is an easy-to-use self-hosted monitoring tool"
+        href: "https://uptime-kuma.localdev/"
+        icon: "sh-uptime-kuma.png"
+        server: "my-docker"
+        showStats: true
+- Services:
+    - cAdvisor:
+        container: "dev-cadvisor-1"
+        description: "Analyzes resource usage and performance characteristics of running containers"
+        href: "https://cadvisor.localdev/"
+        icon: "sh-cadvisor.png"
+        server: "my-docker"
+        showStats: true
+    - IT TOOLS:
+        container: "dev-it-tools-1"
+        description: "Handy tools for developers"
+        href: "https://it-tools.localdev/"
+        icon: "sh-it-tools.png"
+        server: "my-docker"
+        showStats: true
+    - Mailpit:
+        container: "dev-mailpit-1"
+        description: "Mailpit - email & SMTP testing tool with API for developers"
+        href: "https://mailpit.localdev/"
+        icon: "sh-mailpit.png"
+        server: "my-docker"
+        showStats: true
+        widget:
+          mappings:
+            - field: "total"
+              label: "Total"
+            - field: "unread"
+              label: "Unread"
+          password: "{{HOMEPAGE_VAR_DEV_PASSWORD}}"
+          type: "customapi"
+          url: "http://mailpit:8025/api/v1/messages"
+          username: "{{HOMEPAGE_VAR_DEV_USER}}"
+    - MinIO:
+        container: "dev-minio-1"
+        description: "MinIO is a High Performance Object Storage. It is API compatible with Amazon S3 cloud storage service"
+        href: "https://minio.localdev/"
+        icon: "/icons/minio.png"
+        server: "my-docker"
+        showStats: true
+    - Mongo Express:
+        container: "dev-mongo-mongo-express-1"
+        description: "A web-based MongoDB admin interface written with Node.js, Express, and Bootstrap 5"
+        href: "https://mongo-express.localdev/"
+        icon: "/icons/mongo-express.png"
+        server: "my-docker"
+        showStats: true
+    - pgAdmin4:
+        container: "dev-postgres-pgadmin4-1"
+        description: "pgAdmin is the most popular and feature rich Open Source administration and development platform for PostgreSQL"
+        href: "https://pgadmin4.localdev/"
+        icon: "/icons/pgadmin4.ico"
+        server: "my-docker"
+        showStats: true
+    - phpMyAdmin:
+        container: "dev-mysql-phpmyadmin-1"
+        description: "phpMyAdmin is a free software tool written in PHP, intended to handle the administration of MySQL over the Web"
+        href: "https://phpmyadmin.localdev/"
+        icon: "/icons/phpmyadmin.ico"
+        server: "my-docker"
+        showStats: true
+    - Omni Tools:
+        container: "dev-omni-tools-1"
+        description: "Self-hosted collection of powerful web-based tools for everyday tasks"
+        href: "https://omni-tools.localdev/"
+        icon: "sh-omnitools.png"
+        server: "my-docker"
+        showStats: true
+    - Planka:
+        container: "dev-planka-1"
+        description: "Elegant open source project tracking"
+        href: "https://planka.localdev/"
+        icon: "/icons/planka.png"
+        server: "my-docker"
+        showStats: true
+    - RabbitMQ:
+        container: "dev-rabbitmq-1"
+        description: "RabbitMQ is a reliable and mature messaging and streaming broker, which is easy to deploy on cloud environments, on-premises, and on your local machine"
+        href: "https://rabbitmq.localdev/"
+        icon: "sh-rabbitmq.png"
+        server: "my-docker"
+        showStats: true
+    - Redis Insight:
+        container: "dev-redis-redisinsight-1"
+        description: "Redis Insight is a powerful tool for visualizing and optimizing data in Redis or Redis Stack, making real-time application development easier and more fun than ever before"
+        href: "https://redisinsight.localdev/"
+        icon: "/icons/redisinsight.png"
+        server: "my-docker"
+        showStats: true
+    - What's up Docker?:
+        container: "dev-whatsupdocker-1"
+        description: "Keep your containers up-to-date!"
+        href: "https://whatsupdocker.localdev"
+        icon: "/icons/wud.svg"
+        server: "my-docker"
+        showStats: true
+        widget:
+          type: "whatsupdocker"
+          url: "http://whatsupdocker:3000"

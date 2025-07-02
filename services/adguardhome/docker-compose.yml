@@ -1,0 +1,22 @@
+networks:
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+services:
+  adguardhome:
+    environment:
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${ADGUARDHOME_VIRTUAL_HOST:?err}"
+      VIRTUAL_PORT: "${ADGUARDHOME_VIRTUAL_PORT:?err}"
+    image: "adguard/adguardhome:${ADGUARDHOME_VERSION:?err}"
+    labels:
+      wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
+    networks:
+      - "nginx-proxy"
+    restart: "unless-stopped"
+    volumes:
+      - "adguardhome-conf:/opt/adguardhome/conf"
+      - "adguardhome-data:/opt/adguardhome/work"
+volumes:
+  adguardhome-conf: null
+  adguardhome-data: null

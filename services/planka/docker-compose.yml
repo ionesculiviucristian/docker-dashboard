@@ -1,0 +1,53 @@
+networks:
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+  planka:
+    driver: "bridge"
+    name: "${PLANKA_NETWORK:?err}"
+services:
+  planka:
+    depends_on:
+      - "planka-postgres"
+    environment:
+      BASE_URL: "${PLANKA_BASE_URL}"
+      DATABASE_URL: "${PLANKA_DATABASE_URL:?err}"
+      DEFAULT_ADMIN_EMAIL: "${PLANKA_DEFAULT_ADMIN_EMAIL:?err}"
+      DEFAULT_ADMIN_NAME: "${PLANKA_DEFAULT_ADMIN_NAME}"
+      DEFAULT_ADMIN_PASSWORD: "${PLANKA_DEFAULT_ADMIN_PASSWORD:?err}"
+      DEFAULT_ADMIN_USERNAME: "${PLANKA_DEFAULT_ADMIN_USERNAME:?err}"
+      SECRET_KEY: "${PLANKA_SECRET_KEY:?err}"
+      TRUST_PROXY: "${PLANKA_TRUST_PROXY}"
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${PLANKA_VIRTUAL_HOST:?err}"
+      VIRTUAL_PORT: "${PLANKA_VIRTUAL_PORT:?err}"
+    image: "ghcr.io/plankanban/planka:${PLANKA_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
+    networks:
+      - "nginx-proxy"
+      - "planka"
+    restart: "unless-stopped"
+    volumes:
+      - "planka-attachments:/app/private/attachments"
+      - "planka-project-background-images:/app/public/project-background-images"
+      - "planka-user-avatars:/app/public/user-avatars"
+  planka-postgres:
+    environment:
+      POSTGRES_DB: "${PLANKA_POSTGRES_DB:?err}"
+      POSTGRES_PASSWORD: "${PLANKA_POSTGRES_PASSWORD:?err}"
+      POSTGRES_USER: "${PLANKA_POSTGRES_USER:?err}"
+      TZ: "${TZ:?err}"
+    image: "postgres:${PLANKA_POSTGRES_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+$$"
+    networks:
+      - "planka"
+    restart: "unless-stopped"
+    volumes:
+      - "planka-postgres-data:/var/lib/postgresql/data"
+volumes:
+  planka-attachments: null
+  planka-postgres-data: null
+  planka-project-background-images: null
+  planka-user-avatars: null

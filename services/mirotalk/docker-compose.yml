@@ -1,0 +1,21 @@
+networks:
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+services:
+  mirotalk:
+    environment:
+      HOST_PROTECTED: "${MIROTALK_HOST_PROTECTED:?err}"
+      HOST_USERS: "${MIROTALK_HOST_USERS:?err}"
+      HOST_USER_AUTH: "${MIROTALK_HOST_USER_AUTH:?err}"
+      PRESENTERS: "${MIROTALK_HOST_USERS}"
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${MIROTALK_VIRTUAL_HOST:?err}"
+      VIRTUAL_PORT: "${MIROTALK_VIRTUAL_PORT:?err}"
+    image: "mirotalk/p2p:${MIROTALK_VERSION:?err}"
+    labels:
+      wud.tag.include: "latest"
+      wud.watch.digest: true
+    networks:
+      - "nginx-proxy"
+    restart: "unless-stopped"

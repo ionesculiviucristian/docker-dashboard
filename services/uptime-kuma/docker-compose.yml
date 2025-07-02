@@ -1,0 +1,20 @@
+networks:
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+services:
+  uptime-kuma:
+    environment:
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${UPTIME_KUMA_VIRTUAL_HOST:?err}"
+      VIRTUAL_PORT: "${UPTIME_KUMA_VIRTUAL_PORT:?err}"
+    image: "louislam/uptime-kuma:${UPTIME_KUMA_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
+    networks:
+      - "nginx-proxy"
+    restart: "unless-stopped"
+    volumes:
+      - "uptime-kuma-data:/app/data"
+volumes:
+  uptime-kuma-data: null

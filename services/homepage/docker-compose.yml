@@ -1,0 +1,36 @@
+networks:
+  mailpit:
+    external: true
+    name: "${MAILPIT_NETWORK:?err}"
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+services:
+  homepage:
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: "${HOMEPAGE_HOMEPAGE_ALLOWED_HOSTS}"
+      HOMEPAGE_VAR_DEV_PASSWORD: "${DEV_PASSWORD:?err}"
+      HOMEPAGE_VAR_DEV_USER: "${DEV_USER:?err}"
+      # HOMEPAGE_VAR_GILAB_TOKEN: "${HOMEPAGE_VAR_GILAB_TOKEN:?err}"
+      # HOMEPAGE_VAR_GILAB_USER_ID: "${HOMEPAGE_VAR_GILAB_USER_ID:?err}"
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${HOMEPAGE_VIRTUAL_HOST:?err}"
+    image: "ghcr.io/gethomepage/homepage:${HOMEPAGE_VERSION:?err}"
+    labels:
+      wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
+    networks:
+      - "mailpit"
+      - "nginx-proxy"
+    restart: "unless-stopped"
+    volumes:
+      - "${PWD}/services/homepage/config/bookmarks.yaml:/app/config/bookmarks.yaml:ro"
+      - "${PWD}/services/homepage/config/docker.yaml:/app/config/docker.yaml:ro"
+      - "${PWD}/services/homepage/config/services.yaml:/app/config/services.yaml:ro"
+      - "${PWD}/services/homepage/config/settings.yaml:/app/config/settings.yaml:ro"
+      - "${PWD}/services/homepage/config/widgets.yaml:/app/config/widgets.yaml:ro"
+      - "${PWD}/services/homepage/public/icons:/app/public/icons:ro"
+      - "${PWD}/services/homepage/public/images:/app/public/images:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "homepage-data:/app/config"
+volumes:
+  homepage-data: null

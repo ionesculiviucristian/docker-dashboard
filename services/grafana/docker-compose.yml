@@ -1,0 +1,51 @@
+networks:
+  grafana:
+    driver: "bridge"
+    name: "${GRAFANA_NETWORK:?err}"
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+services:
+  grafana:
+    environment:
+      GF_DATABASE_HOST: "grafana-postgres"
+      GF_DATABASE_NAME: "${GRAFANA_POSTGRES_DB:?err}"
+      GF_DATABASE_PASSWORD: "${GRAFANA_POSTGRES_PASSWORD:?err}"
+      GF_DATABASE_TYPE: "postgres"
+      GF_DATABASE_USER: "${GRAFANA_POSTGRES_USER:?err}"
+      GF_FEATURE_TOGGLES_ENABLE: "${GRAFANA_GF_FEATURE_TOGGLES_ENABLE}"
+      GF_INSTALL_PLUGINS: "${GRAFANA_GF_INSTALL_PLUGINS}"
+      GF_SECURITY_ADMIN_EMAIL: "${GRAFANA_GF_SECURITY_ADMIN_EMAIL:?err}"
+      GF_SECURITY_ADMIN_PASSWORD: "${GRAFANA_GF_SECURITY_ADMIN_PASSWORD:?err}"
+      GF_SECURITY_ADMIN_USER: "${GRAFANA_GF_SECURITY_ADMIN_USER:?err}"
+      GF_SECURITY_SECRET_KEY: "${GRAFANA_GF_SECURITY_SECRET_KEY:?err}"
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${GRAFANA_VIRTUAL_HOST:?err}"
+      VIRTUAL_PORT: "${GRAFANA_VIRTUAL_PORT:?err}"
+    image: "grafana/grafana:${GRAFANA_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
+    networks:
+      - "grafana"
+      - "nginx-proxy"
+    restart: "unless-stopped"
+    volumes:
+      - "${PWD}/services/grafana/provisioning:/etc/grafana/provisioning"
+      - "grafana-data:/var/lib/grafana"
+  grafana-postgres:
+    environment:
+      POSTGRES_DB: "${GRAFANA_POSTGRES_DB:?err}"
+      POSTGRES_PASSWORD: "${GRAFANA_POSTGRES_PASSWORD:?err}"
+      POSTGRES_USER: "${GRAFANA_POSTGRES_USER:?err}"
+      TZ: "${TZ:?err}"
+    image: "postgres:${GRAFANA_POSTGRES_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+$$"
+    networks:
+      - "grafana"
+    restart: "unless-stopped"
+    volumes:
+      - "grafana-postgres-data:/var/lib/postgresql/data"
+volumes:
+  grafana-data: null
+  grafana-postgres-data: null

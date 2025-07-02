@@ -1,0 +1,55 @@
+networks:
+  kimai:
+    driver: "bridge"
+    name: "${KIMAI_NETWORK:?err}"
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+services:
+  kimai:
+    environment:
+      ADMINMAIL: "${KIMAI_ADMINMAIL:?err}"
+      ADMINPASS: "${KIMAI_ADMINPASS:?err}"
+      APP_SECRET: "${KIMAI_APP_SECRET:?err}"
+      DATABASE_URL: "${KIMAI_DATABASE_URL:?err}"
+      MAILER_FROM: "${KIMAI_MAILER_FROM}"
+      TIMEZONE: "${TZ:?err}"
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${KIMAI_VIRTUAL_HOST:?err}"
+      VIRTUAL_PORT: "${KIMAI_VIRTUAL_PORT:?err}"
+    image: "kimai/kimai2:${KIMAI_VERSION:?err}"
+    labels:
+      wud.tag.include: "^apache-\\d+\\.\\d+\\.\\d+$$"
+    networks:
+      - "kimai"
+      - "nginx-proxy"
+    restart: "unless-stopped"
+    volumes:
+      - "kimai-data:/opt/kimai/var/data"
+      - "kimai-plugins:/opt/kimai/var/plugins"
+  kimai-mysql:
+    environment:
+      MYSQL_DATABASE: "${KIMAI_MYSQL_DATABASE:?err}"
+      MYSQL_PASSWORD: "${KIMAI_MYSQL_PASSWORD:?err}"
+      MYSQL_ROOT_PASSWORD: "${KIMAI_MYSQL_ROOT_PASSWORD:?err}"
+      MYSQL_USER: "${KIMAI_MYSQL_USER:?err}"
+      TZ: "${TZ:?err}"
+    image: "mysql:${KIMAI_MYSQL_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+$$"
+    networks:
+      - "kimai"
+    restart: "unless-stopped"
+    ulimits:
+      nofile:
+        hard: 102400
+        soft: 102400
+      nproc:
+        hard: 10240
+        soft: 10240
+    volumes:
+      - "kimai-mysql-data:/var/lib/mysql"
+volumes:
+  kimai-data: null
+  kimai-mysql-data: null
+  kimai-plugins: null

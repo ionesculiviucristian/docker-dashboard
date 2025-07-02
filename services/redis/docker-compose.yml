@@ -1,0 +1,38 @@
+networks:
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+  redis:
+    driver: "bridge"
+    name: "${REDIS_NETWORK:?err}"
+services:
+  redis:
+    command: "redis-server --appendonly yes --save 60 1 --requirepass ${REDIS_PASSWORD}"
+    environment:
+      REDIS_PASSWORD: "${REDIS_PASSWORD:?err}"
+      TZ: "${TZ:?err}"
+    image: "redis:${REDIS_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+-alpine$$"
+    networks:
+      - "redis"
+    restart: "unless-stopped"
+    volumes:
+      - "redis-data:/data"
+  redis-redisinsight:
+    environment:
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${REDIS_VIRTUAL_HOST:?err}"
+      VIRTUAL_PORT: "${REDIS_VIRTUAL_PORT:?err}"
+    image: "redis/redisinsight:${REDIS_REDISINSIGHT_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+$$"
+    networks:
+      - "nginx-proxy"
+      - "redis"
+    restart: "unless-stopped"
+    volumes:
+      - "redis-redisinsight-data:/data"
+volumes:
+  redis-data: null
+  redis-redisinsight-data: null

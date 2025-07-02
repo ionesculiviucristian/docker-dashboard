@@ -1,0 +1,40 @@
+networks:
+  gitlab:
+    driver: "bridge"
+    name: "${GITLAB_NETWORK:?err}"
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+services:
+  gitlab:
+    environment:
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${GITLAB_VIRTUAL_HOST:?err}"
+    image: "gitlab/gitlab-ce:${GITLAB_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+\\.\\d+-ce\\.\\d+$$"
+    networks:
+      - "gitlab"
+      - "nginx-proxy"
+    restart: "unless-stopped"
+    shm_size: "256m"
+    volumes:
+      - "gitlab-config:/etc/gitlab"
+      - "gitlab-data:/var/opt/gitlab"
+      - "gitlab-logs:/var/log/gitlab"
+  gitlab-runner:
+    environment:
+      TZ: "${TZ:?err}"
+    image: "gitlab/gitlab-runner:${GITLAB_RUNNER_VERSION:?err}"
+    labels:
+      wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
+    networks:
+      - "gitlab"
+    restart: "unless-stopped"
+    volumes:
+      - "${PWD}/services/gitlab/config.toml:/etc/gitlab-runner/config.toml:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+volumes:
+  gitlab-config: null
+  gitlab-data: null
+  gitlab-logs: null

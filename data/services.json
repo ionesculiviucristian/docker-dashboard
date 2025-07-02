@@ -1,0 +1,205 @@
+[
+  {
+    "name": "AdGuard Home",
+    "url": "",
+    "localdev_url": "https://adguardhome.localdev",
+    "docker_hub_url": "https://hub.docker.com/r/adguard/adguardhome",
+    "dockerfile_url": "https://github.com/AdguardTeam/AdGuardHome/blob/master/docker/Dockerfile"
+  },
+  {
+    "name": "Bitwarden",
+    "url": "",
+    "localdev_url": "https://bitwarden.localdev",
+    "docker_hub_url": "https://github.com/bitwarden/self-host/pkgs/container/self-host",
+    "dockerfile_url": "https://github.com/bitwarden/self-host/blob/main/docker-unified/Dockerfile"
+  },
+  {
+    "name": "Grafana",
+    "url": "",
+    "localdev_url": "https://grafana.localdev",
+    "docker_hub_url": "https://hub.docker.com/r/grafana/grafana",
+    "dockerfile_url": "https://github.com/grafana/grafana/blob/main/Dockerfile"
+  },
+  {
+    "name": "Healthchecks",
+    "url": "",
+    "localdev_url": "https://healthchecks.localdev",
+    "docker_hub_url": "https://hub.docker.com/r/healthchecks/healthchecks",
+    "dockerfile_url": "https://github.com/healthchecks/healthchecks/blob/master/docker/Dockerfile"
+  },
+  {
+    "name": "IT - TOOLS",
+    "url": "",
+    "localdev_url": "https://it-tools.localdev",
+    "docker_hub_url": "https://hub.docker.com/r/corentinth/it-tools",
+    "dockerfile_url": "https://github.com/CorentinTh/it-tools/blob/main/Dockerfile"
+  },
+  {
+    "name": "Kimai",
+    "url": "",
+    "localdev_url": "https://kimai.localdev",
+    "docker_hub_url": "https://hub.docker.com/r/kimai/kimai2",
+    "dockerfile_url": "https://github.com/kimai/kimai/blob/main/Dockerfile"
+  },
+  {
+    "name": "Linkwarden",
+    "url": "",
+    "localdev_url": "https://linkwarden.localdev",
+    "docker_hub_url": "https://github.com/linkwarden/linkwarden/pkgs/container/linkwarden",
+    "dockerfile_url": "https://github.com/linkwarden/linkwarden/blob/main/Dockerfile"
+  },
+  {
+    "name": "Mailpit",
+    "url": "",
+    "localdev_url": "https://mailpit.localdev",
+    "docker_hub_url": "https://hub.docker.com/r/axllent/mailpit",
+    "dockerfile_url": "https://github.com/axllent/mailpit/blob/master/Dockerfile"
+  },
+  {
+    "name": "MinIO",
+    "url": "",
+    "localdev_url": "https://minio.localdev",
+    "docker_hub_url": "https://hub.docker.com/r/minio/minio",
+    "dockerfile_url": "https://github.com/minio/minio/blob/master/Dockerfile"
+  },
+  {
+    "name": "MongoDB",
+    "url": "",
+    "localdev_url": null,
+    "docker_hub_url": "https://hub.docker.com/_/mongo",
+    "dockerfile_url": "https://github.com/docker-library/mongo/blob/master/8.0/Dockerfile"
+  },
+  {
+    "name": "MiroTalk",
+    "url": "",
+    "localdev_url": "https://mirotalk.localdev",
+    "docker_hub_url": "https://hub.docker.com/r/mirotalk/p2p",
+    "dockerfile_url": "https://github.com/miroslavpejic85/mirotalk/blob/master/Dockerfile"
+  },
+  {
+    "name": "MySQL",
+    "url": "",
+    "localdev_url": null,
+    "docker_hub_url": "https://hub.docker.com/_/mysql",
+    "dockerfile_url": "https://github.com/docker-library/mysql/blob/master/innovation/Dockerfile.oracle"
+  },
+  {
+    "name": "Omni Tools",
+    "url": "",
+    "localdev_url": "https://omni-tools.localdev",
+    "docker_hub_url": "https://hub.docker.com/r/iib0011/omni-tools",
+    "dockerfile_url": "https://github.com/iib0011/omni-tools/blob/main/Dockerfile"
+  },
+  {
+    "name": "Planka",
+    "url": "",
+    "localdev_url": "https://planka.localdev",
+    "docker_hub_url": "https://github.com/plankanban/planka/pkgs/container/planka",
+    "dockerfile_url": "https://github.com/plankanban/planka/blob/master/Dockerfile"
+  },
+  {
+    "name": "PostgreSQL",
+    "url": "",
+    "localdev_url": null,
+    "docker_hub_url": "https://hub.docker.com/_/postgres",
+    "dockerfile_url": "https://github.com/docker-library/postgres/blob/master/17/bookworm/Dockerfile"
+  },
+  {
+    "name": "Prometheus",
+    "url": "",
+    "localdev_url": "https://prometheus.localdev",
+    "docker_hub_url": "https://hub.docker.com/r/prom/prometheus",
+    "dockerfile_url": "https://github.com/prometheus/prometheus/blob/main/Dockerfile"
+  },
+  {
+    "name": "RabbitMQ",
+    "url": "",
+    "localdev_url": "https://rabbitmq.localdev",
+    "docker_hub_url": "https://hub.docker.com/_/rabbitmq",
+    "dockerfile_url": "https://github.com/docker-library/rabbitmq/blob/master/4.0/alpine/Dockerfile"
+  },
+  {
+    "name": "Redis",
+    "url": "",
+    "localdev_url": null,
+    "docker_hub_url": "https://hub.docker.com/_/redis",
+    "dockerfile_url": "https://github.com/redis/docker-library-redis/blob/master/7.4/alpine/Dockerfile"
+  },
+  {
+    "name": "Redis Insight",
+    "url": "",
+    "localdev_url": "https://redisinsight.localdev",
+    "docker_hub_url": "https://hub.docker.com/r/redis/redisinsight",
+    "dockerfile_url": "https://github.com/RedisInsight/RedisInsight/blob/main/Dockerfile"
+  },
+  {
+    "name": "Uptime Kuma",
+    "url": "",
+    "localdev_url": "https://uptime-kuma.localdev",
+    "docker_hub_url": "https://hub.docker.com/r/louislam/uptime-kuma",
+    "dockerfile_url": "https://github.com/louislam/uptime-kuma/blob/master/docker/dockerfile"
+  },
+  {
+    "name": "What's up Docker?",
+    "url": "",
+    "localdev_url": "https://whatsupdocker.localdev",
+    "docker_hub_url": "https://hub.docker.com/r/getwud/wud",
+    "dockerfile_url": "https://github.com/getwud/wud/blob/main/Dockerfile"
+  },
+  {
+    "name": "cAdvisor",
+    "url": "",
+    "localdev_url": "https://cadvisor.localdev",
+    "docker_hub_url": "https://hub.docker.com/r/google/cadvisor",
+    "dockerfile_url": "https://github.com/google/cadvisor/blob/master/deploy/Dockerfile"
+  },
+  {
+    "name": "GeoServer",
+    "url": "",
+    "localdev_url": "https://geoserver.localdev",
+    "docker_hub_url": "https://docker.osgeo.org/#browse/browse:geoserver-docker",
+    "dockerfile_url": "https://github.com/geoserver/docker/blob/master/Dockerfile"
+  },
+  {
+    "name": "GitLab",
+    "url": "",
+    "localdev_url": "https://gitlab.localdev",
+    "docker_hub_url": "https://hub.docker.com/r/gitlab/gitlab-ce/",
+    "dockerfile_url": null
+  },
+  {
+    "name": "homepage",
+    "url": "",
+    "localdev_url": "https://homepage.localdev",
+    "docker_hub_url": "https://hub.docker.com/r/gethomepage/homepage",
+    "dockerfile_url": "https://github.com/gethomepage/homepage/blob/dev/Dockerfile"
+  },
+  {
+    "name": "mongo-express",
+    "url": "",
+    "localdev_url": "https://mongo-express.localdev",
+    "docker_hub_url": "https://hub.docker.com/_/mongo-express",
+    "dockerfile_url": "https://github.com/mongo-express/mongo-express/blob/master/Dockerfile"
+  },
+  {
+    "name": "ownCloud",
+    "url": "",
+    "localdev_url": "https://owncloud.localdev",
+    "docker_hub_url": "https://hub.docker.com/r/owncloud/server/",
+    "dockerfile_url": "https://github.com/owncloud-docker/server/blob/master/v20.04/Dockerfile.multiarch"
+  },
+  {
+    "name": "pgadmin4",
+    "url": "",
+    "localdev_url": "https://pgadmin4.localdev",
+    "docker_hub_url": "https://hub.docker.com/r/dpage/pgadmin4",
+    "dockerfile_url": "https://github.com/pgadmin-org/pgadmin4/blob/master/Dockerfile"
+  },
+  {
+    "name": "phpMyAdmin",
+    "url": "",
+    "localdev_url": "https://phpmyadmin.localdev",
+    "docker_hub_url": "https://hub.docker.com/_/phpmyadmin",
+    "dockerfile_url": "https://github.com/phpmyadmin/docker/blob/master/apache/Dockerfile"
+  }
+]

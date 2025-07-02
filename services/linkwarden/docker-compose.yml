@@ -1,0 +1,53 @@
+networks:
+  linkwarden:
+    driver: "bridge"
+    name: "${LINKWARDEN_NETWORK:?err}"
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+services:
+  linkwarden:
+    environment:
+      DATABASE_URL: "${LINKWARDEN_DATABASE_URL:?err}"
+      NEXTAUTH_SECRET: "${LINKWARDEN_NEXTAUTH_SECRET:?err}"
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${LINKWARDEN_VIRTUAL_HOST:?err}"
+      VIRTUAL_PORT: "${LINKWARDEN_VIRTUAL_PORT:?err}"
+    image: "ghcr.io/linkwarden/linkwarden:${LINKWARDEN_VERSION:?err}"
+    labels:
+      wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
+    networks:
+      - "linkwarden"
+      - "nginx-proxy"
+    restart: "unless-stopped"
+    volumes:
+      - "linkwarden-data:/data/data"
+  linkwarden-meilisearch:
+    environment:
+      TZ: "${TZ:?err}"
+    image: "getmeili/meilisearch:${LINKWARDEN_MEILISEARCH_VERSION}"
+    labels:
+      wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
+    networks:
+      - "linkwarden"
+    restart: "unless-stopped"
+    volumes:
+      - "linkwarden-meilisearch-data:/meili_data"
+  linkwarden-postgres:
+    environment:
+      POSTGRES_DB: "${LINKWARDEN_POSTGRES_DB:?err}"
+      POSTGRES_PASSWORD: "${LINKWARDEN_POSTGRES_PASSWORD:?err}"
+      POSTGRES_USER: "${LINKWARDEN_POSTGRES_USER:?err}"
+      TZ: "${TZ:?err}"
+    image: "postgres:${LINKWARDEN_POSTGRES_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+$$"
+    networks:
+      - "linkwarden"
+    restart: "unless-stopped"
+    volumes:
+      - "linkwarden-postgres-data:/var/lib/postgresql/data"
+volumes:
+  linkwarden-data: null
+  linkwarden-meilisearch-data: null
+  linkwarden-postgres-data: null

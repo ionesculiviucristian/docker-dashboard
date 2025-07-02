@@ -1,0 +1,52 @@
+networks:
+  mysql:
+    driver: "bridge"
+    name: "${MYSQL_NETWORK:?err}"
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+services:
+  mysql:
+    environment:
+      MYSQL_DEV_PASSWORD_FILE: "/run/secrets/MYSQL_DEV_PASSWORD"
+      MYSQL_DEV_USER: "${MYSQL_DEV_USER:?err}"
+      MYSQL_ROOT_PASSWORD_FILE: "/run/secrets/MYSQL_ROOT_PASSWORD"
+      TZ: "${TZ:?err}"
+    image: "mysql:${MYSQL_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+$$"
+    networks:
+      - "mysql"
+    restart: "unless-stopped"
+    secrets:
+      - "MYSQL_DEV_PASSWORD"
+      - "MYSQL_ROOT_PASSWORD"
+    ulimits:
+      nofile:
+        hard: 102400
+        soft: 102400
+      nproc:
+        hard: 10240
+        soft: 10240
+    volumes:
+      - "${PWD}/services/mysql/mysql/initdb:/docker-entrypoint-initdb.d:ro"
+      - "mysql-data:/var/lib/mysql"
+  mysql-phpmyadmin:
+    depends_on:
+      - "mysql"
+    environment:
+      PMA_HOSTS: "${MYSQL_PHPMYADMIN_PMA_HOSTS:?err}"
+      TZ: "${TZ:?err}"
+      UPLOAD_LIMIT: "${MYSQL_PHPMYADMIN_PMA_UPLOAD_LIMIT}"
+      VIRTUAL_HOST: "${MYSQL_PHPMYADMIN_VIRTUAL_HOST:?err}"
+    image: "phpmyadmin:${MYSQL_PHPMYADMIN_PMA_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+$$"
+    networks:
+      - "mysql"
+      - "nginx-proxy"
+    restart: "unless-stopped"
+    volumes:
+      - "${PWD}/services/mysql/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro"
+volumes:
+  mysql-data: null

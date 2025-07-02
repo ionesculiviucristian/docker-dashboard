@@ -1,0 +1,22 @@
+networks:
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK}"
+services:
+  nginx-proxy:
+    environment:
+      TZ: "${TZ:?err}"
+    image: "jwilder/nginx-proxy:${NGINX_PROXY_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+$$"
+    networks:
+      - "nginx-proxy"
+    ports:
+      - "0.0.0.0:443:443"
+      - "0.0.0.0:80:80"
+    restart: "unless-stopped"
+    volumes:
+      - "${PWD}/.certs:/etc/nginx/certs:ro"
+      - "${PWD}/services/nginx-proxy/default.conf:/etc/nginx/conf.d/90-default.conf:ro"
+      - "${PWD}/services/nginx-proxy/htpasswd:/etc/nginx/htpasswd:ro"
+      - "/var/run/docker.sock:/tmp/docker.sock:ro"

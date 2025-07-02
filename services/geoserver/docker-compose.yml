@@ -1,0 +1,56 @@
+networks:
+  geoserver:
+    driver: "bridge"
+    name: "${GEOSERVER_NETWORK:?err}"
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+services:
+  geoserver:
+    depends_on:
+      - "geoserver-postgis"
+    environment:
+      COMMUNITY_EXTENSIONS: "${GEOSERVER_COMMUNITY_EXTENSIONS}"
+      CORS_ENABLED: "${GEOSERVER_CORS_ENABLED}"
+      EXTRA_JAVA_OPTS: "${GEOSERVER_EXTRA_JAVA_OPTS}"
+      FORCE_SSL: "${GEOSERVER_FORCE_SSL}"
+      GEOSERVER_CSRF_WHITELIST: "${GEOSERVER_CSRF_WHITELIST}"
+      INSTALL_EXTENSIONS: "${GEOSERVER_INSTALL_EXTENSIONS}"
+      POSTGRES_DB: "${GEOSERVER_POSTGRES_DB:?err}"
+      POSTGRES_HOST: "${GEOSERVER_POSTGRES_HOST:?err}"
+      POSTGRES_JNDI_ENABLED: "${GEOSERVER_POSTGRES_JNDI_ENABLED}"
+      POSTGRES_JNDI_RESOURCE_NAME: "${GEOSERVER_POSTGRES_JNDI_RESOURCE_NAME}"
+      POSTGRES_PASSWORD: "${GEOSERVER_POSTGRES_PASSWORD:?err}"
+      POSTGRES_USERNAME: "${GEOSERVER_POSTGRES_USERNAME:?err}"
+      PROXY_BASE_URL: "${GEOSERVER_PROXY_BASE_URL}"
+      ROOT_WEBAPP_REDIRECT: "${GEOSERVER_ROOT_WEBAPP_REDIRECT}"
+      SKIP_DEMO_DATA: "${GEOSERVER_SKIP_DEMO_DATA}"
+      STABLE_EXTENSIONS: "${GEOSERVER_STABLE_EXTENSIONS}"
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${GEOSERVER_VIRTUAL_HOST:?err}"
+      VIRTUAL_PORT: "${GEOSERVER_VIRTUAL_PORT:?err}"
+    image: "docker.osgeo.org/geoserver:${GEOSERVER_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+\\.x$$"
+    networks:
+      - "geoserver"
+      - "nginx-proxy"
+    restart: "unless-stopped"
+    volumes:
+      - "geoserver-data:/opt/geoserver_data"
+  geoserver-postgis:
+    environment:
+      POSTGRES_DB: "${GEOSERVER_POSTGRES_DB:?err}"
+      POSTGRES_PASSWORD: "${GEOSERVER_POSTGRES_PASSWORD:?err}"
+      POSTGRES_USER: "${GEOSERVER_POSTGRES_USER:?err}"
+      TZ: "${TZ:?err}"
+    image: "postgis/postgis:${GEOSERVER_POSTGIS_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+-\\d+\\.\\d+$$"
+    networks:
+      - "geoserver"
+    volumes:
+      - "geoserver-postgis-data:/var/lib/postgresql/data"
+volumes:
+  geoserver-data: null
+  geoserver-postgis-data: null
