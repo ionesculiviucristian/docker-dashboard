@@ -1,205 +1,268 @@
 [
   {
-    "name": "AdGuard Home",
-    "url": "",
+    "description": "Automated Nginx reverse proxy for docker containers",
+    "docker_hub_url": "https://hub.docker.com/r/jwilder/nginx-proxy",
+    "dockerfile_url": "https://github.com/nginx-proxy/nginx-proxy/blob/main/Dockerfile.debian",
     "localdev_url": "https://adguardhome.localdev",
+    "name": "nginx-proxy",
+    "url": "https://github.com/nginx-proxy/nginx-proxy"
+  },
+  {
+    "description": "AdGuard Home is a network-wide software for blocking ads & tracking",
     "docker_hub_url": "https://hub.docker.com/r/adguard/adguardhome",
-    "dockerfile_url": "https://github.com/AdguardTeam/AdGuardHome/blob/master/docker/Dockerfile"
+    "dockerfile_url": "https://github.com/AdguardTeam/AdGuardHome/blob/master/docker/Dockerfile",
+    "localdev_url": "https://adguardhome.localdev",
+    "name": "AdGuard Home",
+    "url": "https://adguard.com/en/adguard-home/overview.html"
   },
   {
-    "name": "Bitwarden",
-    "url": "",
-    "localdev_url": "https://bitwarden.localdev",
+    "description": "Bitwarden is the best password manager for securely storing, managing, and sharing sensitive information such as passwords, passkeys, and credit cards",
     "docker_hub_url": "https://github.com/bitwarden/self-host/pkgs/container/self-host",
-    "dockerfile_url": "https://github.com/bitwarden/self-host/blob/main/docker-unified/Dockerfile"
+    "dockerfile_url": "https://github.com/bitwarden/self-host/blob/main/docker-unified/Dockerfile",
+    "localdev_url": "https://bitwarden.localdev",
+    "name": "Bitwarden",
+    "url": "https://bitwarden.com"
   },
   {
-    "name": "Grafana",
-    "url": "",
-    "localdev_url": "https://grafana.localdev",
+    "description": "The open and composable observability and data visualization platform",
     "docker_hub_url": "https://hub.docker.com/r/grafana/grafana",
-    "dockerfile_url": "https://github.com/grafana/grafana/blob/main/Dockerfile"
+    "dockerfile_url": "https://github.com/grafana/grafana/blob/main/Dockerfile",
+    "localdev_url": "https://grafana.localdev",
+    "name": "Grafana",
+    "url": "https://grafana.com"
   },
   {
-    "name": "Healthchecks",
-    "url": "",
-    "localdev_url": "https://healthchecks.localdev",
+    "description": "Open-source cron job and background task monitoring service, written in Python & Django",
     "docker_hub_url": "https://hub.docker.com/r/healthchecks/healthchecks",
-    "dockerfile_url": "https://github.com/healthchecks/healthchecks/blob/master/docker/Dockerfile"
+    "dockerfile_url": "https://github.com/healthchecks/healthchecks/blob/master/docker/Dockerfile",
+    "localdev_url": "https://healthchecks.localdev",
+    "name": "Healthchecks",
+    "url": "https://healthchecks.io"
   },
   {
-    "name": "IT - TOOLS",
-    "url": "",
-    "localdev_url": "https://it-tools.localdev",
+    "description": "Collection of handy online tools for developers, with great UX",
     "docker_hub_url": "https://hub.docker.com/r/corentinth/it-tools",
-    "dockerfile_url": "https://github.com/CorentinTh/it-tools/blob/main/Dockerfile"
+    "dockerfile_url": "https://github.com/CorentinTh/it-tools/blob/main/Dockerfile",
+    "localdev_url": "https://it-tools.localdev",
+    "name": "IT - TOOLS",
+    "url": "https://it-tools.tech"
   },
   {
-    "name": "Kimai",
-    "url": "",
-    "localdev_url": "https://kimai.localdev",
+    "description": "Kimai is a web-based multi-user time-tracking application",
     "docker_hub_url": "https://hub.docker.com/r/kimai/kimai2",
-    "dockerfile_url": "https://github.com/kimai/kimai/blob/main/Dockerfile"
+    "dockerfile_url": "https://github.com/kimai/kimai/blob/main/Dockerfile",
+    "localdev_url": "https://kimai.localdev",
+    "name": "Kimai",
+    "url": "https://www.kimai.org"
   },
   {
-    "name": "Linkwarden",
-    "url": "",
-    "localdev_url": "https://linkwarden.localdev",
+    "description": "elf-hosted collaborative bookmark manager to collect, organize, and preserve webpages, articles, and documents",
     "docker_hub_url": "https://github.com/linkwarden/linkwarden/pkgs/container/linkwarden",
-    "dockerfile_url": "https://github.com/linkwarden/linkwarden/blob/main/Dockerfile"
+    "dockerfile_url": "https://github.com/linkwarden/linkwarden/blob/main/Dockerfile",
+    "localdev_url": "https://linkwarden.localdev",
+    "name": "Linkwarden",
+    "url": "https://linkwarden.app"
   },
   {
-    "name": "Mailpit",
-    "url": "",
-    "localdev_url": "https://mailpit.localdev",
+    "description": "An email and SMTP testing tool with API for developers",
     "docker_hub_url": "https://hub.docker.com/r/axllent/mailpit",
-    "dockerfile_url": "https://github.com/axllent/mailpit/blob/master/Dockerfile"
+    "dockerfile_url": "https://github.com/axllent/mailpit/blob/master/Dockerfile",
+    "localdev_url": "https://mailpit.localdev",
+    "name": "Mailpit",
+    "url": "https://mailpit.axllent.org"
   },
   {
-    "name": "MinIO",
-    "url": "",
-    "localdev_url": "https://minio.localdev",
+    "description": "MinIO is a high-performance, S3 compatible object store, open sourced under GNU AGPLv3 license",
     "docker_hub_url": "https://hub.docker.com/r/minio/minio",
-    "dockerfile_url": "https://github.com/minio/minio/blob/master/Dockerfile"
+    "dockerfile_url": "https://github.com/minio/minio/blob/master/Dockerfile",
+    "localdev_url": "https://minio.localdev",
+    "name": "MinIO",
+    "url": "https://min.io"
   },
   {
-    "name": "MongoDB",
-    "url": "",
-    "localdev_url": null,
-    "docker_hub_url": "https://hub.docker.com/_/mongo",
-    "dockerfile_url": "https://github.com/docker-library/mongo/blob/master/8.0/Dockerfile"
-  },
-  {
-    "name": "MiroTalk",
-    "url": "",
-    "localdev_url": "https://mirotalk.localdev",
-    "docker_hub_url": "https://hub.docker.com/r/mirotalk/p2p",
-    "dockerfile_url": "https://github.com/miroslavpejic85/mirotalk/blob/master/Dockerfile"
-  },
-  {
-    "name": "MySQL",
-    "url": "",
-    "localdev_url": null,
-    "docker_hub_url": "https://hub.docker.com/_/mysql",
-    "dockerfile_url": "https://github.com/docker-library/mysql/blob/master/innovation/Dockerfile.oracle"
-  },
-  {
-    "name": "Omni Tools",
-    "url": "",
-    "localdev_url": "https://omni-tools.localdev",
-    "docker_hub_url": "https://hub.docker.com/r/iib0011/omni-tools",
-    "dockerfile_url": "https://github.com/iib0011/omni-tools/blob/main/Dockerfile"
-  },
-  {
-    "name": "Planka",
-    "url": "",
-    "localdev_url": "https://planka.localdev",
-    "docker_hub_url": "https://github.com/plankanban/planka/pkgs/container/planka",
-    "dockerfile_url": "https://github.com/plankanban/planka/blob/master/Dockerfile"
-  },
-  {
-    "name": "PostgreSQL",
-    "url": "",
-    "localdev_url": null,
-    "docker_hub_url": "https://hub.docker.com/_/postgres",
-    "dockerfile_url": "https://github.com/docker-library/postgres/blob/master/17/bookworm/Dockerfile"
-  },
-  {
-    "name": "Prometheus",
-    "url": "",
-    "localdev_url": "https://prometheus.localdev",
-    "docker_hub_url": "https://hub.docker.com/r/prom/prometheus",
-    "dockerfile_url": "https://github.com/prometheus/prometheus/blob/main/Dockerfile"
-  },
-  {
-    "name": "RabbitMQ",
-    "url": "",
-    "localdev_url": "https://rabbitmq.localdev",
-    "docker_hub_url": "https://hub.docker.com/_/rabbitmq",
-    "dockerfile_url": "https://github.com/docker-library/rabbitmq/blob/master/4.0/alpine/Dockerfile"
-  },
-  {
-    "name": "Redis",
-    "url": "",
-    "localdev_url": null,
-    "docker_hub_url": "https://hub.docker.com/_/redis",
-    "dockerfile_url": "https://github.com/redis/docker-library-redis/blob/master/7.4/alpine/Dockerfile"
-  },
-  {
-    "name": "Redis Insight",
-    "url": "",
-    "localdev_url": "https://redisinsight.localdev",
-    "docker_hub_url": "https://hub.docker.com/r/redis/redisinsight",
-    "dockerfile_url": "https://github.com/RedisInsight/RedisInsight/blob/main/Dockerfile"
-  },
-  {
-    "name": "Uptime Kuma",
-    "url": "",
-    "localdev_url": "https://uptime-kuma.localdev",
-    "docker_hub_url": "https://hub.docker.com/r/louislam/uptime-kuma",
-    "dockerfile_url": "https://github.com/louislam/uptime-kuma/blob/master/docker/dockerfile"
-  },
-  {
-    "name": "What's up Docker?",
-    "url": "",
-    "localdev_url": "https://whatsupdocker.localdev",
-    "docker_hub_url": "https://hub.docker.com/r/getwud/wud",
-    "dockerfile_url": "https://github.com/getwud/wud/blob/main/Dockerfile"
-  },
-  {
-    "name": "cAdvisor",
-    "url": "",
-    "localdev_url": "https://cadvisor.localdev",
-    "docker_hub_url": "https://hub.docker.com/r/google/cadvisor",
-    "dockerfile_url": "https://github.com/google/cadvisor/blob/master/deploy/Dockerfile"
-  },
-  {
-    "name": "GeoServer",
-    "url": "",
-    "localdev_url": "https://geoserver.localdev",
-    "docker_hub_url": "https://docker.osgeo.org/#browse/browse:geoserver-docker",
-    "dockerfile_url": "https://github.com/geoserver/docker/blob/master/Dockerfile"
-  },
-  {
-    "name": "GitLab",
-    "url": "",
-    "localdev_url": "https://gitlab.localdev",
-    "docker_hub_url": "https://hub.docker.com/r/gitlab/gitlab-ce/",
-    "dockerfile_url": null
-  },
-  {
-    "name": "homepage",
-    "url": "",
-    "localdev_url": "https://homepage.localdev",
-    "docker_hub_url": "https://hub.docker.com/r/gethomepage/homepage",
-    "dockerfile_url": "https://github.com/gethomepage/homepage/blob/dev/Dockerfile"
-  },
-  {
-    "name": "mongo-express",
-    "url": "",
-    "localdev_url": "https://mongo-express.localdev",
+    "dependencies": [
+      {
+        "description": "MongoDB is a document database with the scalability and flexibility that you want with the querying and indexing that you need",
+        "docker_hub_url": "https://hub.docker.com/_/mongo",
+        "dockerfile_url": "https://github.com/docker-library/mongo/blob/master/8.0/Dockerfile",
+        "localdev_url": null,
+        "name": "MongoDB",
+        "url": "https://www.mongodb.com"
+      }
+    ],
+    "description": "Web-based MongoDB admin interface, written with Node.js and Express",
     "docker_hub_url": "https://hub.docker.com/_/mongo-express",
-    "dockerfile_url": "https://github.com/mongo-express/mongo-express/blob/master/Dockerfile"
+    "dockerfile_url": "https://github.com/mongo-express/mongo-express/blob/master/Dockerfile",
+    "localdev_url": "https://mongo-express.localdev",
+    "name": "mongo-express",
+    "url": "https://github.com/mongo-express/mongo-express"
   },
   {
-    "name": "ownCloud",
-    "url": "",
-    "localdev_url": "https://owncloud.localdev",
-    "docker_hub_url": "https://hub.docker.com/r/owncloud/server/",
-    "dockerfile_url": "https://github.com/owncloud-docker/server/blob/master/v20.04/Dockerfile.multiarch"
+    "description": "WebRTC - P2P - Simple, Secure, Fast Real-Time Video Conferences Up to 8k and 60fps, compatible with all browsers and platforms",
+    "docker_hub_url": "https://hub.docker.com/r/mirotalk/p2p",
+    "dockerfile_url": "https://github.com/miroslavpejic85/mirotalk/blob/master/Dockerfile",
+    "localdev_url": "https://mirotalk.localdev",
+    "name": "MiroTalk",
+    "url": "https://p2p.mirotalk.com"
   },
   {
-    "name": "pgadmin4",
-    "url": "",
-    "localdev_url": "https://pgadmin4.localdev",
-    "docker_hub_url": "https://hub.docker.com/r/dpage/pgadmin4",
-    "dockerfile_url": "https://github.com/pgadmin-org/pgadmin4/blob/master/Dockerfile"
-  },
-  {
-    "name": "phpMyAdmin",
-    "url": "",
-    "localdev_url": "https://phpmyadmin.localdev",
+    "dependencies": [
+      {
+        "description": "MySQL is the world's most popular open source database",
+        "docker_hub_url": "https://hub.docker.com/_/mysql",
+        "dockerfile_url": "https://github.com/docker-library/mysql/blob/master/innovation/Dockerfile.oracle",
+        "localdev_url": null,
+        "name": "MySQL",
+        "url": "https://www.mysql.com"
+      }
+    ],
+    "description": "A web interface for MySQL and MariaDB",
     "docker_hub_url": "https://hub.docker.com/_/phpmyadmin",
-    "dockerfile_url": "https://github.com/phpmyadmin/docker/blob/master/apache/Dockerfile"
+    "dockerfile_url": "https://github.com/phpmyadmin/docker/blob/master/apache/Dockerfile",
+    "localdev_url": "https://phpmyadmin.localdev",
+    "name": "phpMyAdmin",
+    "url": "https://www.phpmyadmin.net"
+  },
+  {
+    "description": "Self-hosted collection of powerful web-based tools for everyday tasks. No ads, no tracking, just fast, accessible utilities right from your browser!",
+    "docker_hub_url": "https://hub.docker.com/r/iib0011/omni-tools",
+    "dockerfile_url": "https://github.com/iib0011/omni-tools/blob/main/Dockerfile",
+    "localdev_url": "https://omni-tools.localdev",
+    "name": "Omni Tools",
+    "url": "https://omnitools.app"
+  },
+  {
+    "description": "PLANKA is the kanban-style project mastering tool for everyone",
+    "docker_hub_url": "https://github.com/plankanban/planka/pkgs/container/planka",
+    "dockerfile_url": "https://github.com/plankanban/planka/blob/master/Dockerfile",
+    "localdev_url": "https://planka.localdev",
+    "name": "Planka",
+    "url": "https://docs.planka.cloud/docs/welcome"
+  },
+  {
+    "dependencies": [
+      {
+        "description": "PostgreSQL is a powerful, open source object-relational database system with over 35 years of active development that has earned it a strong reputation for reliability, feature robustness, and performance",
+        "docker_hub_url": "https://hub.docker.com/_/postgres",
+        "dockerfile_url": "https://github.com/docker-library/postgres/blob/master/17/bookworm/Dockerfile",
+        "localdev_url": null,
+        "name": "PostgreSQL",
+        "url": "https://www.postgresql.org"
+      }
+    ],
+    "description": "pgAdmin is the most popular and feature rich Open Source administration and development platform for PostgreSQL, the most advanced Open Source database in the world",
+    "docker_hub_url": "https://hub.docker.com/r/dpage/pgadmin4",
+    "dockerfile_url": "https://github.com/pgadmin-org/pgadmin4/blob/master/Dockerfile",
+    "localdev_url": "https://pgadmin4.localdev",
+    "name": "pgadmin4",
+    "url": "https://www.pgadmin.org"
+  },
+  {
+    "description": "The Prometheus monitoring system and time series database",
+    "docker_hub_url": "https://hub.docker.com/r/prom/prometheus",
+    "dockerfile_url": "https://github.com/prometheus/prometheus/blob/main/Dockerfile",
+    "localdev_url": "https://prometheus.localdev",
+    "name": "Prometheus",
+    "url": "https://prometheus.io"
+  },
+  {
+    "description": "RabbitMQ is a reliable and mature messaging and streaming broker, which is easy to deploy on cloud environments, on-premises, and on your local machine. It is currently used by millions worldwide",
+    "docker_hub_url": "https://hub.docker.com/_/rabbitmq",
+    "dockerfile_url": "https://github.com/docker-library/rabbitmq/blob/master/4.0/alpine/Dockerfile",
+    "localdev_url": "https://rabbitmq.localdev",
+    "name": "RabbitMQ",
+    "url": "https://www.rabbitmq.com"
+  },
+  {
+    "dependencies": [
+      {
+        "description": "Redis is the world's fastest in-memory database",
+        "docker_hub_url": "https://hub.docker.com/_/redis",
+        "dockerfile_url": "https://github.com/redis/docker-library-redis/blob/master/7.4/alpine/Dockerfile",
+        "localdev_url": null,
+        "name": "Redis",
+        "url": "https://redis.io"
+      }
+    ],
+    "description": "Redis GUI by Redis",
+    "docker_hub_url": "https://hub.docker.com/r/redis/redisinsight",
+    "dockerfile_url": "https://github.com/RedisInsight/RedisInsight/blob/main/Dockerfile",
+    "localdev_url": "https://redisinsight.localdev",
+    "name": "Redis Insight",
+    "url": "https://redis.io/insight"
+  },
+  {
+    "description": " Afancy self-hosted monitoring tool",
+    "docker_hub_url": "https://hub.docker.com/r/louislam/uptime-kuma",
+    "dockerfile_url": "https://github.com/louislam/uptime-kuma/blob/master/docker/dockerfile",
+    "localdev_url": "https://uptime-kuma.localdev",
+    "name": "Uptime Kuma",
+    "url": "https://uptime.kuma.pet"
+  },
+  {
+    "description": "Keep your containers up-to-date!",
+    "docker_hub_url": "https://hub.docker.com/r/getwud/wud",
+    "dockerfile_url": "https://github.com/getwud/wud/blob/main/Dockerfile",
+    "localdev_url": "https://whatsupdocker.localdev",
+    "name": "What's up Docker?",
+    "url": "https://getwud.github.io/wud/#"
+  },
+  {
+    "description": "Analyzes resource usage and performance characteristics of running containers",
+    "docker_hub_url": "https://hub.docker.com/r/google/cadvisor",
+    "dockerfile_url": "https://github.com/google/cadvisor/blob/master/deploy/Dockerfile",
+    "localdev_url": "https://cadvisor.localdev",
+    "name": "cAdvisor",
+    "url": "https://github.com/google/cadvisor"
+  },
+  {
+    "dependencies": [
+      {
+        "description": "PostGIS extends the capabilities of the PostgreSQL relational database by adding support for storing, indexing, and querying geospatial data",
+        "docker_hub_url": "https://hub.docker.com/r/postgis/postgis",
+        "dockerfile_url": "https://github.com/postgis/docker-postgis/blob/master/17-3.5/Dockerfile",
+        "localdev_url": null,
+        "name": "Postgres with PostGIS",
+        "url": "https://postgis.net"
+      }
+    ],
+    "description": "GeoServer is an open source server for sharing geospatial data",
+    "docker_hub_url": "https://docker.osgeo.org/#browse/browse:geoserver-docker",
+    "dockerfile_url": "https://github.com/geoserver/docker/blob/master/Dockerfile",
+    "localdev_url": "https://geoserver.localdev",
+    "name": "GeoServer",
+    "url": "https://geoserver.org"
+  },
+  {
+    "dependencies": [
+      {
+        "docker_hub_url": "https://hub.docker.com/r/gitlab/gitlab-runner",
+        "dockerfile_url": "https://gitlab.com/gitlab-org/gitlab-runner/-/blob/main/dockerfiles/runner/Dockerfile",
+        "localdev_url": "",
+        "name": "GitLab Runner",
+        "url": "https://gitlab.com/gitlab-org/gitlab-runner"
+      }
+    ],
+    "docker_hub_url": "https://hub.docker.com/r/gitlab/gitlab-ce",
+    "dockerfile_url": "https://gitlab.com/gitlab-org/gitlab/-/blob/master/Dockerfile.assets",
+    "localdev_url": "https://gitlab.localdev",
+    "name": "GitLab",
+    "url": "https://about.gitlab.com"
+  },
+  {
+    "description": "A highly customizable homepage (or startpage / application dashboard) with Docker and service API integrations",
+    "docker_hub_url": "https://hub.docker.com/r/gethomepage/homepage",
+    "dockerfile_url": "https://github.com/gethomepage/homepage/blob/dev/Dockerfile",
+    "localdev_url": "https://homepage.localdev",
+    "name": "homepage",
+    "url": "https://gethomepage.dev"
+  },
+  {
+    "description": "ownCloud enables you to share and sync data and keep it safe at the same time, on all platforms",
+    "docker_hub_url": "https://hub.docker.com/r/owncloud/server",
+    "dockerfile_url": "https://github.com/owncloud-docker/server/blob/master/v20.04/Dockerfile.multiarch",
+    "localdev_url": "https://owncloud.localdev",
+    "name": "ownCloud",
+    "url": "https://owncloud.com"
   }
 ]

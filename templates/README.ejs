@@ -1,0 +1,8 @@
+<%- include('partials/header.ejs'); -%>
+
+## List of available services
+<% services.sort(sortServices).forEach(function(service){ %>
+<%- `- ${service.name}` -%>
+<% }); -%>
+
+<%- include('partials/footer.ejs'); -%>
