@@ -2,7 +2,8 @@
 
 ## List of available services
 <% services.sort(sortServices).forEach(function(service){ %>
-<%- `- ${service.name}` -%>
+<%- `- [${service.name}](${service.localdev_url}): ${service.description} [<i class="fa-brands fa-docker" title="Docker Hub"></i>](${service.docker_hub_url}) [<i class="fa fa-file-code" title="Dockerfile"></i>](${service.dockerfile_url})` -%>
 <% }); -%>
+
 
 <%- include('partials/footer.ejs'); -%>

@@ -1,128 +1,158 @@
 #!/bin/bash
+# shellcheck disable=SC2046
 set -eu 
 
-cd ~/Projects/services
-( set -a; source .env; set +a;
-docker network create "$NGINX_PROXY_NETWORK" )
+set -a
+# shellcheck disable=SC1091
+source .env
+set +a
 
+reset_docker() {
+    docker stop $(docker ps -aq) 
+    docker rm -v $(docker ps -aq)
+    docker network prune -f
+    docker volume rm $(docker volume ls -q)
 
-cd ~/Projects/services
+    # docker image prune -a -f
+    # docker builder prune -a -f
+
+    # docker system prune -a --volumes -f
+
+    # docker image ls -a \
+    #     && docker container ls -a \
+    #     && docker volume ls \
+    #     && docker network ls
+}
+
+create_docker_network() {
+  local name="$1"
+  if ! docker network inspect "${name}" >/dev/null 2>&1; then
+    docker network create "${name}"
+  fi
+}
+
+# Create docker networks
+create_docker_network "$BITWARDEN_NETWORK"
+create_docker_network "$CADVISOR_NETWORK"
+create_docker_network "$GEOSERVER_NETWORK"
+create_docker_network "$GITLAB_NETWORK"
+create_docker_network "$GRAFANA_NETWORK"
+create_docker_network "$HEALTHCHECKS_NETWORK"
+create_docker_network "$KIMAI_NETWORK"
+create_docker_network "$LINKWARDEN_NETWORK"
+create_docker_network "$MAILPIT_NETWORK"
+create_docker_network "$MINIO_NETWORK"
+create_docker_network "$MONGO_NETWORK"
+create_docker_network "$MYSQL_NETWORK"
+create_docker_network "$NGINX_PROXY_NETWORK"
+create_docker_network "$OWNCLOUD_NETWORK"
+create_docker_network "$PLANKA_NETWORK"
+create_docker_network "$POSTGRES_NETWORK"
+create_docker_network "$PROMETHEUS_NETWORK"
+create_docker_network "$RABBITMQ_NETWORK"
+create_docker_network "$REDIS_NETWORK"
+
+# AdGuard Home
+./generate-cert.sh adguardhome.localdev
+
+# Bitwarden
+./generate-cert.sh bitwarden.localdev
+
+# cAdvisor
 ./generate-cert.sh cadvisor.localdev
 ./generate-htpasswd.sh cadvisor.localdev
 
-
-cd ~/Projects/services
+# GeoServer
 ./generate-cert.sh geoserver.localdev
 
+# GitLab
+./generate-cert.sh gitlab.localdev
 
-cd ~/Projects/services
+# Grafana
 ./generate-cert.sh grafana.localdev
 
+# Healthchecks
+./generate-cert.sh healthchecks.localdev
 
-cd ~/Projects/services
+# homepage
 ./generate-cert.sh homepage.localdev
 ./generate-htpasswd.sh homepage.localdev
 
-
-cd ~/Projects/services
+# IT - TOOLS
 ./generate-cert.sh it-tools.localdev
 ./generate-htpasswd.sh it-tools.localdev
 
-cd ~/Projects/services
+# Kimai
+./generate-cert.sh kimai.localdev
+
+# Linkwarden
+./generate-cert.sh linkwarden.localdev
+
+# Mailpit
 ./generate-cert.sh mailpit.localdev
 
-cd ~/Projects/services
+# MinIO
 ./generate-cert.sh minio.localdev
 
+# MiroTalk
+./generate-cert.sh mirotalk.localdev
 
-cd ~/Projects/services
+# mongo-express
 ./generate-cert.sh mongo-express.localdev
 
-cd ~/Projects/services/mongo
-openssl rand -base64 756 > keyfile
-chmod 400 keyfile
-sudo chown 999:999 keyfile
+[ -f "./services/mongo/keyfile" ] || (
+  cd "./services/mongo"
+  openssl rand -base64 756 > "./keyfile"
+  chmod 400 "./keyfile"
+  sudo chown 999:999 "./keyfile"
+)
 
+# nginx-proxy
 
-cd ~/Projects/services
-./generate-cert.sh phpmyadmin.localdev
-./generate-secret.sh MYSQL_ROOT_PASSWORD
-USE_DEV_PASSWORD=true ./generate-secret.sh MYSQL_DEV_PASSWORD
-
-cd ~/Projects/services
+# Omni Tools
 ./generate-cert.sh omni-tools.localdev
 
+# ownCloud
+./generate-cert.sh owncloud.localdev
 
-cd ~/Projects/services
-./generate-cert.sh planka.localdev
-
-
-cd ~/Projects/services
-./generate-cert.sh prometheus.localdev
-./generate-htpasswd.sh prometheus.localdev
-
-
-cd ~/Projects/services
+# pgadmin4
 ./generate-cert.sh pgadmin4.localdev
 ./generate-secret.sh POSTGRES_PASSWORD
 USE_DEV_PASSWORD=true ./generate-secret.sh POSTGRES_DEV_PASSWORD
 
+# phpmyadmin
+./generate-cert.sh phpmyadmin.localdev
+./generate-secret.sh MYSQL_ROOT_PASSWORD
+USE_DEV_PASSWORD=true ./generate-secret.sh MYSQL_DEV_PASSWORD
 
-cd ~/Projects/services
+# Planka
+./generate-cert.sh planka.localdev
+
+# Prometheus
+./generate-cert.sh prometheus.localdev
+./generate-htpasswd.sh prometheus.localdev
+
+# RabbitMQ
 ./generate-cert.sh rabbitmq.localdev
 
-
-cd ~/Projects/services
+# Redis Insight
 ./generate-cert.sh redisinsight.localdev
 ./generate-htpasswd.sh redisinsight.localdev
 
+# Uptime Kuma
+./generate-cert.sh uptime-kuma.localdev
 
-cd ~/Projects/services
+# What's up Docker?
 ./generate-cert.sh whatsupdocker.localdev
 ./generate-htpasswd.sh whatsupdocker.localdev
 
-
-cd ~/Projects/services
-./generate-cert.sh adguardhome.localdev
-
-
-cd ~/Projects/services
-./generate-cert.sh bitwarden.localdev
-
-
-cd ~/Projects/services
-./generate-cert.sh gitlab.localdev
-
-
-cd ~/Projects/services
-./generate-cert.sh healthchecks.localdev
-
-
-cd ~/Projects/services
-./generate-cert.sh mirotalk.localdev
-
-
-cd ~/Projects/services
-./generate-cert.sh kimai.localdev
-
-
-cd ~/Projects/services
-./generate-cert.sh linkwarden.localdev
-
-
-cd ~/Projects/services
-./generate-cert.sh owncloud.localdev
-
-
-cd ~/Projects/services
-./generate-cert.sh uptime-kuma.localdev
-
-
-cd ~/Projects/services
+# Start services
 docker compose up -d
 
-docker compose exec mongo mongosh -u developer --eval 'rs.initiate({ _id: "rs0", members: [{ _id: 0, host: "mongo:27017" }] })'
-
-docker compose exec mysql mysql -uroot -p"${MYSQL_ROOT_PASSWORD}" -e "GRANT CREATE, ALTER, DROP ON *.* TO 'developer'@'%'; FLUSH PRIVILEGES"
-
-docker compose exec healthchecks /opt/healthchecks/manage.py createsuperuser
+docker compose exec mongo mongosh -u "$DEV_USER" -p "$DEV_PASSWORD" --eval '
+if (rs.status().ok === 0) {
+  rs.initiate({ _id: "rs0", members: [{ _id: 0, host: "mongo:27017" }] });
+}
+'
+# TODO: add command for creating the user
+# docker compose exec healthchecks /opt/healthchecks/manage.py createsuperuser
