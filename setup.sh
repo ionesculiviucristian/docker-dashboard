@@ -31,6 +31,9 @@ create_docker_network() {
   fi
 }
 
+# Install local certificate authority (CA)
+mkcert -install
+
 # Create docker networks
 create_docker_network "$BITWARDEN_NETWORK"
 create_docker_network "$CADVISOR_NETWORK"
@@ -118,12 +121,12 @@ create_docker_network "$REDIS_NETWORK"
 # pgadmin4
 ./generate-cert.sh pgadmin4.localdev
 ./generate-secret.sh POSTGRES_PASSWORD
-USE_DEV_PASSWORD=true ./generate-secret.sh POSTGRES_DEV_PASSWORD
+./generate-secret.sh POSTGRES_DEV_PASSWORD --secret "${DEV_PASSWORD}"
 
 # phpmyadmin
 ./generate-cert.sh phpmyadmin.localdev
 ./generate-secret.sh MYSQL_ROOT_PASSWORD
-USE_DEV_PASSWORD=true ./generate-secret.sh MYSQL_DEV_PASSWORD
+./generate-secret.sh MYSQL_DEV_PASSWORD --secret "${DEV_PASSWORD}"
 
 # Planka
 ./generate-cert.sh planka.localdev

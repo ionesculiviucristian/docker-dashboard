@@ -7,30 +7,7 @@
 [Install mkcert](https://github.com/FiloSottile/mkcert?tab=readme-ov-file#linux)
 
 ```bash
-mkcert -install
 
-sudo pacman -Syu dnsmasq
-
-sudo systemctl disable systemd-resolved
-sudo systemctl stop systemd-resolved
-
-echo "[main]" | sudo tee -a /etc/NetworkManager/NetworkManager.conf
-echo "dns=none" | sudo tee -a /etc/NetworkManager/NetworkManager.conf
-echo "rc-manager=unmanaged" | sudo tee -a /etc/NetworkManager/NetworkManager.conf
-sudo systemctl restart NetworkManager
-
-ls -lh /etc/resolv.conf
-sudo rm /etc/resolv.conf
-
-echo "nameserver 127.0.0.1" | sudo tee -a /etc/resolv.conf
-echo "nameserver 1.1.1.1" | sudo tee -a /etc/resolv.conf
-
-sudo mkdir /etc/resolver
-
-echo "address=/.localdev/127.0.0.1" | sudo tee -a /etc/dnsmasq.conf
-echo "listen-address=127.0.0.1" | sudo tee -a /etc/dnsmasq.conf
-echo "nameserver 127.0.0.1" | sudo tee -a /etc/resolver/localdev
-sudo systemctl restart dnsmasq
 ```
 
 ```bash
