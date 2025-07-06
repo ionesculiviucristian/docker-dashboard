@@ -118,10 +118,10 @@
               label: "Total"
             - field: "unread"
               label: "Unread"
-          password: "{{HOMEPAGE_VAR_DEV_PASSWORD}}"
+          password: "{{HOMEPAGE_VAR_SERVICES_USER_PASSWORRD}}"
           type: "customapi"
           url: "http://mailpit:8025/api/v1/messages"
-          username: "{{HOMEPAGE_VAR_DEV_USER}}"
+          username: "{{HOMEPAGE_VAR_SERVICES_USER}}"
     - MinIO:
         container: "dev-minio-1"
         description: "MinIO is a High Performance Object Storage. It is API compatible with Amazon S3 cloud storage service"

@@ -8,8 +8,8 @@ networks:
 services:
   mysql:
     environment:
-      MYSQL_DEV_PASSWORD_FILE: "/run/secrets/MYSQL_DEV_PASSWORD"
-      MYSQL_DEV_USER: "${MYSQL_DEV_USER:?err}"
+      MYSQL_SERVICES_USER_PASSWORRD_FILE: "/run/secrets/MYSQL_SERVICES_USER_PASSWORRD"
+      MYSQL_SERVICES_USER: "${MYSQL_SERVICES_USER:?err}"
       MYSQL_ROOT_PASSWORD_FILE: "/run/secrets/MYSQL_ROOT_PASSWORD"
       TZ: "${TZ:?err}"
     image: "mysql:${MYSQL_VERSION:?err}"
@@ -19,7 +19,7 @@ services:
       - "mysql"
     restart: "unless-stopped"
     secrets:
-      - "MYSQL_DEV_PASSWORD"
+      - "MYSQL_SERVICES_USER_PASSWORRD"
       - "MYSQL_ROOT_PASSWORD"
     ulimits:
       nofile:

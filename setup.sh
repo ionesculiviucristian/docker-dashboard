@@ -121,12 +121,12 @@ create_docker_network "$REDIS_NETWORK"
 # pgadmin4
 ./generate-cert.sh pgadmin4.localdev
 ./generate-secret.sh POSTGRES_PASSWORD
-./generate-secret.sh POSTGRES_DEV_PASSWORD --secret "${DEV_PASSWORD}"
+./generate-secret.sh POSTGRES_SERVICES_USER_PASSWORRD --secret "${SERVICES_USER_PASSWORRD}"
 
 # phpmyadmin
 ./generate-cert.sh phpmyadmin.localdev
 ./generate-secret.sh MYSQL_ROOT_PASSWORD
-./generate-secret.sh MYSQL_DEV_PASSWORD --secret "${DEV_PASSWORD}"
+./generate-secret.sh MYSQL_SERVICES_USER_PASSWORRD --secret "${SERVICES_USER_PASSWORRD}"
 
 # Planka
 ./generate-cert.sh planka.localdev
@@ -152,7 +152,7 @@ create_docker_network "$REDIS_NETWORK"
 # Start services
 docker compose up -d
 
-docker compose exec mongo mongosh -u "$DEV_USER" -p "$DEV_PASSWORD" --eval '
+docker compose exec mongo mongosh -u "$SERVICES_USER" -p "$SERVICES_USER_PASSWORRD" --eval '
 if (rs.status().ok === 0) {
   rs.initiate({ _id: "rs0", members: [{ _id: 0, host: "mongo:27017" }] });
 }

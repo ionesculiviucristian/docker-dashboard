@@ -8,8 +8,8 @@ networks:
 services:
   postgres:
     environment:
-      POSTGRES_DEV_PASSWORD: "/run/secrets/POSTGRES_DEV_PASSWORD"
-      POSTGRES_DEV_USER: "${POSTGRES_DEV_USER:?err}"
+      POSTGRES_SERVICES_USER_PASSWORRD: "/run/secrets/POSTGRES_SERVICES_USER_PASSWORRD"
+      POSTGRES_SERVICES_USER: "${POSTGRES_SERVICES_USER:?err}"
       POSTGRES_PASSWORD_FILE: "/run/secrets/POSTGRES_PASSWORD"
       TZ: "${TZ:?err}"
     image: "postgres:${POSTGRES_VERSION:?err}"
@@ -19,7 +19,7 @@ services:
       - "postgres"
     restart: "unless-stopped"
     secrets:
-      - "POSTGRES_DEV_PASSWORD"
+      - "POSTGRES_SERVICES_USER_PASSWORRD"
       - "POSTGRES_PASSWORD"
     shm_size: "256m"
     volumes:
@@ -30,7 +30,7 @@ services:
       - "postgres"
     environment:
       PGADMIN_DEFAULT_EMAIL: "${POSTGRES_PGADMIN4_PGADMIN_DEFAULT_EMAIL:?err}"
-      PGADMIN_DEFAULT_PASSWORD_FILE: "/run/secrets/POSTGRES_DEV_PASSWORD"
+      PGADMIN_DEFAULT_PASSWORD_FILE: "/run/secrets/POSTGRES_SERVICES_USER_PASSWORRD"
       TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${POSTGRES_PGADMIN4_VIRTUAL_HOST:?err}"
     image: "dpage/pgadmin4:${POSTGRES_PGADMIN4_PGADMIN_VERSION:?err}"
@@ -41,7 +41,7 @@ services:
       - "postgres"
     restart: "unless-stopped"
     secrets:
-      - "POSTGRES_DEV_PASSWORD"
+      - "POSTGRES_SERVICES_USER_PASSWORRD"
     volumes:
       - "${PWD}/services/postgres/pgadmin4/preferences.json:/pgadmin4/preferences.json:ro"
       - "${PWD}/services/postgres/pgadmin4/servers.json:/pgadmin4/servers.json:ro"

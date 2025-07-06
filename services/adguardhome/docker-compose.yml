@@ -13,6 +13,9 @@ services:
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
     networks:
       - "nginx-proxy"
+    ports:
+      - "5353:53/tcp"
+      - "5353:53/udp"
     restart: "unless-stopped"
     volumes:
       - "adguardhome-conf:/opt/adguardhome/conf"
