@@ -6,7 +6,7 @@ networks:
     external: true
     name: "${NGINX_PROXY_NETWORK:?err}"
   prometheus:
-    driver: "bridge"
+    external: true
     name: "${PROMETHEUS_NETWORK:?err}"
 services:
   prometheus:

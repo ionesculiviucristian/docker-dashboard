@@ -1,6 +1,6 @@
 networks:
   mailpit:
-    driver: "bridge"
+    external: true
     name: "${MAILPIT_NETWORK:?err}"
   nginx-proxy:
     external: true

@@ -3,7 +3,7 @@ networks:
     external: true
     name: "${NGINX_PROXY_NETWORK:?err}"
   planka:
-    driver: "bridge"
+    external: true
     name: "${PLANKA_NETWORK:?err}"
 services:
   planka:

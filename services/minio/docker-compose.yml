@@ -1,12 +1,18 @@
 networks:
   minio:
-    driver: "bridge"
+    external: true
     name: "${MINIO_NETWORK:?err}"
   nginx-proxy:
     external: true
     name: "${NGINX_PROXY_NETWORK:?err}"
 services:
   minio:
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "60s"
+      test: "mc ready local || exit 1"
+      timeout: "10s"
     command: "server /data --console-address ':9001'"
     environment:
       MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD:?err}"

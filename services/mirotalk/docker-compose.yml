@@ -12,6 +12,12 @@ services:
       TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${MIROTALK_VIRTUAL_HOST:?err}"
       VIRTUAL_PORT: "${MIROTALK_VIRTUAL_PORT:?err}"
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "60s"
+      test: "wget --no-verbose --tries=1 --spider http://localhost:3000 || exit 1"
+      timeout: "10s"
     image: "mirotalk/p2p:${MIROTALK_VERSION:?err}"
     labels:
       wud.tag.include: "latest"

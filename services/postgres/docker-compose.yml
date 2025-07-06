@@ -3,14 +3,20 @@ networks:
     external: true
     name: "${NGINX_PROXY_NETWORK:?err}"
   postgres:
-    driver: "bridge"
+    external: true
     name: "${POSTGRES_NETWORK:?err}"
 services:
   postgres:
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "60s"
+      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"]
+      timeout: "10s"
     environment:
       POSTGRES_SERVICES_USER_PASSWORRD: "/run/secrets/POSTGRES_SERVICES_USER_PASSWORRD"
       POSTGRES_SERVICES_USER: "${POSTGRES_SERVICES_USER:?err}"
-      POSTGRES_PASSWORD_FILE: "/run/secrets/POSTGRES_PASSWORD"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:?err}"
       TZ: "${TZ:?err}"
     image: "postgres:${POSTGRES_VERSION:?err}"
     labels:
@@ -18,9 +24,6 @@ services:
     networks:
       - "postgres"
     restart: "unless-stopped"
-    secrets:
-      - "POSTGRES_SERVICES_USER_PASSWORRD"
-      - "POSTGRES_PASSWORD"
     shm_size: "256m"
     volumes:
       - "${PWD}/services/postgres/postgres/initdb:/docker-entrypoint-initdb.d:ro"
@@ -30,7 +33,7 @@ services:
       - "postgres"
     environment:
       PGADMIN_DEFAULT_EMAIL: "${POSTGRES_PGADMIN4_PGADMIN_DEFAULT_EMAIL:?err}"
-      PGADMIN_DEFAULT_PASSWORD_FILE: "/run/secrets/POSTGRES_SERVICES_USER_PASSWORRD"
+      PGADMIN_DEFAULT_PASSWORD: "/run/secrets/POSTGRES_SERVICES_USER_PASSWORRD"
       TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${POSTGRES_PGADMIN4_VIRTUAL_HOST:?err}"
     image: "dpage/pgadmin4:${POSTGRES_PGADMIN4_PGADMIN_VERSION:?err}"
@@ -40,8 +43,6 @@ services:
       - "nginx-proxy"
       - "postgres"
     restart: "unless-stopped"
-    secrets:
-      - "POSTGRES_SERVICES_USER_PASSWORRD"
     volumes:
       - "${PWD}/services/postgres/pgadmin4/preferences.json:/pgadmin4/preferences.json:ro"
       - "${PWD}/services/postgres/pgadmin4/servers.json:/pgadmin4/servers.json:ro"

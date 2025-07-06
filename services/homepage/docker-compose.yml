@@ -8,13 +8,17 @@ networks:
 services:
   homepage:
     environment:
-      HOMEPAGE_ALLOWED_HOSTS: "${HOMEPAGE_HOMEPAGE_ALLOWED_HOSTS}"
-      HOMEPAGE_VAR_SERVICES_USER_PASSWORRD: "${SERVICES_USER_PASSWORRD:?err}"
+      HOMEPAGE_ALLOWED_HOSTS: "${HOMEPAGE_VIRTUAL_HOST}"
       HOMEPAGE_VAR_SERVICES_USER: "${SERVICES_USER:?err}"
-      # HOMEPAGE_VAR_GILAB_TOKEN: "${HOMEPAGE_VAR_GILAB_TOKEN:?err}"
-      # HOMEPAGE_VAR_GILAB_USER_ID: "${HOMEPAGE_VAR_GILAB_USER_ID:?err}"
+      HOMEPAGE_VAR_SERVICES_USER_PASSWORRD: "${SERVICES_USER_PASSWORRD:?err}"
       TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${HOMEPAGE_VIRTUAL_HOST:?err}"
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "60s"
+      test: "wget --no-verbose --tries=1 --spider http://0.0.0.0:3000 || exit 1"
+      timeout: "10s"
     image: "ghcr.io/gethomepage/homepage:${HOMEPAGE_VERSION:?err}"
     labels:
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"

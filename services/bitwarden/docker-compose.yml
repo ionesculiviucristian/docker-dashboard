@@ -1,6 +1,6 @@
 networks:
   bitwarden:
-    driver: "bridge"
+    external: true
     name: "${BITWARDEN_NETWORK:?err}"
   nginx-proxy:
     external: true
@@ -10,17 +10,23 @@ services:
     depends_on:
       - "bitwarden-postgres"
     environment:
-      BW_DB_DATABASE: "${BITWARDEN_BW_DB_DATABASE:?err}"
-      BW_DB_PASSWORD: "${BITWARDEN_BW_DB_PASSWORD:?err}"
-      BW_DB_PROVIDER: "${BITWARDEN_BW_DB_PROVIDER:?err}"
-      BW_DB_SERVER: "${BITWARDEN_BW_DB_SERVER:?err}"
-      BW_DB_USERNAME: "${BITWARDEN_BW_DB_USERNAME:?err}"
-      BW_DOMAIN: "${BITWARDEN_BW_DOMAIN:?err}"
+      BW_DB_DATABASE: "${BITWARDEN_POSTGRES_DB:?err}"
+      BW_DB_PASSWORD: "${BITWARDEN_POSTGRES_PASSWORD:?err}"
+      BW_DB_PROVIDER: "postgres"
+      BW_DB_SERVER: "bitwarden-postgres"
+      BW_DB_USERNAME: "${BITWARDEN_POSTGRES_USER:?err}"
+      BW_DOMAIN: "${BITWARDEN_VIRTUAL_HOST:?err}"
       BW_INSTALLATION_ID: "${BITWARDEN_BW_INSTALLATION_ID:?err}"
       BW_INSTALLATION_KEY: "${BITWARDEN_BW_INSTALLATION_KEY:?err}"
       TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${BITWARDEN_VIRTUAL_HOST:?err}"
       VIRTUAL_PORT: "${BITWARDEN_VIRTUAL_PORT:?err}"
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "60s"
+      test: "curl -f http://localhost:8080/alive || exit 1"
+      timeout: "10s"
     image: "ghcr.io/bitwarden/self-host:${BITWARDEN_VERSION:?err}"
     labels:
       wud.tag.include: "latest"
@@ -38,6 +44,12 @@ services:
       POSTGRES_PASSWORD: "${BITWARDEN_POSTGRES_PASSWORD:?err}"
       POSTGRES_USER: "${BITWARDEN_POSTGRES_USER:?err}"
       TZ: "${TZ:?err}"
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "60s"
+      test: "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"
+      timeout: "10s"
     image: "postgres:${BITWARDEN_POSTGRES_VERSION:?err}"
     labels:
       wud.tag.include: "^\\d+\\.\\d+$$"

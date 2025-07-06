@@ -3,7 +3,7 @@ networks:
     external: true
     name: "${NGINX_PROXY_NETWORK:?err}"
   owncloud:
-    driver: "bridge"
+    external: true
     name: "${OWNCLOUD_NETWORK:?err}"
 services:
   owncloud:

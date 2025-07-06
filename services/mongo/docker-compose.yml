@@ -1,6 +1,6 @@
 networks:
   mongo:
-    driver: "bridge"
+    external: true
     name: "${MONGO_NETWORK:?err}"
   nginx-proxy:
     external: true
@@ -28,7 +28,7 @@ services:
         hard: 64000
         soft: 64000
     volumes:
-      - "${PWD}/services/mongo/backups:/backups:ro"
+      - "${PWD}/services/mongo/backups:/data/backups:ro"
       - "${PWD}/services/mongo/keyfile:/data/keyfile:ro"
       - "mongo-config:/data/configdb"
       - "mongo-data:/data/db"
@@ -38,9 +38,9 @@ services:
     environment:
       ME_CONFIG_BASICAUTH_PASSWORD: "${MONGO_ME_CONFIG_BASICAUTH_PASSWORD:?err}"
       ME_CONFIG_BASICAUTH_USERNAME: "${MONGO_ME_CONFIG_BASICAUTH_USERNAME:?err}"
-      ME_CONFIG_MONGODB_ADMINPASSWORD: "${MONGO_ME_CONFIG_MONGODB_ADMINPASSWORD:?err}"
-      ME_CONFIG_MONGODB_ADMINUSERNAME: "${MONGO_ME_CONFIG_MONGODB_ADMINUSERNAME:?err}"
-      ME_CONFIG_MONGODB_SERVER: "${MONGO_ME_CONFIG_MONGODB_SERVER:?err}"
+      ME_CONFIG_MONGODB_ADMINPASSWORD: "${MONGO_INITDB_ROOT_PASSWORD:?err}"
+      ME_CONFIG_MONGODB_ADMINUSERNAME: "${MONGO_INITDB_ROOT_USERNAME:?err}"
+      ME_CONFIG_MONGODB_SERVER: "mongo"
       ME_CONFIG_OPTIONS_EDITORTHEME: "${MONGO_ME_CONFIG_OPTIONS_EDITORTHEME}"
       TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${MONGO_VIRTUAL_HOST:?err}"

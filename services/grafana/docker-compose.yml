@@ -1,6 +1,6 @@
 networks:
   grafana:
-    driver: "bridge"
+    external: true
     name: "${GRAFANA_NETWORK:?err}"
   nginx-proxy:
     external: true
@@ -38,6 +38,12 @@ services:
       POSTGRES_PASSWORD: "${GRAFANA_POSTGRES_PASSWORD:?err}"
       POSTGRES_USER: "${GRAFANA_POSTGRES_USER:?err}"
       TZ: "${TZ:?err}"
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "60s"
+      test: "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"
+      timeout: "10s"
     image: "postgres:${GRAFANA_POSTGRES_VERSION:?err}"
     labels:
       wud.tag.include: "^\\d+\\.\\d+$$"

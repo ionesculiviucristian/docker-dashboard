@@ -6,7 +6,7 @@ networks:
     external: true
     name: "${PROMETHEUS_NETWORK:?err}"
   rabbitmq:
-    driver: "bridge"
+    external: true
     name: "${RABBITMQ_NETWORK:?err}"
 services:
   rabbitmq:

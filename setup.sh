@@ -36,7 +36,6 @@ mkcert -install
 
 # Create docker networks
 create_docker_network "$BITWARDEN_NETWORK"
-create_docker_network "$CADVISOR_NETWORK"
 create_docker_network "$GEOSERVER_NETWORK"
 create_docker_network "$GITLAB_NETWORK"
 create_docker_network "$GRAFANA_NETWORK"
@@ -60,6 +59,7 @@ create_docker_network "$REDIS_NETWORK"
 
 # Bitwarden
 ./generate-cert.sh bitwarden.localdev
+./generate-env-secret.sh BITWARDEN_POSTGRES_PASSWORD
 
 # cAdvisor
 ./generate-cert.sh cadvisor.localdev
@@ -67,15 +67,21 @@ create_docker_network "$REDIS_NETWORK"
 
 # GeoServer
 ./generate-cert.sh geoserver.localdev
+./generate-env-secret.sh GEOSERVER_POSTGIS_PASSWORD
 
 # GitLab
 ./generate-cert.sh gitlab.localdev
 
 # Grafana
 ./generate-cert.sh grafana.localdev
+./generate-env-secret.sh GRAFANA_POSTGRES_PASSWORD
+./generate-env-secret.sh GF_SECURITY_ADMIN_PASSWORD --secret "${SERVICES_USER_PASSWORRD}"
+./generate-env-secret.sh GF_SECURITY_SECRET_KEY --length 128
 
 # Healthchecks
 ./generate-cert.sh healthchecks.localdev
+./generate-env-secret.sh HEALTHCHECKS_POSTGRES_PASSWORD
+./generate-env-secret.sh HEALTHCHECKS_SECRET_KEY --length 128
 
 # homepage
 ./generate-cert.sh homepage.localdev
@@ -87,9 +93,14 @@ create_docker_network "$REDIS_NETWORK"
 
 # Kimai
 ./generate-cert.sh kimai.localdev
+./generate-env-secret.sh KIMAI_MYSQL_PASSWORD
+./generate-env-secret.sh KIMAI_MYSQL_ROOT_PASSWORD
+./generate-env-secret.sh KIMAI_APP_SECRET --length 128
 
 # Linkwarden
 ./generate-cert.sh linkwarden.localdev
+./generate-env-secret.sh LINKWARDEN_POSTGRES_PASSWORD
+./generate-env-secret.sh LINKWARDEN_NEXTAUTH_SECRET --length 128
 
 # Mailpit
 ./generate-cert.sh mailpit.localdev
@@ -102,6 +113,7 @@ create_docker_network "$REDIS_NETWORK"
 
 # mongo-express
 ./generate-cert.sh mongo-express.localdev
+./generate-env-secret.sh MONGO_INITDB_ROOT_PASSWORD
 
 [ -f "./services/mongo/keyfile" ] || (
   cd "./services/mongo"
@@ -120,13 +132,13 @@ create_docker_network "$REDIS_NETWORK"
 
 # pgadmin4
 ./generate-cert.sh pgadmin4.localdev
-./generate-secret.sh POSTGRES_PASSWORD
-./generate-secret.sh POSTGRES_SERVICES_USER_PASSWORRD --secret "${SERVICES_USER_PASSWORRD}"
+./generate-env-secret.sh POSTGRES_PASSWORD
+./generate-env-secret.sh POSTGRES_SERVICES_USER_PASSWORRD --secret "${SERVICES_USER_PASSWORRD}"
 
 # phpmyadmin
 ./generate-cert.sh phpmyadmin.localdev
-./generate-secret.sh MYSQL_ROOT_PASSWORD
-./generate-secret.sh MYSQL_SERVICES_USER_PASSWORRD --secret "${SERVICES_USER_PASSWORRD}"
+./generate-env-secret.sh MYSQL_ROOT_PASSWORD
+./generate-env-secret.sh MYSQL_SERVICES_USER_PASSWORRD --secret "${SERVICES_USER_PASSWORRD}"
 
 # Planka
 ./generate-cert.sh planka.localdev

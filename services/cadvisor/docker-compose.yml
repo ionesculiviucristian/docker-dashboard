@@ -1,7 +1,4 @@
 networks:
-  cadvisor:
-    driver: "bridge"
-    name: "${CADVISOR_NETWORK:?err}"
   nginx-proxy:
     external: true
     name: "${NGINX_PROXY_NETWORK:?err}"
@@ -17,7 +14,6 @@ services:
     labels:
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
     networks:
-      - "cadvisor"
       - "nginx-proxy"
     privileged: true
     restart: "unless-stopped"

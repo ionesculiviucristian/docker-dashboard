@@ -1,6 +1,6 @@
 networks:
   kimai:
-    driver: "bridge"
+    external: true
     name: "${KIMAI_NETWORK:?err}"
   nginx-proxy:
     external: true
@@ -28,6 +28,12 @@ services:
       - "kimai-data:/opt/kimai/var/data"
       - "kimai-plugins:/opt/kimai/var/plugins"
   kimai-mysql:
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "60s"
+      test: "mysqladmin ping -h localhost -u root -p${MYSQL_ROOT_PASSWORD} || exit 1"
+      timeout: "10s"
     environment:
       MYSQL_DATABASE: "${KIMAI_MYSQL_DATABASE:?err}"
       MYSQL_PASSWORD: "${KIMAI_MYSQL_PASSWORD:?err}"

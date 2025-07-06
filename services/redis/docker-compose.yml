@@ -3,7 +3,7 @@ networks:
     external: true
     name: "${NGINX_PROXY_NETWORK:?err}"
   redis:
-    driver: "bridge"
+    external: true
     name: "${REDIS_NETWORK:?err}"
 services:
   redis:

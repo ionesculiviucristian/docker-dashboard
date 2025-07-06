@@ -1,6 +1,6 @@
 networks:
   mysql:
-    driver: "bridge"
+    external: true
     name: "${MYSQL_NETWORK:?err}"
   nginx-proxy:
     external: true
@@ -8,9 +8,7 @@ networks:
 services:
   mysql:
     environment:
-      MYSQL_SERVICES_USER_PASSWORRD_FILE: "/run/secrets/MYSQL_SERVICES_USER_PASSWORRD"
-      MYSQL_SERVICES_USER: "${MYSQL_SERVICES_USER:?err}"
-      MYSQL_ROOT_PASSWORD_FILE: "/run/secrets/MYSQL_ROOT_PASSWORD"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:?err}"
       TZ: "${TZ:?err}"
     image: "mysql:${MYSQL_VERSION:?err}"
     labels:
@@ -18,9 +16,6 @@ services:
     networks:
       - "mysql"
     restart: "unless-stopped"
-    secrets:
-      - "MYSQL_SERVICES_USER_PASSWORRD"
-      - "MYSQL_ROOT_PASSWORD"
     ulimits:
       nofile:
         hard: 102400

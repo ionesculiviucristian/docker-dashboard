@@ -8,6 +8,12 @@ services:
       TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${ADGUARDHOME_VIRTUAL_HOST:?err}"
       VIRTUAL_PORT: "${ADGUARDHOME_VIRTUAL_PORT:?err}"
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "60s"
+      test: "wget --no-verbose --tries=1 --spider http://localhost:3000 || exit 1"
+      timeout: "10s"
     image: "adguard/adguardhome:${ADGUARDHOME_VERSION:?err}"
     labels:
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
@@ -19,7 +25,7 @@ services:
     restart: "unless-stopped"
     volumes:
       - "adguardhome-conf:/opt/adguardhome/conf"
-      - "adguardhome-data:/opt/adguardhome/work"
+      - "adguardhome-work:/opt/adguardhome/work"
 volumes:
   adguardhome-conf: null
-  adguardhome-data: null
+  adguardhome-work: null
