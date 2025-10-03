@@ -39,9 +39,7 @@
         "dockerfile_url": "https://github.com/docker-library/mongo/blob/master/8.0/Dockerfile",
         "localdev_url": null,
         "name": "MongoDB",
-        "url": "https://www.mongodb.com",
-        "environments_url": null,
-        "has_notes": false
+        "url": "https://www.mongodb.com"
       }
     ],
     "description": "Web-based MongoDB admin interface, written with Node.js and Express",
@@ -59,9 +57,7 @@
         "dockerfile_url": "https://github.com/docker-library/mysql/blob/master/innovation/Dockerfile.oracle",
         "localdev_url": null,
         "name": "MySQL",
-        "url": "https://www.mysql.com",
-        "environments_url": null,
-        "has_notes": false
+        "url": "https://www.mysql.com"
       }
     ],
     "description": "A web interface for MySQL and MariaDB",
@@ -77,8 +73,7 @@
     "dockerfile_url": "https://github.com/nginx-proxy/nginx-proxy/blob/main/Dockerfile.debian",
     "localdev_url": null,
     "name": "nginx-proxy",
-    "url": "https://github.com/nginx-proxy/nginx-proxy",
-    "environments_url": "https://github.com/nginx-proxy/nginx-proxy/tree/main/docs"
+    "url": "https://github.com/nginx-proxy/nginx-proxy"
   },
   {
     "description": "Self-hosted collection of powerful web-based tools for everyday tasks. No ads, no tracking, just fast, accessible utilities right from your browser!",
@@ -96,9 +91,7 @@
         "dockerfile_url": "https://github.com/docker-library/postgres/blob/master/17/bookworm/Dockerfile",
         "localdev_url": null,
         "name": "PostgreSQL",
-        "url": "https://www.postgresql.org",
-        "environments_url": null,
-        "has_notes": false
+        "url": "https://www.postgresql.org"
       }
     ],
     "description": "pgAdmin is the most popular and feature rich Open Source administration and development platform for PostgreSQL, the most advanced Open Source database in the world",
@@ -124,9 +117,7 @@
         "dockerfile_url": "https://github.com/redis/docker-library-redis/blob/master/7.4/alpine/Dockerfile",
         "localdev_url": null,
         "name": "Redis",
-        "url": "https://redis.io",
-        "environments_url": null,
-        "has_notes": false
+        "url": "https://redis.io"
       }
     ],
     "description": "Redis GUI by Redis",

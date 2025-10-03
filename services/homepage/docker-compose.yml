@@ -7,9 +7,6 @@ networks:
     name: "${NGINX_PROXY_NETWORK:?err}"
 services:
   homepage:
-    dns:
-      - "1.1.1.1"
-      - "8.8.8.8"
     environment:
       HOMEPAGE_ALLOWED_HOSTS: "${HOMEPAGE_VIRTUAL_HOST}"
       HOMEPAGE_VAR_SERVICES_USER: "${SERVICES_USER:?err}"

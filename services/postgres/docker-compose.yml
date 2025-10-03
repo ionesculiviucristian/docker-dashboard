@@ -15,7 +15,7 @@ services:
       interval: "30s"
       retries: 5
       start_period: "60s"
-      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       timeout: "10s"
     image: "postgres:${POSTGRES_VERSION:?err}"
     labels:
