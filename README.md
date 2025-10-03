@@ -45,27 +45,30 @@ Before running the install script make sure [mkcert](https://github.com/FiloSott
 - [MinIO](https://minio.localdev): MinIO is a high-performance, S3 compatible object store, open sourced under GNU AGPLv3 license
   - [Docker Hub](https://hub.docker.com/r/minio/minio)
   - [Dockerfile](https://github.com/minio/minio/blob/master/Dockerfile)
-- [mongo-express](https://mongo-express.localdev): Web-based MongoDB admin interface, written with Node.js and Express
-  - [Docker Hub](https://hub.docker.com/_/mongo-express)
-  - [Dockerfile](https://github.com/mongo-express/mongo-express/blob/master/Dockerfile)
+- [MongoDB](null): MongoDB is a document database with the scalability and flexibility that you want with the querying and indexing that you need
+  - [Docker Hub](https://hub.docker.com/_/mongo)
+  - [Dockerfile](https://github.com/docker-library/mongo/blob/master/8.0/Dockerfile)
+- [MySQL](null): MySQL is the world's most popular open source database
+  - [Docker Hub](https://hub.docker.com/_/mysql)
+  - [Dockerfile](https://github.com/docker-library/mysql/blob/master/innovation/Dockerfile.oracle)
 - [nginx-proxy](null): Automated Nginx reverse proxy for docker containers
   - [Docker Hub](https://hub.docker.com/r/jwilder/nginx-proxy)
   - [Dockerfile](https://github.com/nginx-proxy/nginx-proxy/blob/main/Dockerfile.debian)
 - [Omni Tools](https://omni-tools.localdev): Self-hosted collection of powerful web-based tools for everyday tasks. No ads, no tracking, just fast, accessible utilities right from your browser!
   - [Docker Hub](https://hub.docker.com/r/iib0011/omni-tools)
   - [Dockerfile](https://github.com/iib0011/omni-tools/blob/main/Dockerfile)
-- [pgadmin4](https://pgadmin4.localdev): pgAdmin is the most popular and feature rich Open Source administration and development platform for PostgreSQL, the most advanced Open Source database in the world
-  - [Docker Hub](https://hub.docker.com/r/dpage/pgadmin4)
-  - [Dockerfile](https://github.com/pgadmin-org/pgadmin4/blob/master/Dockerfile)
-- [phpMyAdmin](https://phpmyadmin.localdev): A web interface for MySQL and MariaDB
-  - [Docker Hub](https://hub.docker.com/_/phpmyadmin)
-  - [Dockerfile](https://github.com/phpmyadmin/docker/blob/master/apache/Dockerfile)
+- [PostgreSQL](null): PostgreSQL is a powerful, open source object-relational database system with over 35 years of active development that has earned it a strong reputation for reliability, feature robustness, and performance
+  - [Docker Hub](https://hub.docker.com/_/postgres)
+  - [Dockerfile](https://github.com/docker-library/postgres/blob/master/17/bookworm/Dockerfile)
+- [prometheus](https://prometheus.localdev): Monitor your applications, systems, and services with the leading open source monitoring solution. Instrument, collect, store, and query your metrics for alerting, dashboarding, and other use cases
+  - [Docker Hub](https://hub.docker.com/r/prom/prometheus)
+  - [Dockerfile](https://github.com/prometheus/prometheus/blob/main/Dockerfile)
 - [RabbitMQ](https://rabbitmq.localdev): RabbitMQ is a reliable and mature messaging and streaming broker, which is easy to deploy on cloud environments, on-premises, and on your local machine. It is currently used by millions worldwide
   - [Docker Hub](https://hub.docker.com/_/rabbitmq)
   - [Dockerfile](https://github.com/docker-library/rabbitmq/blob/master/4.0/alpine/Dockerfile)
-- [Redis Insight](https://redisinsight.localdev): Redis GUI by Redis
-  - [Docker Hub](https://hub.docker.com/r/redis/redisinsight)
-  - [Dockerfile](https://github.com/RedisInsight/RedisInsight/blob/main/Dockerfile)
+- [Redis](null): Redis is the world's fastest in-memory database
+  - [Docker Hub](https://hub.docker.com/_/redis)
+  - [Dockerfile](https://github.com/redis/docker-library-redis/blob/master/7.4/alpine/Dockerfile)
 - [What's up Docker?](https://whatsupdocker.localdev): Keep your containers up-to-date!
   - [Docker Hub](https://hub.docker.com/r/getwud/wud)
   - [Dockerfile](https://github.com/getwud/wud/blob/main/Dockerfile)

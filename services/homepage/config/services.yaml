@@ -58,6 +58,13 @@
         icon: "/icons/phpmyadmin.ico"
         server: "my-docker"
         showStats: true
+    - Prometheus:
+        container: "dev-prometheus-1"
+        description: "Monitor your applications, systems, and services with the leading open source monitoring solution. Instrument, collect, store, and query your metrics for alerting, dashboarding, and other use cases"
+        href: "https://prometheus.localdev/"
+        icon: "sh-prometheus.png"
+        server: "my-docker"
+        showStats: true
     - Omni Tools:
         container: "dev-omni-tools-1"
         description: "Self-hosted collection of powerful web-based tools for everyday tasks"

@@ -1,0 +1,25 @@
+networks:
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+  prometheus:
+    external: true
+    name: "${PROMETHEUS_NETWORK:?err}"
+services:
+  prometheus:
+    environment:
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${PROMETHEUS_VIRTUAL_HOST:?err}"
+      VIRTUAL_PORT: "${PROMETHEUS_VIRTUAL_PORT:?err}"
+    image: "prom/prometheus:${PROMETHEUS_VERSION:?err}"
+    labels:
+      wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
+    networks:
+      - "nginx-proxy"
+      - "prometheus"
+    restart: "unless-stopped"
+    volumes:
+      - "${PWD}/services/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro"
+      - "prometheus-data:/prometheus"
+volumes:
+  prometheus-data: null

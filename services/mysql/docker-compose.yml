@@ -5,9 +5,14 @@ networks:
   nginx-proxy:
     external: true
     name: "${NGINX_PROXY_NETWORK:?err}"
+  prometheus:
+    external: true
+    name: "${PROMETHEUS_NETWORK:?err}"
 services:
   mysql:
     environment:
+      MYSQL_EXPORTER_USER_PASSWORD: "${MYSQL_EXPORTER_USER_PASSWORD:?err}"
+      MYSQL_EXPORTER_USER: "${MYSQL_EXPORTER_USER:?err}"
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:?err}"
       TZ: "${TZ:?err}"
     healthcheck:
@@ -30,6 +35,7 @@ services:
         hard: 10240
         soft: 10240
     volumes:
+      - "${PWD}/services/mysql/initdb:/docker-entrypoint-initdb.d:ro"
       - "mysql-data:/var/lib/mysql"
   mysql-phpmyadmin:
     depends_on:
@@ -54,5 +60,22 @@ services:
     restart: "unless-stopped"
     volumes:
       - "${PWD}/services/mysql/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro"
+  mysql-prometheus-exporter:
+    command:
+      - "--mysqld.address=mysql:3306"
+      - "--mysqld.username=${MYSQL_EXPORTER_USER}"
+    depends_on:
+      - "mysql"
+    environment:
+      MYSQLD_EXPORTER_PASSWORD: "${MYSQL_EXPORTER_USER_PASSWORD:?err}"
+      MYSQL_EXPORTER_USER: "${MYSQL_EXPORTER_USER:?err}"
+      TZ: "${TZ:?err}"
+    image: "prom/mysqld-exporter:${MYSQL_PROMETHEUS_EXPORTER_VERSION:?err}"
+    labels:
+      wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
+    networks:
+      - "mysql"
+      - "prometheus"
+    restart: "unless-stopped"
 volumes:
   mysql-data: null

@@ -22,6 +22,7 @@ create_docker_network "${MONGO_NETWORK}"
 create_docker_network "${MYSQL_NETWORK}"
 create_docker_network "${NGINX_PROXY_NETWORK}"
 create_docker_network "${POSTGRES_NETWORK}"
+create_docker_network "${PROMETHEUS_NETWORK}"
 create_docker_network "${RABBITMQ_NETWORK}"
 create_docker_network "${REDIS_NETWORK}"
 
@@ -65,6 +66,9 @@ touch "./services/homepage/config/bookmarks.yaml"
 
 # phpmyadmin
 ./scripts/generate-cert.sh phpmyadmin.localdev
+
+# Prometheus
+./scripts/generate-cert.sh prometheus.localdev
 
 # RabbitMQ
 ./scripts/generate-cert.sh rabbitmq.localdev

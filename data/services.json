@@ -32,40 +32,48 @@
     "url": "https://min.io"
   },
   {
-    "dependencies": [
+    "dependents": [
       {
-        "description": "MongoDB is a document database with the scalability and flexibility that you want with the querying and indexing that you need",
-        "docker_hub_url": "https://hub.docker.com/_/mongo",
-        "dockerfile_url": "https://github.com/docker-library/mongo/blob/master/8.0/Dockerfile",
-        "localdev_url": null,
-        "name": "MongoDB",
-        "url": "https://www.mongodb.com"
+        "description": "Web-based MongoDB admin interface, written with Node.js and Express",
+        "docker_hub_url": "https://hub.docker.com/_/mongo-express",
+        "dockerfile_url": "https://github.com/mongo-express/mongo-express/blob/master/Dockerfile",
+        "localdev_url": "https://mongo-express.localdev",
+        "name": "mongo-express",
+        "url": "https://github.com/mongo-express/mongo-express"
       }
     ],
-    "description": "Web-based MongoDB admin interface, written with Node.js and Express",
-    "docker_hub_url": "https://hub.docker.com/_/mongo-express",
-    "dockerfile_url": "https://github.com/mongo-express/mongo-express/blob/master/Dockerfile",
-    "localdev_url": "https://mongo-express.localdev",
-    "name": "mongo-express",
-    "url": "https://github.com/mongo-express/mongo-express"
+    "description": "MongoDB is a document database with the scalability and flexibility that you want with the querying and indexing that you need",
+    "docker_hub_url": "https://hub.docker.com/_/mongo",
+    "dockerfile_url": "https://github.com/docker-library/mongo/blob/master/8.0/Dockerfile",
+    "localdev_url": null,
+    "name": "MongoDB",
+    "url": "https://www.mongodb.com"
   },
   {
-    "dependencies": [
+    "dependents": [
       {
-        "description": "MySQL is the world's most popular open source database",
-        "docker_hub_url": "https://hub.docker.com/_/mysql",
-        "dockerfile_url": "https://github.com/docker-library/mysql/blob/master/innovation/Dockerfile.oracle",
+        "description": "A web interface for MySQL and MariaDB",
+        "docker_hub_url": "https://hub.docker.com/_/phpmyadmin",
+        "dockerfile_url": "https://github.com/phpmyadmin/docker/blob/master/apache/Dockerfile",
+        "localdev_url": "https://phpmyadmin.localdev",
+        "name": "phpMyAdmin",
+        "url": "https://www.phpmyadmin.net"
+      },
+      {
+        "description": "A Exporter for MySQL server metrics",
+        "docker_hub_url": "https://hub.docker.com/r/prom/mysqld-exporter",
+        "dockerfile_url": "https://github.com/prometheus/mysqld_exporter/blob/main/Dockerfile",
         "localdev_url": null,
-        "name": "MySQL",
-        "url": "https://www.mysql.com"
+        "name": "MySQL Server Exporter",
+        "url": "https://github.com/prometheus/mysqld_exporter"
       }
     ],
-    "description": "A web interface for MySQL and MariaDB",
-    "docker_hub_url": "https://hub.docker.com/_/phpmyadmin",
-    "dockerfile_url": "https://github.com/phpmyadmin/docker/blob/master/apache/Dockerfile",
-    "localdev_url": "https://phpmyadmin.localdev",
-    "name": "phpMyAdmin",
-    "url": "https://www.phpmyadmin.net"
+    "description": "MySQL is the world's most popular open source database",
+    "docker_hub_url": "https://hub.docker.com/_/mysql",
+    "dockerfile_url": "https://github.com/docker-library/mysql/blob/master/innovation/Dockerfile.oracle",
+    "localdev_url": null,
+    "name": "MySQL",
+    "url": "https://www.mysql.com"
   },
   {
     "description": "Automated Nginx reverse proxy for docker containers",
@@ -84,22 +92,30 @@
     "url": "https://omnitools.app"
   },
   {
-    "dependencies": [
+    "dependents": [
       {
-        "description": "PostgreSQL is a powerful, open source object-relational database system with over 35 years of active development that has earned it a strong reputation for reliability, feature robustness, and performance",
-        "docker_hub_url": "https://hub.docker.com/_/postgres",
-        "dockerfile_url": "https://github.com/docker-library/postgres/blob/master/17/bookworm/Dockerfile",
-        "localdev_url": null,
-        "name": "PostgreSQL",
-        "url": "https://www.postgresql.org"
+        "description": "pgAdmin is the most popular and feature rich Open Source administration and development platform for PostgreSQL, the most advanced Open Source database in the world",
+        "docker_hub_url": "https://hub.docker.com/r/dpage/pgadmin4",
+        "dockerfile_url": "https://github.com/pgadmin-org/pgadmin4/blob/master/Dockerfile",
+        "localdev_url": "https://pgadmin4.localdev",
+        "name": "pgadmin4",
+        "url": "https://www.pgadmin.org"
       }
     ],
-    "description": "pgAdmin is the most popular and feature rich Open Source administration and development platform for PostgreSQL, the most advanced Open Source database in the world",
-    "docker_hub_url": "https://hub.docker.com/r/dpage/pgadmin4",
-    "dockerfile_url": "https://github.com/pgadmin-org/pgadmin4/blob/master/Dockerfile",
-    "localdev_url": "https://pgadmin4.localdev",
-    "name": "pgadmin4",
-    "url": "https://www.pgadmin.org"
+    "description": "PostgreSQL is a powerful, open source object-relational database system with over 35 years of active development that has earned it a strong reputation for reliability, feature robustness, and performance",
+    "docker_hub_url": "https://hub.docker.com/_/postgres",
+    "dockerfile_url": "https://github.com/docker-library/postgres/blob/master/17/bookworm/Dockerfile",
+    "localdev_url": null,
+    "name": "PostgreSQL",
+    "url": "https://www.postgresql.org"
+  },
+  {
+    "description": "Monitor your applications, systems, and services with the leading open source monitoring solution. Instrument, collect, store, and query your metrics for alerting, dashboarding, and other use cases",
+    "docker_hub_url": "https://hub.docker.com/r/prom/prometheus",
+    "dockerfile_url": "https://github.com/prometheus/prometheus/blob/main/Dockerfile",
+    "localdev_url": "https://prometheus.localdev",
+    "name": "prometheus",
+    "url": "https://prometheus.io/"
   },
   {
     "description": "RabbitMQ is a reliable and mature messaging and streaming broker, which is easy to deploy on cloud environments, on-premises, and on your local machine. It is currently used by millions worldwide",
@@ -110,22 +126,22 @@
     "url": "https://www.rabbitmq.com"
   },
   {
-    "dependencies": [
+    "dependents": [
       {
-        "description": "Redis is the world's fastest in-memory database",
-        "docker_hub_url": "https://hub.docker.com/_/redis",
-        "dockerfile_url": "https://github.com/redis/docker-library-redis/blob/master/7.4/alpine/Dockerfile",
-        "localdev_url": null,
-        "name": "Redis",
-        "url": "https://redis.io"
+        "description": "Redis GUI by Redis",
+        "docker_hub_url": "https://hub.docker.com/r/redis/redisinsight",
+        "dockerfile_url": "https://github.com/RedisInsight/RedisInsight/blob/main/Dockerfile",
+        "localdev_url": "https://redisinsight.localdev",
+        "name": "Redis Insight",
+        "url": "https://redis.io/insight"
       }
     ],
-    "description": "Redis GUI by Redis",
-    "docker_hub_url": "https://hub.docker.com/r/redis/redisinsight",
-    "dockerfile_url": "https://github.com/RedisInsight/RedisInsight/blob/main/Dockerfile",
-    "localdev_url": "https://redisinsight.localdev",
-    "name": "Redis Insight",
-    "url": "https://redis.io/insight"
+    "description": "Redis is the world's fastest in-memory database",
+    "docker_hub_url": "https://hub.docker.com/_/redis",
+    "dockerfile_url": "https://github.com/redis/docker-library-redis/blob/master/7.4/alpine/Dockerfile",
+    "localdev_url": null,
+    "name": "Redis",
+    "url": "https://redis.io"
   },
   {
     "description": "Keep your containers up-to-date!",
