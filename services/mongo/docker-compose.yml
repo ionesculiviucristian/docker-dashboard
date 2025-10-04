@@ -10,6 +10,8 @@ services:
     command: "mongod --auth --replSet rs0 --bind_ip_all --keyFile=/data/keyfile"
     environment:
       GLIBC_TUNABLES: "${MONGO_GLIBC_TUNABLES}"
+      MONGO_EXPORTER_USER: "${MONGO_EXPORTER_USER:?err}"
+      MONGO_EXPORTER_USER_PASSWORD: "${MONGO_EXPORTER_USER_PASSWORD:?err}"
       MONGO_INITDB_ROOT_PASSWORD: "${MONGO_INITDB_ROOT_PASSWORD:?err}"
       MONGO_INITDB_ROOT_USERNAME: "${MONGO_INITDB_ROOT_USERNAME:?err}"
       MONGO_PROFILE: "${MONGO_PROFILE}"
@@ -29,6 +31,7 @@ services:
         soft: 64000
     volumes:
       - "${PWD}/services/mongo/backups:/data/backups:ro"
+      - "${PWD}/services/mongo/initdb:/docker-entrypoint-initdb.d:ro"
       - "${PWD}/services/mongo/keyfile:/data/keyfile:ro"
       - "mongo-config:/data/configdb"
       - "mongo-data:/data/db"
@@ -51,6 +54,22 @@ services:
     networks:
       - "mongo"
       - "nginx-proxy"
+    restart: "unless-stopped"
+  mongo-prometheus-exporter:
+    command:
+      - "--mongodb.uri=mongodb://mongo:27017"
+    depends_on:
+      - "mongo"
+    environment:
+      MONGODB_PASSWORD: "${MONGO_EXPORTER_USER_PASSWORD:?err}"
+      MONGODB_USER: "${MONGO_EXPORTER_USER:?err}"
+      TZ: "${TZ:?err}"
+    image: "percona/mongodb_exporter:${MONGO_PROMETHEUS_EXPORTER_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
+    networks:
+      - "mongo"
+      - "prometheus"
     restart: "unless-stopped"
 volumes:
   mongo-config: null

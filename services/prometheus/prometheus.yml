@@ -14,3 +14,7 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: mysql-prometheus-exporter:9104
+
+  - job_name: "mongodb"
+    static_configs:
+      - targets: ["mongo-prometheus-exporter:9216"]

@@ -40,6 +40,14 @@
         "localdev_url": "https://mongo-express.localdev",
         "name": "mongo-express",
         "url": "https://github.com/mongo-express/mongo-express"
+      },
+      {
+        "description": "A Prometheus exporter for MongoDB including sharding, replication and storage engines",
+        "docker_hub_url": "hhttps://hub.docker.com/r/percona/mongodb_exporter",
+        "dockerfile_url": "https://github.com/percona/mongodb_exporter/blob/main/Dockerfile",
+        "localdev_url": null,
+        "name": "MongoDB exporter",
+        "url": "https://github.com/percona/mongodb_exporter"
       }
     ],
     "description": "MongoDB is a document database with the scalability and flexibility that you want with the querying and indexing that you need",
