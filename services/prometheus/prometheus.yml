@@ -18,3 +18,7 @@ scrape_configs:
   - job_name: "mongodb"
     static_configs:
       - targets: ["mongo-prometheus-exporter:9216"]
+
+  - job_name: postgres
+    static_configs:
+      - targets: ["postgres-prometheus-exporter:9187"]

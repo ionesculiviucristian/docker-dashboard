@@ -108,6 +108,14 @@
         "localdev_url": "https://pgadmin4.localdev",
         "name": "pgadmin4",
         "url": "https://www.pgadmin.org"
+      },
+      {
+        "description": "A PostgreSQL metric exporter for Prometheus",
+        "docker_hub_url": "https://hub.docker.com/r/prometheuscommunity/postgres-exporter",
+        "dockerfile_url": "https://github.com/prometheus-community/postgres_exporter/blob/master/Dockerfile",
+        "localdev_url": null,
+        "name": "PostgreSQL Server Exporter",
+        "url": "https://github.com/prometheus-community/postgres_exporter"
       }
     ],
     "description": "PostgreSQL is a powerful, open source object-relational database system with over 35 years of active development that has earned it a strong reputation for reliability, feature robustness, and performance",

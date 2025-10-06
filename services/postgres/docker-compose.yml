@@ -46,6 +46,21 @@ services:
       - "${PWD}/services/postgres/pgadmin4/preferences.json:/pgadmin4/preferences.json:ro"
       - "${PWD}/services/postgres/pgadmin4/servers.json:/pgadmin4/servers.json:ro"
       - "postgres-pgadmin4-data:/var/lib/pgadmin"
+  postgres-prometheus-exporter:
+    depends_on:
+      - "postgres"
+    environment:
+      DATA_SOURCE_PASS: "${POSTGRES_PASSWORD:?err}"
+      DATA_SOURCE_URI: "postgres:5432/postgres?sslmode=disable"
+      DATA_SOURCE_USER: "${POSTGRES_USER:?err}"
+      TZ: "${TZ:?err}"
+    image: "prometheuscommunity/postgres-exporter:${POSTGRES_PROMETHEUS_EXPORTER_VERSION:?err}"
+    labels:
+      wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
+    networks:
+      - "postgres"
+      - "prometheus"
+    restart: "unless-stopped"
 volumes:
   postgres-data: null
   postgres-pgadmin4-data: null
