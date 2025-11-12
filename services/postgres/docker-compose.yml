@@ -8,8 +8,10 @@ networks:
 services:
   postgres:
     environment:
-      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:?err}"
+      POSTGRES_PASSWORD: "${POSTGRES_USER_PASSWORD:?err}"
       POSTGRES_USER: "${POSTGRES_USER:?err}"
+      POSTGRES_EXPORTER_PASSWORD: "${POSTGRES_EXPORTER_USER_PASSWORD:?err}"
+      POSTGRES_EXPORTER_USER: "${POSTGRES_EXPORTER_USER:?err}"
       TZ: "${TZ:?err}"
     healthcheck:
       interval: "30s"
@@ -50,9 +52,9 @@ services:
     depends_on:
       - "postgres"
     environment:
-      DATA_SOURCE_PASS: "${POSTGRES_PASSWORD:?err}"
+      DATA_SOURCE_PASS: "${POSTGRES_EXPORTER_USER_PASSWORD:?err}"
       DATA_SOURCE_URI: "postgres:5432/postgres?sslmode=disable"
-      DATA_SOURCE_USER: "${POSTGRES_USER:?err}"
+      DATA_SOURCE_USER: "${POSTGRES_EXPORTER_USER:?err}"
       TZ: "${TZ:?err}"
     image: "prometheuscommunity/postgres-exporter:${POSTGRES_PROMETHEUS_EXPORTER_VERSION:?err}"
     labels:
