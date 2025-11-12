@@ -5,13 +5,16 @@ networks:
   postgres:
     external: true
     name: "${POSTGRES_NETWORK:?err}"
+  prometheus:
+    external: true
+    name: "${PROMETHEUS_NETWORK:?err}"
 services:
   postgres:
     environment:
-      POSTGRES_PASSWORD: "${POSTGRES_USER_PASSWORD:?err}"
-      POSTGRES_USER: "${POSTGRES_USER:?err}"
       POSTGRES_EXPORTER_PASSWORD: "${POSTGRES_EXPORTER_USER_PASSWORD:?err}"
       POSTGRES_EXPORTER_USER: "${POSTGRES_EXPORTER_USER:?err}"
+      POSTGRES_PASSWORD: "${POSTGRES_USER_PASSWORD:?err}"
+      POSTGRES_USER: "${POSTGRES_USER:?err}"
       TZ: "${TZ:?err}"
     healthcheck:
       interval: "30s"

@@ -1,28 +1,32 @@
 global:
-  scrape_interval: 15s
+  scrape_interval: "15s"
 
 scrape_configs:
-  - job_name: mysql
-    metrics_path: /probe
+  - job_name: "mysql"
+    metrics_path: "/probe"
     static_configs:
       - targets:
-          - mysql:3306
+          - "mysql:3306"
     relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - source_labels: [__param_target]
-        target_label: instance
-      - target_label: __address__
-        replacement: mysql-prometheus-exporter:9104
+      - source_labels: ["__address__"]
+        target_label: "__param_target"
+      - source_labels: ["__param_target"]
+        target_label: "instance"
+      - target_label: "__address__"
+        replacement: "mysql-prometheus-exporter:9104"
 
   - job_name: "mongodb"
     static_configs:
       - targets: ["mongo-prometheus-exporter:9216"]
 
-  - job_name: postgres
+  - job_name: "postgres"
     static_configs:
       - targets: ["postgres-prometheus-exporter:9187"]
 
   - job_name: "rabbitmq"
     static_configs:
       - targets: ["rabbitmq:15692"]
+
+  - job_name: "redis"
+    static_configs:
+      - targets: ["redis-prometheus-exporter:9121"]

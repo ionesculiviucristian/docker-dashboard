@@ -2,6 +2,9 @@ networks:
   nginx-proxy:
     external: true
     name: "${NGINX_PROXY_NETWORK:?err}"
+  prometheus:
+    external: true
+    name: "${PROMETHEUS_NETWORK:?err}"
   redis:
     external: true
     name: "${REDIS_NETWORK:?err}"
@@ -20,6 +23,20 @@ services:
     restart: "unless-stopped"
     volumes:
       - "redis-data:/data"
+  redis-prometheus-exporter:
+    environment:
+      REDIS_ADDR: "redis:6379"
+      REDIS_PASSWORD: "${REDIS_PASSWORD:?err}"
+      REDIS_USER: null
+      TZ: "${TZ:?err}"
+    image: "oliver006/redis_exporter:${REDIS_EXPORTER_VERSION:?err}"
+    labels:
+      wud.tag.include: "^v\\d+\\.\\d+\\.\\d+-alpine$$"
+      wud.watch: true
+    networks:
+      - "prometheus"
+      - "redis"
+    restart: "unless-stopped"
   redis-redisinsight:
     environment:
       TZ: "${TZ:?err}"

@@ -5,6 +5,9 @@ networks:
   nginx-proxy:
     external: true
     name: "${NGINX_PROXY_NETWORK:?err}"
+  prometheus:
+    external: true
+    name: "${PROMETHEUS_NETWORK:?err}"
 services:
   mongo:
     command: "mongod --auth --replSet rs0 --bind_ip_all --keyFile=/data/keyfile"
