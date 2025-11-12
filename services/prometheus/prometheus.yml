@@ -30,3 +30,8 @@ scrape_configs:
   - job_name: "redis"
     static_configs:
       - targets: ["redis-prometheus-exporter:9121"]
+
+  - job_name: "cadvisor"
+    scrape_interval: "5s"
+    static_configs:
+      - targets: ["cadvisor:8080"]
