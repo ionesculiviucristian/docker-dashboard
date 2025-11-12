@@ -1,7 +1,7 @@
 networks:
-  nginx-proxy:
+  proxy:
     external: true
-    name: "${NGINX_PROXY_NETWORK:?err}"
+    name: "${PROXY_NETWORK:?err}"
 services:
   it-tools:
     environment:
@@ -11,13 +11,21 @@ services:
       interval: "30s"
       retries: 5
       start_period: "60s"
-      test: "wget --no-verbose --tries=1 --spider http://0.0.0.0 || exit 1"
+      test:
+        - "CMD-SHELL"
+        - "wget --no-verbose --tries=1 --spider http://localhost || exit 1"
       timeout: "10s"
     image: "corentinth/it-tools:${IT_TOOLS_VERSION:?err}"
     labels:
+      traefik.docker.network: "${PROXY_NETWORK:?err}"
+      traefik.enable: true
+      traefik.http.routers.it-tools.entrypoints: "websecure"
+      traefik.http.routers.it-tools.middlewares: "authentik-server@docker"
+      traefik.http.routers.it-tools.rule: "Host(`${IT_TOOLS_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.it-tools.tls: true
       wud.tag.include: "latest"
       wud.watch: true
       wud.watch.digest: true
     networks:
-      - "nginx-proxy"
+      - "proxy"
     restart: "unless-stopped"

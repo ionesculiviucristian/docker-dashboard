@@ -3,7 +3,7 @@
     "description": "Analyzes resource usage and performance characteristics of running containers",
     "docker_hub_url": "https://hub.docker.com/r/google/cadvisor",
     "dockerfile_url": "https://github.com/google/cadvisor/blob/master/deploy/Dockerfile",
-    "local_url": "https://cadvisor.local.dev",
+    "local_url": "https://cadvisor.services.local",
     "name": "cAdvisor",
     "url": "https://github.com/google/cadvisor"
   },
@@ -11,7 +11,7 @@
     "description": "Collection of handy online tools for developers, with great UX",
     "docker_hub_url": "https://hub.docker.com/r/corentinth/it-tools",
     "dockerfile_url": "https://github.com/CorentinTh/it-tools/blob/main/Dockerfile",
-    "local_url": "https://it-tools.local.dev",
+    "local_url": "https://it-tools.services.local",
     "name": "IT - TOOLS",
     "url": "https://it-tools.tech"
   },
@@ -19,7 +19,7 @@
     "description": "An email and SMTP testing tool with API for developers",
     "docker_hub_url": "https://hub.docker.com/r/axllent/mailpit",
     "dockerfile_url": "https://github.com/axllent/mailpit/blob/master/Dockerfile",
-    "local_url": "https://mailpit.local.dev",
+    "local_url": "https://mailpit.services.local",
     "name": "Mailpit",
     "url": "https://mailpit.axllent.org"
   },
@@ -27,7 +27,7 @@
     "description": "MinIO is a high-performance, S3 compatible object store, open sourced under GNU AGPLv3 license",
     "docker_hub_url": "https://hub.docker.com/r/minio/minio",
     "dockerfile_url": "https://github.com/minio/minio/blob/master/Dockerfile",
-    "local_url": "https://minio.local.dev",
+    "local_url": "https://minio.services.local",
     "name": "MinIO",
     "url": "https://min.io"
   },
@@ -37,7 +37,7 @@
         "description": "Web-based MongoDB admin interface, written with Node.js and Express",
         "docker_hub_url": "https://hub.docker.com/_/mongo-express",
         "dockerfile_url": "https://github.com/mongo-express/mongo-express/blob/master/Dockerfile",
-        "local_url": "https://mongo-express.local.dev",
+        "local_url": "https://mongo-express.services.local",
         "name": "mongo-express",
         "url": "https://github.com/mongo-express/mongo-express"
       },
@@ -63,7 +63,7 @@
         "description": "A web interface for MySQL and MariaDB",
         "docker_hub_url": "https://hub.docker.com/_/phpmyadmin",
         "dockerfile_url": "https://github.com/phpmyadmin/docker/blob/master/apache/Dockerfile",
-        "local_url": "https://phpmyadmin.local.dev",
+        "local_url": "https://phpmyadmin.services.local",
         "name": "phpMyAdmin",
         "url": "https://www.phpmyadmin.net"
       },
@@ -83,19 +83,12 @@
     "name": "MySQL",
     "url": "https://www.mysql.com"
   },
-  {
-    "description": "Automated Nginx reverse proxy for docker containers",
-    "docker_hub_url": "https://hub.docker.com/r/jwilder/nginx-proxy",
-    "dockerfile_url": "https://github.com/nginx-proxy/nginx-proxy/blob/main/Dockerfile.debian",
-    "local_url": null,
-    "name": "nginx-proxy",
-    "url": "https://github.com/nginx-proxy/nginx-proxy"
-  },
+
   {
     "description": "Self-hosted collection of powerful web-based tools for everyday tasks. No ads, no tracking, just fast, accessible utilities right from your browser!",
     "docker_hub_url": "https://hub.docker.com/r/iib0011/omni-tools",
     "dockerfile_url": "https://github.com/iib0011/omni-tools/blob/main/Dockerfile",
-    "local_url": "https://omni-tools.local.dev",
+    "local_url": "https://omni-tools.services.local",
     "name": "Omni Tools",
     "url": "https://omnitools.app"
   },
@@ -105,7 +98,7 @@
         "description": "pgAdmin is the most popular and feature rich Open Source administration and development platform for PostgreSQL, the most advanced Open Source database in the world",
         "docker_hub_url": "https://hub.docker.com/r/dpage/pgadmin4",
         "dockerfile_url": "https://github.com/pgadmin-org/pgadmin4/blob/master/Dockerfile",
-        "local_url": "https://pgadmin4.local.dev",
+        "local_url": "https://pgadmin4.services.local",
         "name": "pgadmin4",
         "url": "https://www.pgadmin.org"
       },
@@ -129,7 +122,7 @@
     "description": "Monitor your applications, systems, and services with the leading open source monitoring solution. Instrument, collect, store, and query your metrics for alerting, dashboarding, and other use cases",
     "docker_hub_url": "https://hub.docker.com/r/prom/prometheus",
     "dockerfile_url": "https://github.com/prometheus/prometheus/blob/main/Dockerfile",
-    "local_url": "https://prometheus.local.dev",
+    "local_url": "https://prometheus.services.local",
     "name": "prometheus",
     "url": "https://prometheus.io/"
   },
@@ -137,7 +130,7 @@
     "description": "RabbitMQ is a reliable and mature messaging and streaming broker, which is easy to deploy on cloud environments, on-premises, and on your local machine. It is currently used by millions worldwide",
     "docker_hub_url": "https://hub.docker.com/_/rabbitmq",
     "dockerfile_url": "https://github.com/docker-library/rabbitmq/blob/master/4.0/alpine/Dockerfile",
-    "local_url": "https://rabbitmq.local.dev",
+    "local_url": "https://rabbitmq.services.local",
     "name": "RabbitMQ",
     "url": "https://www.rabbitmq.com"
   },
@@ -147,7 +140,7 @@
         "description": "Redis GUI by Redis",
         "docker_hub_url": "https://hub.docker.com/r/redis/redisinsight",
         "dockerfile_url": "https://github.com/RedisInsight/RedisInsight/blob/main/Dockerfile",
-        "local_url": "https://redisinsight.local.dev",
+        "local_url": "https://redisinsight.services.local",
         "name": "Redis Insight",
         "url": "https://redis.io/insight"
       }
@@ -163,7 +156,7 @@
     "description": "Keep your containers up-to-date!",
     "docker_hub_url": "https://hub.docker.com/r/getwud/wud",
     "dockerfile_url": "https://github.com/getwud/wud/blob/main/Dockerfile",
-    "local_url": "https://whatsupdocker.local.dev",
+    "local_url": "https://whatsupdocker.services.local",
     "name": "What's up Docker?",
     "url": "https://getwud.github.io/wud/#"
   },
@@ -171,7 +164,7 @@
     "description": "A highly customizable homepage (or startpage / application dashboard) with Docker and service API integrations",
     "docker_hub_url": "https://hub.docker.com/r/gethomepage/homepage",
     "dockerfile_url": "https://github.com/gethomepage/homepage/blob/dev/Dockerfile",
-    "local_url": "https://homepage.local.dev",
+    "local_url": "https://homepage.services.local",
     "name": "homepage",
     "url": "https://gethomepage.dev"
   }

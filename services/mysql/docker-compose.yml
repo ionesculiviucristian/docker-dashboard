@@ -2,24 +2,26 @@ networks:
   mysql:
     external: true
     name: "${MYSQL_NETWORK:?err}"
-  nginx-proxy:
-    external: true
-    name: "${NGINX_PROXY_NETWORK:?err}"
   prometheus:
     external: true
     name: "${PROMETHEUS_NETWORK:?err}"
+  proxy:
+    external: true
+    name: "${PROXY_NETWORK:?err}"
 services:
   mysql:
     environment:
-      MYSQL_EXPORTER_USER_PASSWORD: "${MYSQL_EXPORTER_USER_PASSWORD:?err}"
       MYSQL_EXPORTER_USER: "${MYSQL_EXPORTER_USER:?err}"
+      MYSQL_EXPORTER_USER_PASSWORD: "${MYSQL_EXPORTER_USER_PASSWORD:?err}"
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:?err}"
       TZ: "${TZ:?err}"
     healthcheck:
       interval: "30s"
       retries: 5
       start_period: "60s"
-      test: "mysqladmin ping -h localhost -u root -p${MYSQL_ROOT_PASSWORD} || exit 1"
+      test:
+        - "CMD-SHELL"
+        - "mysqladmin ping -h localhost -u root -p${MYSQL_ROOT_PASSWORD} || exit 1"
       timeout: "10s"
     image: "mysql:${MYSQL_VERSION:?err}"
     labels:
@@ -50,15 +52,23 @@ services:
       interval: "30s"
       retries: 5
       start_period: "60s"
-      test: "curl --fail http://localhost/robots.txt || exit 1"
+      test:
+        - "CMD-SHELL"
+        - "curl --fail --silent --show-error http://localhost/robots.txt || exit 1"
       timeout: "10s"
     image: "phpmyadmin:${MYSQL_PHPMYADMIN_VERSION:?err}"
     labels:
+      traefik.docker.network: "${PROXY_NETWORK:?err}"
+      traefik.enable: true
+      traefik.http.routers.mysql-phpmyadmin.entrypoints: "websecure"
+      traefik.http.routers.mysql-phpmyadmin.middlewares: "authentik-server@docker"
+      traefik.http.routers.mysql-phpmyadmin.rule: "Host(`${MYSQL_PHPMYADMIN_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.mysql-phpmyadmin.tls: true
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
       - "mysql"
-      - "nginx-proxy"
+      - "proxy"
     restart: "unless-stopped"
     volumes:
       - "${PWD}/services/mysql/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro"
@@ -72,6 +82,14 @@ services:
       MYSQLD_EXPORTER_PASSWORD: "${MYSQL_EXPORTER_USER_PASSWORD:?err}"
       MYSQL_EXPORTER_USER: "${MYSQL_EXPORTER_USER:?err}"
       TZ: "${TZ:?err}"
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "60s"
+      test:
+        - "CMD-SHELL"
+        - "wget --no-verbose --tries=1 --spider http://localhost:9104/metrics || exit 1"
+      timeout: "10s"
     image: "prom/mysqld-exporter:${MYSQL_PROMETHEUS_EXPORTER_VERSION:?err}"
     labels:
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"

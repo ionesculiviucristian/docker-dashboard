@@ -1,7 +1,7 @@
 networks:
-  nginx-proxy:
+  proxy:
     external: true
-    name: "${NGINX_PROXY_NETWORK:?err}"
+    name: "${PROXY_NETWORK:?err}"
   rabbitmq:
     external: true
     name: "${RABBITMQ_NETWORK:?err}"
@@ -13,13 +13,27 @@ services:
       TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${RABBITMQ_VIRTUAL_HOST:?err}"
       VIRTUAL_PORT: "${RABBITMQ_VIRTUAL_PORT:?err}"
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "60s"
+      test:
+        - "CMD-SHELL"
+        - "rabbitmq-diagnostics -q ping || exit 1"
+      timeout: "10s"
     hostname: "rabbitmq-dev"
     image: "rabbitmq:${RABBITMQ_VERSION:?err}"
     labels:
-      wud.tag.include: "^\\d+\\.\\d+-management-alpine$$"
+      traefik.docker.network: "${PROXY_NETWORK:?err}"
+      traefik.enable: true
+      traefik.http.routers.rabbitmq.entrypoints: "websecure"
+      traefik.http.routers.rabbitmq.rule: "Host(`${RABBITMQ_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.rabbitmq.tls: true
+      traefik.http.services.rabbitmq.loadbalancer.server.port: "${RABBITMQ_VIRTUAL_PORT:?err}"
+      wud.tag.include: "^\\d+\\.\\d+\\.\\d+-management-alpine$$"
       wud.watch: true
     networks:
-      - "nginx-proxy"
+      - "proxy"
       - "rabbitmq"
     restart: "unless-stopped"
     volumes:

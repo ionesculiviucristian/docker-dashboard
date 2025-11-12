@@ -24,6 +24,14 @@ Built with flexibility and productivity in mind, it helps developers quickly spi
 
 Before running the install script make sure [mkcert](https://github.com/FiloSottile/mkcert?tab=readme-ov-file#linux) is installed.
 
+⚠️ Note: The following services require manual registration / authentication because they have payed OIDC authentication or will have in the future:
+
+- MinIO
+- pgAdmin4
+- RabbitMQ
+
+The rest of the services are protected by Authentik.
+
 ```bash
 ./install.sh
 ```

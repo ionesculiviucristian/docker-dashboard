@@ -1,23 +1,37 @@
 networks:
-  nginx-proxy:
-    external: true
-    name: "${NGINX_PROXY_NETWORK:?err}"
   prometheus:
     external: true
     name: "${PROMETHEUS_NETWORK:?err}"
+  proxy:
+    external: true
+    name: "${PROXY_NETWORK:?err}"
 services:
   prometheus:
     environment:
       TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${PROMETHEUS_VIRTUAL_HOST:?err}"
       VIRTUAL_PORT: "${PROMETHEUS_VIRTUAL_PORT:?err}"
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "60s"
+      test:
+        - "CMD-SHELL"
+        - "wget --no-verbose --tries=1 --spider http://localhost:9090/-/healthy || exit 1"
+      timeout: "10s"
     image: "prom/prometheus:${PROMETHEUS_VERSION:?err}"
     labels:
+      traefik.docker.network: "${PROXY_NETWORK:?err}"
+      traefik.enable: true
+      traefik.http.routers.prometheus.entrypoints: "websecure"
+      traefik.http.routers.prometheus.rule: "Host(`${PROMETHEUS_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.prometheus.tls: true
+      traefik.http.services.prometheus.loadbalancer.server.port: "${PROMETHEUS_VIRTUAL_PORT:?err}"
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
-      - "nginx-proxy"
       - "prometheus"
+      - "proxy"
     restart: "unless-stopped"
     volumes:
       - "${PWD}/services/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro"

@@ -1,7 +1,7 @@
 networks:
-  nginx-proxy:
+  proxy:
     external: true
-    name: "${NGINX_PROXY_NETWORK:?err}"
+    name: "${PROXY_NETWORK:?err}"
 services:
   omni-tools:
     environment:
@@ -11,12 +11,20 @@ services:
       interval: "30s"
       retries: 5
       start_period: "60s"
-      test: "curl --fail http://localhost || exit 1"
+      test:
+        - "CMD-SHELL"
+        - "curl --fail --silent --show-error http://localhost || exit 1"
       timeout: "10s"
     image: "iib0011/omni-tools:${OMNI_TOOLS_VERSION:?err}"
     labels:
+      traefik.docker.network: "${PROXY_NETWORK:?err}"
+      traefik.enable: true
+      traefik.http.routers.omni-tools.entrypoints: "websecure"
+      traefik.http.routers.omni-tools.middlewares: "authentik-server@docker"
+      traefik.http.routers.omni-tools.rule: "Host(`${OMNI_TOOLS_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.omni-tools.tls: true
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
-      - "nginx-proxy"
+      - "proxy"
     restart: "unless-stopped"

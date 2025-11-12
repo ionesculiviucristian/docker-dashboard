@@ -2,9 +2,9 @@ networks:
   minio:
     external: true
     name: "${MINIO_NETWORK:?err}"
-  nginx-proxy:
+  proxy:
     external: true
-    name: "${NGINX_PROXY_NETWORK:?err}"
+    name: "${PROXY_NETWORK:?err}"
 services:
   minio:
     command: "server /data --console-address ':9001'"
@@ -18,15 +18,23 @@ services:
       interval: "30s"
       retries: 5
       start_period: "60s"
-      test: "mc ready local || exit 1"
+      test:
+        - "CMD-SHELL"
+        - "mc ready local || exit 1"
       timeout: "10s"
     image: "minio/minio:${MINIO_VERSION:?err}"
     labels:
+      traefik.docker.network: "${PROXY_NETWORK:?err}"
+      traefik.enable: true
+      traefik.http.routers.minio.entrypoints: "websecure"
+      traefik.http.routers.minio.rule: "Host(`${MINIO_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.minio.tls: true
+      traefik.http.services.minio.loadbalancer.server.port: "${MINIO_VIRTUAL_PORT:?err}"
       wud.tag.include: "^RELEASE\\.\\d+-\\d+-\\d+T\\d+-\\d+-\\d+Z$$"
       wud.watch: true
     networks:
       - "minio"
-      - "nginx-proxy"
+      - "proxy"
     restart: "unless-stopped"
     volumes:
       - "minio-data:/data"

@@ -24,25 +24,33 @@ Built with flexibility and productivity in mind, it helps developers quickly spi
 
 Before running the install script make sure [mkcert](https://github.com/FiloSottile/mkcert?tab=readme-ov-file#linux) is installed.
 
+⚠️ Note: The following services require manual registration / authentication because they have payed OIDC authentication or will have in the future:
+
+- MinIO
+- pgAdmin4
+- RabbitMQ
+
+The rest of the services are protected by Authentik.
+
 ```bash
 ./install.sh
 ```
 
 ## List of available services
 
-- [cAdvisor](https://cadvisor.local.dev): Analyzes resource usage and performance characteristics of running containers
+- [cAdvisor](https://cadvisor.services.local): Analyzes resource usage and performance characteristics of running containers
   - [Docker Hub](https://hub.docker.com/r/google/cadvisor)
   - [Dockerfile](https://github.com/google/cadvisor/blob/master/deploy/Dockerfile)
-- [homepage](https://homepage.local.dev): A highly customizable homepage (or startpage / application dashboard) with Docker and service API integrations
+- [homepage](https://homepage.services.local): A highly customizable homepage (or startpage / application dashboard) with Docker and service API integrations
   - [Docker Hub](https://hub.docker.com/r/gethomepage/homepage)
   - [Dockerfile](https://github.com/gethomepage/homepage/blob/dev/Dockerfile)
-- [IT - TOOLS](https://it-tools.local.dev): Collection of handy online tools for developers, with great UX
+- [IT - TOOLS](https://it-tools.services.local): Collection of handy online tools for developers, with great UX
   - [Docker Hub](https://hub.docker.com/r/corentinth/it-tools)
   - [Dockerfile](https://github.com/CorentinTh/it-tools/blob/main/Dockerfile)
-- [Mailpit](https://mailpit.local.dev): An email and SMTP testing tool with API for developers
+- [Mailpit](https://mailpit.services.local): An email and SMTP testing tool with API for developers
   - [Docker Hub](https://hub.docker.com/r/axllent/mailpit)
   - [Dockerfile](https://github.com/axllent/mailpit/blob/master/Dockerfile)
-- [MinIO](https://minio.local.dev): MinIO is a high-performance, S3 compatible object store, open sourced under GNU AGPLv3 license
+- [MinIO](https://minio.services.local): MinIO is a high-performance, S3 compatible object store, open sourced under GNU AGPLv3 license
   - [Docker Hub](https://hub.docker.com/r/minio/minio)
   - [Dockerfile](https://github.com/minio/minio/blob/master/Dockerfile)
 - [MongoDB](null): MongoDB is a document database with the scalability and flexibility that you want with the querying and indexing that you need
@@ -51,25 +59,22 @@ Before running the install script make sure [mkcert](https://github.com/FiloSott
 - [MySQL](null): MySQL is the world's most popular open source database
   - [Docker Hub](https://hub.docker.com/_/mysql)
   - [Dockerfile](https://github.com/docker-library/mysql/blob/master/innovation/Dockerfile.oracle)
-- [nginx-proxy](null): Automated Nginx reverse proxy for docker containers
-  - [Docker Hub](https://hub.docker.com/r/jwilder/nginx-proxy)
-  - [Dockerfile](https://github.com/nginx-proxy/nginx-proxy/blob/main/Dockerfile.debian)
-- [Omni Tools](https://omni-tools.local.dev): Self-hosted collection of powerful web-based tools for everyday tasks. No ads, no tracking, just fast, accessible utilities right from your browser!
+- [Omni Tools](https://omni-tools.services.local): Self-hosted collection of powerful web-based tools for everyday tasks. No ads, no tracking, just fast, accessible utilities right from your browser!
   - [Docker Hub](https://hub.docker.com/r/iib0011/omni-tools)
   - [Dockerfile](https://github.com/iib0011/omni-tools/blob/main/Dockerfile)
 - [PostgreSQL](null): PostgreSQL is a powerful, open source object-relational database system with over 35 years of active development that has earned it a strong reputation for reliability, feature robustness, and performance
   - [Docker Hub](https://hub.docker.com/_/postgres)
   - [Dockerfile](https://github.com/docker-library/postgres/blob/master/17/bookworm/Dockerfile)
-- [prometheus](https://prometheus.local.dev): Monitor your applications, systems, and services with the leading open source monitoring solution. Instrument, collect, store, and query your metrics for alerting, dashboarding, and other use cases
+- [prometheus](https://prometheus.services.local): Monitor your applications, systems, and services with the leading open source monitoring solution. Instrument, collect, store, and query your metrics for alerting, dashboarding, and other use cases
   - [Docker Hub](https://hub.docker.com/r/prom/prometheus)
   - [Dockerfile](https://github.com/prometheus/prometheus/blob/main/Dockerfile)
-- [RabbitMQ](https://rabbitmq.local.dev): RabbitMQ is a reliable and mature messaging and streaming broker, which is easy to deploy on cloud environments, on-premises, and on your local machine. It is currently used by millions worldwide
+- [RabbitMQ](https://rabbitmq.services.local): RabbitMQ is a reliable and mature messaging and streaming broker, which is easy to deploy on cloud environments, on-premises, and on your local machine. It is currently used by millions worldwide
   - [Docker Hub](https://hub.docker.com/_/rabbitmq)
   - [Dockerfile](https://github.com/docker-library/rabbitmq/blob/master/4.0/alpine/Dockerfile)
 - [Redis](null): Redis is the world's fastest in-memory database
   - [Docker Hub](https://hub.docker.com/_/redis)
   - [Dockerfile](https://github.com/redis/docker-library-redis/blob/master/7.4/alpine/Dockerfile)
-- [What's up Docker?](https://whatsupdocker.local.dev): Keep your containers up-to-date!
+- [What's up Docker?](https://whatsupdocker.services.local): Keep your containers up-to-date!
   - [Docker Hub](https://hub.docker.com/r/getwud/wud)
   - [Dockerfile](https://github.com/getwud/wud/blob/main/Dockerfile)
 

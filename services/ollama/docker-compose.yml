@@ -1,11 +1,19 @@
 networks:
-  nginx-proxy:
+  proxy:
     external: true
-    name: "${NGINX_PROXY_NETWORK:?err}"
+    name: "${PROXY_NETWORK:?err}"
 services:
   ollama:
     environment:
       TZ: "${TZ:?err}"
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "60s"
+      test:
+        - "CMD-SHELL"
+        - "timeout 1 bash -c '</dev/tcp/localhost/11434' || exit 1"
+      timeout: "10s"
     image: "ollama/ollama:${OLLAMA_VERSION:?err}"
     labels:
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+-rocm$$"
@@ -21,20 +29,37 @@ services:
     depends_on:
       - "ollama"
     environment:
+      ENABLE_SIGNUP: false
       OLLAMA_BASE_URL: "http://ollama:11434"
       TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${OLLAMA_OPEN_WEBUI_VIRTUAL_HOST:?err}"
       VIRTUAL_PORT: "${OLLAMA_OPEN_WEBUI_VIRTUAL_PORT:?err}"
+      WEBUI_AUTH: false
       WEBUI_SECRET_KEY: "${OLLAMA_OPEN_WEBUI_WEBUI_SECRET_KEY:?err}"
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "60s"
+      test:
+        - "CMD-SHELL"
+        - "curl --fail --silent --show-error http://localhost:8080/health || exit 1"
+      timeout: "10s"
     image: "ghcr.io/open-webui/open-webui:${OLLAMA_OPEN_WEBUI_VERSION:?err}"
     labels:
+      traefik.docker.network: "${PROXY_NETWORK:?err}"
+      traefik.enable: true
+      traefik.http.routers.ollama-open-webui.entrypoints: "websecure"
+      traefik.http.routers.ollama-open-webui.middlewares: "authentik-server@docker"
+      traefik.http.routers.ollama-open-webui.rule: "Host(`${OLLAMA_OPEN_WEBUI_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.ollama-open-webui.tls: true
+      traefik.http.services.ollama-open-webui.loadbalancer.server.port: "${OLLAMA_OPEN_WEBUI_VIRTUAL_PORT:?err}"
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
       - "default"
-      - "nginx-proxy"
+      - "proxy"
     restart: "unless-stopped"
     volumes:
       - "ollama-open-webui-data:/app/backend/data"

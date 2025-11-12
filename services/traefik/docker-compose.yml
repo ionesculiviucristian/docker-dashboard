@@ -1,0 +1,81 @@
+networks:
+  proxy:
+    external: true
+    name: "${PROXY_NETWORK:?err}"
+services:
+  traefik:
+    command:
+      # https://doc.traefik.io/traefik/contributing/data-collection/
+      - --global.sendAnonymousUsage=false
+      # https://doc.traefik.io/traefik/reference/install-configuration/observability/logs-and-accesslogs/
+      - --log.level=INFO
+      # https://doc.traefik.io/traefik/reference/install-configuration/providers/docker/
+      - --providers.docker=true
+      - --providers.docker.endpoint=unix:///var/run/docker.sock
+      - --providers.docker.watch=true
+      - --providers.docker.exposedbydefault=false
+      # https://doc.traefik.io/traefik/reference/install-configuration/providers/others/file/
+      - --providers.file=true
+      - --providers.file.directory=/etc/traefik
+      - --providers.file.watch=true
+      # https://doc.traefik.io/traefik/reference/install-configuration/api-dashboard/
+      - --api.dashboard=true
+      - --api.insecure=true
+      # https://doc.traefik.io/traefik/reference/install-configuration/entrypoints/
+      - --entrypoints.web.address=:80
+      - --entrypoints.web.http.redirections.entrypoint.to=websecure
+      - --entrypoints.web.http.redirections.entrypoint.scheme=https
+      - --entrypoints.websecure.address=:443
+      - --entrypoints.websecure.forwardedHeaders.insecure=true
+      # https://doc.traefik.io/traefik/operations/ping/
+      - --ping=true
+    environment:
+      TZ: "${TZ:?err}"
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "60s"
+      test:
+        - "CMD-SHELL"
+        - "traefik healthcheck --ping || exit 1"
+      timeout: "10s"
+    image: "traefik:${TRAEFIK_VERSION:?err}"
+    labels:
+      traefik.docker.network: "${PROXY_NETWORK:?err}"
+      traefik.enable: true
+      traefik.http.routers.traefik.entrypoints: "websecure"
+      traefik.http.routers.traefik.middlewares: "authentik-server@docker"
+      traefik.http.routers.traefik.rule: "Host(`${TRAEFIK_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.traefik.service: "api@internal"
+      traefik.http.routers.traefik.tls: true
+      wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
+      wud.watch: true
+    networks:
+      - "proxy"
+    ports:
+      - "443:443"
+      - "8080:8080"
+    restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
+    volumes:
+      - "${PWD}/services/traefik/certs:/certs:ro"
+      - "${PWD}/services/traefik/config:/etc/traefik:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+  traefik-whoami:
+    environment:
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${TRAEFIK_WHOAMI_VIRTUAL_HOST:?err}"
+    image: "traefik/whoami:${TRAEFIK_WHOAMI_VERSION:?err}"
+    labels:
+      traefik.docker.network: "${PROXY_NETWORK:?err}"
+      traefik.enable: true
+      traefik.http.routers.traefik-whoami.entrypoints: "websecure"
+      traefik.http.routers.traefik-whoami.middlewares: "authentik-server@docker"
+      traefik.http.routers.traefik-whoami.rule: "Host(`${TRAEFIK_WHOAMI_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.traefik-whoami.tls: true
+      wud.tag.include: "^v\\d+\\.\\d+$$"
+      wud.watch: true
+    networks:
+      - "proxy"
+    restart: "unless-stopped"

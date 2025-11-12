@@ -2,23 +2,37 @@ networks:
   mailpit:
     external: true
     name: "${MAILPIT_NETWORK:?err}"
-  nginx-proxy:
+  proxy:
     external: true
-    name: "${NGINX_PROXY_NETWORK:?err}"
+    name: "${PROXY_NETWORK:?err}"
 services:
   mailpit:
     environment:
-      MP_UI_AUTH: "${MAILPIT_MP_UI_AUTH:?err}"
       TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${MAILPIT_VIRTUAL_HOST:?err}"
       VIRTUAL_PORT: "${MAILPIT_VIRTUAL_PORT:?err}"
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "60s"
+      test:
+        - "CMD-SHELL"
+        - "wget --no-verbose --tries=1 --spider http://localhost:8025/api/v1/info || exit 1"
+      timeout: "10s"
     image: "axllent/mailpit:${MAILPIT_VERSION:?err}"
     labels:
+      traefik.docker.network: "${PROXY_NETWORK:?err}"
+      traefik.enable: true
+      traefik.http.routers.mailpit.entrypoints: "websecure"
+      traefik.http.routers.mailpit.middlewares: "authentik-server@docker"
+      traefik.http.routers.mailpit.rule: "Host(`${MAILPIT_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.mailpit.tls: true
+      traefik.http.services.mailpit.loadbalancer.server.port: "${MAILPIT_VIRTUAL_PORT:?err}"
       wud.tag.include: "^v\\d+\\.\\d+$$"
       wud.watch: true
     networks:
       - "mailpit"
-      - "nginx-proxy"
+      - "proxy"
     restart: "unless-stopped"
     volumes:
       - "mailpit-data:/data"

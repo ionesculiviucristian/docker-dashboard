@@ -1,7 +1,7 @@
 networks:
-  nginx-proxy:
+  proxy:
     external: true
-    name: "${NGINX_PROXY_NETWORK:?err}"
+    name: "${PROXY_NETWORK:?err}"
 services:
   whatsupdocker:
     environment:
@@ -9,12 +9,26 @@ services:
       VIRTUAL_HOST: "${WHATSUPDOCKER_VIRTUAL_HOST:?err}"
       WUD_REGISTRY_CUSTOM_OSGEO_URL: "${WHATSUPDOCKER_WUD_REGISTRY_CUSTOM_OSGEO_URL}"
       WUD_WATCHER_LOCAL_WATCHBYDEFAULT: false
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "60s"
+      test:
+        - "CMD-SHELL"
+        - "curl --fail --silent --show-error http://localhost:3000/api/containers || exit 1"
+      timeout: "10s"
     image: "getwud/wud:${WHATSUPDOCKER_VERSION:?err}"
     labels:
+      traefik.docker.network: "${PROXY_NETWORK:?err}"
+      traefik.enable: true
+      traefik.http.routers.whatsupdocker.entrypoints: "websecure"
+      traefik.http.routers.whatsupdocker.middlewares: "authentik-server@docker"
+      traefik.http.routers.whatsupdocker.rule: "Host(`${WHATSUPDOCKER_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.whatsupdocker.tls: true
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
-      - "nginx-proxy"
+      - "proxy"
     restart: "unless-stopped"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"

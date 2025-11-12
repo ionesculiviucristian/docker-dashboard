@@ -1,7 +1,7 @@
 networks:
-  nginx-proxy:
+  proxy:
     external: true
-    name: "${NGINX_PROXY_NETWORK:?err}"
+    name: "${PROXY_NETWORK:?err}"
 services:
   cadvisor:
     devices:
@@ -10,12 +10,26 @@ services:
       TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${CADVISOR_VIRTUAL_HOST:?err}"
       VIRTUAL_PORT: "${CADVISOR_VIRTUAL_PORT:?err}"
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "60s"
+      test:
+        - "CMD-SHELL"
+        - "wget --no-verbose --tries=1 --spider http://localhost:8080/healthz || exit 1"
+      timeout: "10s"
     image: "gcr.io/cadvisor/cadvisor:${CADVISOR_VERSION:?err}"
     labels:
+      traefik.docker.network: "${PROXY_NETWORK:?err}"
+      traefik.enable: true
+      traefik.http.routers.cadvisor.entrypoints: "websecure"
+      traefik.http.routers.cadvisor.middlewares: "authentik-server@docker"
+      traefik.http.routers.cadvisor.rule: "Host(`${CADVISOR_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.cadvisor.tls: true
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
-      - "nginx-proxy"
+      - "proxy"
     privileged: true
     restart: "unless-stopped"
     volumes:

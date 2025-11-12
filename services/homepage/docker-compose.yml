@@ -2,9 +2,9 @@ networks:
   mailpit:
     external: true
     name: "${MAILPIT_NETWORK:?err}"
-  nginx-proxy:
+  proxy:
     external: true
-    name: "${NGINX_PROXY_NETWORK:?err}"
+    name: "${PROXY_NETWORK:?err}"
 services:
   homepage:
     environment:
@@ -17,15 +17,23 @@ services:
       interval: "30s"
       retries: 5
       start_period: "60s"
-      test: "wget --no-verbose --tries=1 --spider http://0.0.0.0:3000 || exit 1"
+      test:
+        - "CMD-SHELL"
+        - "wget --no-verbose --tries=1 --spider http://localhost:3000 || exit 1"
       timeout: "10s"
     image: "ghcr.io/gethomepage/homepage:${HOMEPAGE_VERSION:?err}"
     labels:
+      traefik.docker.network: "${PROXY_NETWORK:?err}"
+      traefik.enable: true
+      traefik.http.routers.homepage.entrypoints: "websecure"
+      traefik.http.routers.homepage.middlewares: "authentik-server@docker"
+      traefik.http.routers.homepage.rule: "Host(`${HOMEPAGE_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.homepage.tls: true
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
       - "mailpit"
-      - "nginx-proxy"
+      - "proxy"
     restart: "unless-stopped"
     volumes:
       - "${PWD}/services/homepage/config/bookmarks.yaml:/app/config/bookmarks.yaml:ro"
