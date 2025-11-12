@@ -89,4 +89,6 @@ docker compose exec mongo mongosh \
   -p "${SERVICES_USER_PASSWORD}" \
   --eval 'rs.initiate({ _id: "rs0", members: [{ _id: 0, host: "mongo:27017" }] })'
 
+docker compose exec rabbitmq rabbitmq-plugins enable rabbitmq_prometheus
+
 exit 0
