@@ -15,6 +15,7 @@ services:
     image: "axllent/mailpit:${MAILPIT_VERSION:?err}"
     labels:
       wud.tag.include: "^v\\d+\\.\\d+$$"
+      wud.watch: true
     networks:
       - "mailpit"
       - "nginx-proxy"

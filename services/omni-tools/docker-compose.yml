@@ -16,6 +16,7 @@ services:
     image: "iib0011/omni-tools:${OMNI_TOOLS_VERSION:?err}"
     labels:
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
+      wud.watch: true
     networks:
       - "nginx-proxy"
     restart: "unless-stopped"

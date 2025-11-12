@@ -17,6 +17,7 @@ services:
     image: "rabbitmq:${RABBITMQ_VERSION:?err}"
     labels:
       wud.tag.include: "^\\d+\\.\\d+-management-alpine$$"
+      wud.watch: true
     networks:
       - "nginx-proxy"
       - "rabbitmq"

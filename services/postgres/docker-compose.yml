@@ -22,6 +22,7 @@ services:
     image: "postgres:${POSTGRES_VERSION:?err}"
     labels:
       wud.tag.include: "^\\d+\\.\\d+$$"
+      wud.watch: true
     networks:
       - "postgres"
     restart: "unless-stopped"
@@ -40,6 +41,7 @@ services:
     image: "dpage/pgadmin4:${POSTGRES_PGADMIN4_PGADMIN_VERSION:?err}"
     labels:
       wud.tag.include: "^\\d+\\.\\d+$$"
+      wud.watch: true
     networks:
       - "nginx-proxy"
       - "postgres"
@@ -59,6 +61,7 @@ services:
     image: "prometheuscommunity/postgres-exporter:${POSTGRES_PROMETHEUS_EXPORTER_VERSION:?err}"
     labels:
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
+      wud.watch: true
     networks:
       - "postgres"
       - "prometheus"

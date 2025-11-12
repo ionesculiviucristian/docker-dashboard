@@ -13,6 +13,7 @@ services:
     image: "gcr.io/cadvisor/cadvisor:${CADVISOR_VERSION:?err}"
     labels:
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
+      wud.watch: true
     networks:
       - "nginx-proxy"
     privileged: true

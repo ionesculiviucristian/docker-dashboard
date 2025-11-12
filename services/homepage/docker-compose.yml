@@ -22,6 +22,7 @@ services:
     image: "ghcr.io/gethomepage/homepage:${HOMEPAGE_VERSION:?err}"
     labels:
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
+      wud.watch: true
     networks:
       - "mailpit"
       - "nginx-proxy"

@@ -16,6 +16,7 @@ services:
     image: "corentinth/it-tools:${IT_TOOLS_VERSION:?err}"
     labels:
       wud.tag.include: "latest"
+      wud.watch: true
       wud.watch.digest: true
     networks:
       - "nginx-proxy"

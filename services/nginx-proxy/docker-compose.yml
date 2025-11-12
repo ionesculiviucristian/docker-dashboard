@@ -15,6 +15,7 @@ services:
     image: "jwilder/nginx-proxy:${NGINX_PROXY_VERSION:?err}"
     labels:
       wud.tag.include: "^\\d+\\.\\d+$$"
+      wud.watch: true
     networks:
       - "nginx-proxy"
     ports:

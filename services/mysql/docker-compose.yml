@@ -24,6 +24,7 @@ services:
     image: "mysql:${MYSQL_VERSION:?err}"
     labels:
       wud.tag.include: "^\\d+\\.\\d+$$"
+      wud.watch: true
     networks:
       - "mysql"
     restart: "unless-stopped"
@@ -54,6 +55,7 @@ services:
     image: "phpmyadmin:${MYSQL_PHPMYADMIN_VERSION:?err}"
     labels:
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
+      wud.watch: true
     networks:
       - "mysql"
       - "nginx-proxy"
@@ -73,6 +75,7 @@ services:
     image: "prom/mysqld-exporter:${MYSQL_PROMETHEUS_EXPORTER_VERSION:?err}"
     labels:
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
+      wud.watch: true
     networks:
       - "mysql"
       - "prometheus"

@@ -23,6 +23,7 @@ services:
     image: "minio/minio:${MINIO_VERSION:?err}"
     labels:
       wud.tag.include: "^RELEASE\\.\\d+-\\d+-\\d+T\\d+-\\d+-\\d+Z$$"
+      wud.watch: true
     networks:
       - "minio"
       - "nginx-proxy"

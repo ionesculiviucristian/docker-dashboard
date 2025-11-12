@@ -19,6 +19,7 @@ services:
     image: "mongo:${MONGO_VERSION:?err}"
     labels:
       wud.tag.include: "^\\d+\\.\\d+$$"
+      wud.watch: true
     networks:
       - "mongo"
     restart: "unless-stopped"
@@ -51,6 +52,7 @@ services:
     image: "mongo-express:${MONGO_ME_VERSION:?err}"
     labels:
       wud.tag.include: "^\\d+\\.\\d+$$"
+      wud.watch: true
     networks:
       - "mongo"
       - "nginx-proxy"
@@ -67,6 +69,7 @@ services:
     image: "percona/mongodb_exporter:${MONGO_PROMETHEUS_EXPORTER_VERSION:?err}"
     labels:
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
+      wud.watch: true
     networks:
       - "mongo"
       - "prometheus"
