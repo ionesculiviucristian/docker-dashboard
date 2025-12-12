@@ -94,6 +94,6 @@ docker compose exec mongo mongosh \
 
 docker compose exec rabbitmq rabbitmq-plugins enable rabbitmq_prometheus
 
-docker compose exec ollama ollama run "${OLLAMA_MODEL}"
+docker compose exec ollama ollama pull "${OLLAMA_MODEL}"
 
 exit 0
