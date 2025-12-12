@@ -2,7 +2,7 @@
 
 ![Preview 1](./assets/preview.png)
 
-Background by [Viktor Hanacek](https://picjumbo.com/author/viktorhanacek/) from [picjumbo.com](picjumbo.com)
+Background from [wallpapercave.com](https://wallpapercave.com/)
 
 ## Table of Contents
 

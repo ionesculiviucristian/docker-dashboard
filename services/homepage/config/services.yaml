@@ -72,6 +72,13 @@
         icon: "sh-omnitools.png"
         server: "my-docker"
         showStats: true
+    - Open WebUI:
+        container: "dev-ollama-open-webui-1"
+        description: "Open WebUI is an extensible, self-hosted AI interface that adapts to your workflow, all while operating entirely offline"
+        href: "https://open-webui.localdev/"
+        icon: "sh-open-webui.png"
+        server: "my-docker"
+        showStats: true
     - RabbitMQ:
         container: "dev-rabbitmq-1"
         description: "RabbitMQ is a reliable and mature messaging and streaming broker, which is easy to deploy on cloud environments, on-premises, and on your local machine"

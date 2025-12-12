@@ -1,8 +1,8 @@
 background:
   blur: "md"
-  brightness: 50
-  image: "/images/background.jpg"
-  opacity: 75
+  brightness: 75
+  image: "/images/background.png"
+  opacity: 25
 layout:
   Bookmarks:
     columns: 3
