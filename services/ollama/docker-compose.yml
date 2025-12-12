@@ -1,0 +1,40 @@
+networks:
+  nginx-proxy:
+    external: true
+    name: "${NGINX_PROXY_NETWORK:?err}"
+services:
+  ollama:
+    environment:
+      TZ: "${TZ:?err}"
+    image: "ollama/ollama:${OLLAMA_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+\\.\\d+\\-rocm$$"
+      wud.watch: true
+    ports:
+      - "11434:11434"
+    restart: "unless-stopped"
+    volumes:
+      - "ollama-data:/root/.ollama"
+  ollama-open-webui:
+    depends_on:
+      - "ollama"
+    environment:
+      OLLAMA_BASE_URL: "http://ollama:11434"
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${OLLAMA_OPEN_WEBUI_VIRTUAL_HOST:?err}"
+      VIRTUAL_PORT: "${OLLAMA_OPEN_WEBUI_VIRTUAL_PORT:?err}"
+      WEBUI_SECRET_KEY: "${OLLAMA_OPEN_WEBUI_WEBUI_SECRET_KEY:?err}"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    image: "ghcr.io/open-webui/open-webui:${OLLAMA_OPEN_WEBUI_VERSION:?err}"
+    labels:
+      wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
+      wud.watch: true
+    networks:
+      - "nginx-proxy"
+    restart: "unless-stopped"
+    volumes:
+      - "ollama-open-webui-data:/app/backend/data"
+volumes:
+  ollama-data: null
+  ollama-open-webui-data: null

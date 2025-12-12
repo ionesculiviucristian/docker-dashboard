@@ -58,6 +58,9 @@ touch "./services/homepage/config/bookmarks.yaml"
 
 # nginx-proxy
 
+# ollama
+./scripts/generate-cert.sh open-webui.localdev
+
 # Omni Tools
 ./scripts/generate-cert.sh omni-tools.localdev
 
@@ -90,5 +93,7 @@ docker compose exec mongo mongosh \
   --eval 'rs.initiate({ _id: "rs0", members: [{ _id: 0, host: "mongo:27017" }] })'
 
 docker compose exec rabbitmq rabbitmq-plugins enable rabbitmq_prometheus
+
+docker compose exec ollama ollama run "${OLLAMA_MODEL}"
 
 exit 0
