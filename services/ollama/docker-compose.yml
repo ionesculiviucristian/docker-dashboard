@@ -10,6 +10,8 @@ services:
     labels:
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+-rocm$$"
       wud.watch: true
+    networks:
+      - "default"
     ports:
       - "11434:11434"
     restart: "unless-stopped"
@@ -31,6 +33,7 @@ services:
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
+      - "default"
       - "nginx-proxy"
     restart: "unless-stopped"
     volumes:
