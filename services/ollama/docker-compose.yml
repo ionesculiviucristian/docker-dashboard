@@ -8,7 +8,7 @@ services:
       TZ: "${TZ:?err}"
     image: "ollama/ollama:${OLLAMA_VERSION:?err}"
     labels:
-      wud.tag.include: "^\\d+\\.\\d+\\.\\d+\\-rocm$$"
+      wud.tag.include: "^\\d+\\.\\d+\\.\\d+-rocm$$"
       wud.watch: true
     ports:
       - "11434:11434"
