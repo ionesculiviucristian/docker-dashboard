@@ -87,6 +87,12 @@ touch "./services/homepage/config/bookmarks.yaml"
 # Start services
 docker compose up -d
 
+echo "Waiting for MongoDB to be ready..."
+until docker compose exec mongo mongosh --eval "db.adminCommand('ping')" >/dev/null 2>&1; do
+  echo -n "."
+  sleep 2
+done
+
 docker compose exec mongo mongosh \
   -u "${SERVICES_USER}" \
   -p "${SERVICES_USER_PASSWORD}" \

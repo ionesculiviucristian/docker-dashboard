@@ -32,7 +32,7 @@ services:
     shm_size: "256m"
     volumes:
       - "${PWD}/services/postgres/postgres/initdb:/docker-entrypoint-initdb.d:ro"
-      - "postgres-data:/var/lib/postgresql/data"
+      - "postgres-data:/var/lib/postgresql"
   postgres-pgadmin4:
     depends_on:
       - "postgres"
