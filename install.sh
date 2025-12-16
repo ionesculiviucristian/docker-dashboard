@@ -21,7 +21,7 @@ mkcert \
   -key-file "./services/nginx-proxy/certs/local.dev.key" \
   "*.local.dev" "local.dev"
 
-# Create docker networks
+# Create service networks
 create_docker_network "${MAILPIT_NETWORK}"
 create_docker_network "${MINIO_NETWORK}"
 create_docker_network "${MONGO_NETWORK}"
@@ -32,7 +32,7 @@ create_docker_network "${PROMETHEUS_NETWORK}"
 create_docker_network "${RABBITMQ_NETWORK}"
 create_docker_network "${REDIS_NETWORK}"
 
-# Register services to /etc/hosts
+# Register service hosts to /etc/hosts
 ./scripts/register-host.sh cadvisor.local.dev
 ./scripts/register-host.sh homepage.local.dev
 ./scripts/register-host.sh it-tools.local.dev
@@ -57,33 +57,16 @@ create_docker_network "${REDIS_NETWORK}"
 ./scripts/generate-htpasswd.sh redisinsight.local.dev
 ./scripts/generate-htpasswd.sh whatsupdocker.local.dev
 
-# homepage
-touch "./services/homepage/config/bookmarks.yaml"
+# Pre-setup services
+./setups/pre/homepage.sh
+./setups/pre/mongo.sh
 
-# mongo-express
-[ -f "./services/mongo/keyfile" ] || (
-  cd "./services/mongo"
-  openssl rand -base64 756 > "./keyfile"
-  chmod 400 "./keyfile"
-  sudo chown 999:999 "./keyfile"
-)
-
-# Start services
+# Setup services
 docker compose up -d
 
-echo "Waiting for MongoDB to be ready..."
-until docker compose exec mongo mongosh --eval "db.adminCommand('ping')" >/dev/null 2>&1; do
-  echo -n "."
-  sleep 2
-done
-
-docker compose exec mongo mongosh \
-  -u "${SERVICES_USER}" \
-  -p "${SERVICES_USER_PASSWORD}" \
-  --eval 'rs.initiate({ _id: "rs0", members: [{ _id: 0, host: "mongo:27017" }] })'
-
-docker compose exec rabbitmq rabbitmq-plugins enable rabbitmq_prometheus
-
-docker compose exec ollama ollama pull "${OLLAMA_MODEL}"
+# Post-setup services
+setups/post/mongo.sh
+setups/post/ollama.sh
+setups/post/rabbitmq.sh
 
 exit 0
