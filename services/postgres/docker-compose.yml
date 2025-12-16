@@ -37,6 +37,7 @@ services:
     depends_on:
       - "postgres"
     environment:
+      PGADMIN_LISTEN_ADDRESS: "0.0.0.0"
       PGADMIN_DEFAULT_EMAIL: "${POSTGRES_PGADMIN4_PGADMIN_DEFAULT_EMAIL:?err}"
       PGADMIN_DEFAULT_PASSWORD: "${POSTGRES_PGADMIN4_PGADMIN_DEFAULT_PASSWORD:?err}"
       TZ: "${TZ:?err}"

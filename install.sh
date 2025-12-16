@@ -63,6 +63,7 @@ touch "./services/homepage/config/bookmarks.yaml"
 
 # Omni Tools
 ./scripts/generate-cert.sh omni-tools.localdev
+./scripts/generate-htpasswd.sh omni-tools.localdev
 
 # pgadmin4
 ./scripts/generate-cert.sh pgadmin4.localdev
