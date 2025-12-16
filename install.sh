@@ -33,29 +33,29 @@ create_docker_network "${RABBITMQ_NETWORK}"
 create_docker_network "${REDIS_NETWORK}"
 
 # Register service hosts to /etc/hosts
-./scripts/register-host.sh cadvisor.local.dev
-./scripts/register-host.sh homepage.local.dev
-./scripts/register-host.sh it-tools.local.dev
-./scripts/register-host.sh mailpit.local.dev
-./scripts/register-host.sh minio.local.dev
-./scripts/register-host.sh mongo-express.local.dev
-./scripts/register-host.sh omni-tools.local.dev
-./scripts/register-host.sh open-webui.local.dev
-./scripts/register-host.sh pgadmin4.local.dev
-./scripts/register-host.sh phpmyadmin.local.dev
-./scripts/register-host.sh prometheus.local.dev
-./scripts/register-host.sh rabbitmq.local.dev
-./scripts/register-host.sh redisinsight.local.dev
-./scripts/register-host.sh whatsupdocker.local.dev
+./scripts/register_host.sh cadvisor.local.dev
+./scripts/register_host.sh homepage.local.dev
+./scripts/register_host.sh it-tools.local.dev
+./scripts/register_host.sh mailpit.local.dev
+./scripts/register_host.sh minio.local.dev
+./scripts/register_host.sh mongo-express.local.dev
+./scripts/register_host.sh omni-tools.local.dev
+./scripts/register_host.sh open-webui.local.dev
+./scripts/register_host.sh pgadmin4.local.dev
+./scripts/register_host.sh phpmyadmin.local.dev
+./scripts/register_host.sh prometheus.local.dev
+./scripts/register_host.sh rabbitmq.local.dev
+./scripts/register_host.sh redisinsight.local.dev
+./scripts/register_host.sh whatsupdocker.local.dev
 
 # Add basic auth to services
-./scripts/generate-htpasswd.sh cadvisor.local.dev
-./scripts/generate-htpasswd.sh homepage.local.dev
-./scripts/generate-htpasswd.sh it-tools.local.dev
-./scripts/generate-htpasswd.sh omni-tools.local.dev
-./scripts/generate-htpasswd.sh prometheus.local.dev
-./scripts/generate-htpasswd.sh redisinsight.local.dev
-./scripts/generate-htpasswd.sh whatsupdocker.local.dev
+./scripts/generate_htpasswd.sh cadvisor.local.dev
+./scripts/generate_htpasswd.sh homepage.local.dev
+./scripts/generate_htpasswd.sh it-tools.local.dev
+./scripts/generate_htpasswd.sh omni-tools.local.dev
+./scripts/generate_htpasswd.sh prometheus.local.dev
+./scripts/generate_htpasswd.sh redisinsight.local.dev
+./scripts/generate_htpasswd.sh whatsupdocker.local.dev
 
 # Pre-setup services
 ./setups/pre/homepage.sh
