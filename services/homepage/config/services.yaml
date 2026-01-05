@@ -37,6 +37,13 @@
           type: "customapi"
           url: "http://mailpit:8025/api/v1/messages"
           username: "{{HOMEPAGE_VAR_SERVICES_USER}}"
+    - Mealie:
+        container: "dev-mealie-1"
+        description: "Mealie is an intuitive and easy to use recipe management app"
+        href: "https://mealie.services.local/"
+        icon: "sh-mealie.png"
+        server: "my-docker"
+        showStats: true
     - MinIO:
         container: "dev-minio-1"
         description: "MinIO is a High Performance Object Storage. It is API compatible with Amazon S3 cloud storage service"
