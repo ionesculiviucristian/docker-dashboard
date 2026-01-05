@@ -26,6 +26,7 @@ Before running the install script make sure [mkcert](https://github.com/FiloSott
 
 ⚠️ Note: The following services require manual registration / authentication because they have payed OIDC authentication or will have in the future:
 
+- Mealie
 - MinIO
 - pgAdmin4
 - RabbitMQ
@@ -38,6 +39,9 @@ The rest of the services are protected by Authentik.
 
 ## List of available services
 
+- [authentik](https://authentik.services.local): authentik is an IdP (Identity Provider) and SSO (Single Sign On) platform that is built with security at the forefront of every piece of code, every feature, with an emphasis on flexibility and versatility
+  - [Docker Hub](https://hub.docker.com/r/authentik/server)
+  - [Dockerfile](https://github.com/goauthentik/authentik/blob/main/lifecycle/container/Dockerfile)
 - [cAdvisor](https://cadvisor.services.local): Analyzes resource usage and performance characteristics of running containers
   - [Docker Hub](https://hub.docker.com/r/google/cadvisor)
   - [Dockerfile](https://github.com/google/cadvisor/blob/master/deploy/Dockerfile)
@@ -50,6 +54,9 @@ The rest of the services are protected by Authentik.
 - [Mailpit](https://mailpit.services.local): An email and SMTP testing tool with API for developers
   - [Docker Hub](https://hub.docker.com/r/axllent/mailpit)
   - [Dockerfile](https://github.com/axllent/mailpit/blob/master/Dockerfile)
+- [Mealie](https://mealie.services.local): Mealie is an intuitive and easy to use recipe management app
+  - [Docker Hub](https://github.com/mealie-recipes/mealie/pkgs/container/mealie)
+  - [Dockerfile](https://github.com/mealie-recipes/mealie/blob/mealie-next/docker/Dockerfile)
 - [MinIO](https://minio.services.local): MinIO is a high-performance, S3 compatible object store, open sourced under GNU AGPLv3 license
   - [Docker Hub](https://hub.docker.com/r/minio/minio)
   - [Dockerfile](https://github.com/minio/minio/blob/master/Dockerfile)
@@ -59,6 +66,9 @@ The rest of the services are protected by Authentik.
 - [MySQL](null): MySQL is the world's most popular open source database
   - [Docker Hub](https://hub.docker.com/_/mysql)
   - [Dockerfile](https://github.com/docker-library/mysql/blob/master/innovation/Dockerfile.oracle)
+- [Ollama](null): Chat & build with open models
+  - [Docker Hub](https://hub.docker.com/r/ollama/ollama)
+  - [Dockerfile](https://github.com/ollama/ollama/blob/main/Dockerfile)
 - [Omni Tools](https://omni-tools.services.local): Self-hosted collection of powerful web-based tools for everyday tasks. No ads, no tracking, just fast, accessible utilities right from your browser!
   - [Docker Hub](https://hub.docker.com/r/iib0011/omni-tools)
   - [Dockerfile](https://github.com/iib0011/omni-tools/blob/main/Dockerfile)
@@ -74,6 +84,9 @@ The rest of the services are protected by Authentik.
 - [Redis](null): Redis is the world's fastest in-memory database
   - [Docker Hub](https://hub.docker.com/_/redis)
   - [Dockerfile](https://github.com/redis/docker-library-redis/blob/master/7.4/alpine/Dockerfile)
+- [Traefik](https://traefik.services.local): Traefik is your all-in-one, self-hosted, cloud-native, GitOps-driven application proxy, API gateway, and API management platform
+  - [Docker Hub](https://hub.docker.com/_/traefik)
+  - [Dockerfile](https://github.com/traefik/traefik/blob/master/Dockerfile)
 - [What's up Docker?](https://whatsupdocker.services.local): Keep your containers up-to-date!
   - [Docker Hub](https://hub.docker.com/r/getwud/wud)
   - [Dockerfile](https://github.com/getwud/wud/blob/main/Dockerfile)

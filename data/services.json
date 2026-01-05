@@ -1,11 +1,27 @@
 [
   {
+    "description": "authentik is an IdP (Identity Provider) and SSO (Single Sign On) platform that is built with security at the forefront of every piece of code, every feature, with an emphasis on flexibility and versatility",
+    "docker_hub_url": "https://hub.docker.com/r/authentik/server",
+    "dockerfile_url": "https://github.com/goauthentik/authentik/blob/main/lifecycle/container/Dockerfile",
+    "local_url": "https://authentik.services.local",
+    "name": "authentik",
+    "url": "https://goauthentik.io/"
+  },
+  {
     "description": "Analyzes resource usage and performance characteristics of running containers",
     "docker_hub_url": "https://hub.docker.com/r/google/cadvisor",
     "dockerfile_url": "https://github.com/google/cadvisor/blob/master/deploy/Dockerfile",
     "local_url": "https://cadvisor.services.local",
     "name": "cAdvisor",
     "url": "https://github.com/google/cadvisor"
+  },
+  {
+    "description": "A highly customizable homepage (or startpage / application dashboard) with Docker and service API integrations",
+    "docker_hub_url": "https://hub.docker.com/r/gethomepage/homepage",
+    "dockerfile_url": "https://github.com/gethomepage/homepage/blob/dev/Dockerfile",
+    "local_url": "https://homepage.services.local",
+    "name": "homepage",
+    "url": "https://gethomepage.dev"
   },
   {
     "description": "Collection of handy online tools for developers, with great UX",
@@ -22,6 +38,14 @@
     "local_url": "https://mailpit.services.local",
     "name": "Mailpit",
     "url": "https://mailpit.axllent.org"
+  },
+  {
+    "description": "Mealie is an intuitive and easy to use recipe management app",
+    "docker_hub_url": "https://github.com/mealie-recipes/mealie/pkgs/container/mealie",
+    "dockerfile_url": "https://github.com/mealie-recipes/mealie/blob/mealie-next/docker/Dockerfile",
+    "local_url": "https://mealie.services.local",
+    "name": "Mealie",
+    "url": "https://mealie.io/"
   },
   {
     "description": "MinIO is a high-performance, S3 compatible object store, open sourced under GNU AGPLv3 license",
@@ -83,7 +107,24 @@
     "name": "MySQL",
     "url": "https://www.mysql.com"
   },
-
+  {
+    "dependents": [
+      {
+        "description": "Open WebUI is an extensible, self-hosted AI interface that adapts to your workflow, all while operating entirely offline",
+        "docker_hub_url": "https://github.com/open-webui/open-webui/pkgs/container/open-webui",
+        "dockerfile_url": "https://github.com/open-webui/open-webui/blob/main/Dockerfile",
+        "local_url": "https://open-webui.services.local",
+        "name": "Open WebUI",
+        "url": "https://openwebui.com/"
+      }
+    ],
+    "description": "Chat & build with open models",
+    "docker_hub_url": "https://hub.docker.com/r/ollama/ollama",
+    "dockerfile_url": "https://github.com/ollama/ollama/blob/main/Dockerfile",
+    "local_url": null,
+    "name": "Ollama",
+    "url": "https://ollama.com/"
+  },
   {
     "description": "Self-hosted collection of powerful web-based tools for everyday tasks. No ads, no tracking, just fast, accessible utilities right from your browser!",
     "docker_hub_url": "https://hub.docker.com/r/iib0011/omni-tools",
@@ -153,19 +194,19 @@
     "url": "https://redis.io"
   },
   {
+    "description": "Traefik is your all-in-one, self-hosted, cloud-native, GitOps-driven application proxy, API gateway, and API management platform",
+    "docker_hub_url": "https://hub.docker.com/_/traefik",
+    "dockerfile_url": "https://github.com/traefik/traefik/blob/master/Dockerfile",
+    "local_url": "https://traefik.services.local",
+    "name": "Traefik",
+    "url": "https://traefik.io/"
+  },
+  {
     "description": "Keep your containers up-to-date!",
     "docker_hub_url": "https://hub.docker.com/r/getwud/wud",
     "dockerfile_url": "https://github.com/getwud/wud/blob/main/Dockerfile",
     "local_url": "https://whatsupdocker.services.local",
     "name": "What's up Docker?",
     "url": "https://getwud.github.io/wud/#"
-  },
-  {
-    "description": "A highly customizable homepage (or startpage / application dashboard) with Docker and service API integrations",
-    "docker_hub_url": "https://hub.docker.com/r/gethomepage/homepage",
-    "dockerfile_url": "https://github.com/gethomepage/homepage/blob/dev/Dockerfile",
-    "local_url": "https://homepage.services.local",
-    "name": "homepage",
-    "url": "https://gethomepage.dev"
   }
 ]
