@@ -14,11 +14,17 @@ Background from [wallpapercave.com](https://wallpapercave.com/)
 
 ## About this project
 
-This project is a comprehensive Docker-based developer dashboard designed to streamline and enhance your development workflow. It bundles a curated set of essential services and tools—ranging from container monitoring and database management to email testing and customizable start pages—all orchestrated with Docker Compose for easy setup and maintenance.
+A self-hosted Docker Compose stack for local development with databases, monitoring, automation tools, and utilities. All services run locally with SSO authentication and Prometheus metrics.
 
-Whether you want to keep tabs on your running containers with cAdvisor, manage databases using pgAdmin or phpMyAdmin, explore APIs via the homepage dashboard, or test email workflows with Mailpit, this project brings them together in a unified, self-hosted environment.
+**What's included:**
 
-Built with flexibility and productivity in mind, it helps developers quickly spin up a local ecosystem that covers common development needs without clutter or tracking—just fast, accessible tools running right on your machine.
+- Databases with web interfaces (MySQL, PostgreSQL, MongoDB, Redis)
+- Prometheus monitoring with comprehensive metrics collection
+- Authentik for SSO authentication
+- Development tools and utilities
+- Workflow automation (n8n) and AI models (Ollama)
+
+No tracking, no external dependencies—just a local development environment you control.
 
 ## Installation
 
