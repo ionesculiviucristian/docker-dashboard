@@ -34,6 +34,8 @@ services:
     networks:
       - "mongo"
     restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
     ulimits:
       nofile:
         hard: 64000
@@ -49,7 +51,8 @@ services:
       - "mongo-data:/data/db"
   mongo-mongo-express:
     depends_on:
-      - "mongo"
+      mongo:
+        condition: "service_healthy"
     environment:
       ME_CONFIG_BASICAUTH: "false"
       ME_CONFIG_MONGODB_ADMINPASSWORD: "${MONGO_INITDB_ROOT_PASSWORD:?err}"
@@ -82,11 +85,14 @@ services:
       - "mongo"
       - "proxy"
     restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
   mongo-prometheus-exporter:
     command:
       - "--mongodb.uri=mongodb://mongo:27017"
     depends_on:
-      - "mongo"
+      mongo:
+        condition: "service_healthy"
     environment:
       MONGODB_PASSWORD: "${MONGO_EXPORTER_USER_PASSWORD:?err}"
       MONGODB_USER: "${MONGO_EXPORTER_USER:?err}"
@@ -99,6 +105,8 @@ services:
       - "mongo"
       - "prometheus"
     restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
 volumes:
   mongo-config: null
   mongo-data: null

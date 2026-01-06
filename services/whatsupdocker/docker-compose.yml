@@ -30,6 +30,8 @@ services:
     networks:
       - "proxy"
     restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "whatsupdocker-data:/store"

@@ -30,6 +30,8 @@ services:
     networks:
       - "mysql"
     restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
     ulimits:
       nofile:
         hard: 102400
@@ -42,7 +44,8 @@ services:
       - "mysql-data:/var/lib/mysql"
   mysql-phpmyadmin:
     depends_on:
-      - "mysql"
+      mysql:
+        condition: "service_healthy"
     environment:
       PMA_HOSTS: "mysql"
       TZ: "${TZ:?err}"
@@ -70,6 +73,8 @@ services:
       - "mysql"
       - "proxy"
     restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
     volumes:
       - "${PWD}/services/mysql/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro"
   mysql-prometheus-exporter:
@@ -77,7 +82,8 @@ services:
       - "--mysqld.address=mysql:3306"
       - "--mysqld.username=${MYSQL_EXPORTER_USER}"
     depends_on:
-      - "mysql"
+      mysql:
+        condition: "service_healthy"
     environment:
       MYSQLD_EXPORTER_PASSWORD: "${MYSQL_EXPORTER_USER_PASSWORD:?err}"
       MYSQL_EXPORTER_USER: "${MYSQL_EXPORTER_USER:?err}"
@@ -98,5 +104,7 @@ services:
       - "mysql"
       - "prometheus"
     restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
 volumes:
   mysql-data: null

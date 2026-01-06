@@ -31,13 +31,16 @@ services:
     networks:
       - "postgres"
     restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
     shm_size: "256m"
     volumes:
       - "${PWD}/services/postgres/postgres/initdb:/docker-entrypoint-initdb.d:ro"
       - "postgres-data:/var/lib/postgresql"
   postgres-pgadmin4:
     depends_on:
-      - "postgres"
+      postgres:
+        condition: "service_healthy"
     environment:
       PGADMIN_DEFAULT_EMAIL: "${POSTGRES_PGADMIN4_PGADMIN_DEFAULT_EMAIL:?err}"
       PGADMIN_DEFAULT_PASSWORD: "${POSTGRES_PGADMIN4_PGADMIN_DEFAULT_PASSWORD:?err}"
@@ -65,13 +68,16 @@ services:
       - "postgres"
       - "proxy"
     restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
     volumes:
       - "${PWD}/services/postgres/pgadmin4/preferences.json:/pgadmin4/preferences.json:ro"
       - "${PWD}/services/postgres/pgadmin4/servers.json:/pgadmin4/servers.json:ro"
       - "postgres-pgadmin4-data:/var/lib/pgadmin"
   postgres-prometheus-exporter:
     depends_on:
-      - "postgres"
+      postgres:
+        condition: "service_healthy"
     environment:
       DATA_SOURCE_PASS: "${POSTGRES_EXPORTER_USER_PASSWORD:?err}"
       DATA_SOURCE_URI: "postgres:5432/postgres?sslmode=disable"
@@ -93,6 +99,8 @@ services:
       - "postgres"
       - "prometheus"
     restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
 volumes:
   postgres-data: null
   postgres-pgadmin4-data: null

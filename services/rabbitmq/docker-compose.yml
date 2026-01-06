@@ -36,6 +36,8 @@ services:
       - "proxy"
       - "rabbitmq"
     restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
     volumes:
       - "rabbitmq-data:/var/lib/rabbitmq"
 volumes:

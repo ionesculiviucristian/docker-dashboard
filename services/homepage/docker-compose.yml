@@ -35,6 +35,8 @@ services:
       - "mailpit"
       - "proxy"
     restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
     volumes:
       - "${PWD}/services/homepage/config/bookmarks.yaml:/app/config/bookmarks.yaml:ro"
       - "${PWD}/services/homepage/config/docker.yaml:/app/config/docker.yaml:ro"

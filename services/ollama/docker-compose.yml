@@ -20,14 +20,15 @@ services:
       wud.watch: true
     networks:
       - "default"
-    ports:
-      - "11434:11434"
     restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
     volumes:
       - "ollama-data:/root/.ollama"
   ollama-open-webui:
     depends_on:
-      - "ollama"
+      ollama:
+        condition: service_healthy
     environment:
       ENABLE_SIGNUP: false
       OLLAMA_BASE_URL: "http://ollama:11434"
@@ -61,6 +62,8 @@ services:
       - "default"
       - "proxy"
     restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
     volumes:
       - "ollama-open-webui-data:/app/backend/data"
 volumes:

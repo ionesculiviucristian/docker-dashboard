@@ -10,6 +10,14 @@ services:
       TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${N8N_VIRTUAL_HOST:?err}"
       VIRTUAL_PORT: "${N8N_VIRTUAL_PORT:?err}"
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "90s"
+      test:
+        - "CMD-SHELL"
+        - "wget --no-verbose --tries=1 --spider http://localhost:5678/healthz || exit 1"
+      timeout: "10s"
     image: "n8nio/n8n:${N8N_VERSION:?err}"
     labels:
       traefik.docker.network: "${PROXY_NETWORK:?err}"
@@ -23,6 +31,8 @@ services:
     networks:
       - "proxy"
     restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
     volumes:
       - "n8n-data:/home/node/.n8n"
 volumes:

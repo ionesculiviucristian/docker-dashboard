@@ -32,6 +32,8 @@ services:
       - "proxy"
     privileged: true
     restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
     volumes:
       - "/:/rootfs:ro"
       - "/dev/disk/:/dev/disk:ro"

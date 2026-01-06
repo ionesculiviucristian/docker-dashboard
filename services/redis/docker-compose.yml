@@ -29,6 +29,8 @@ services:
     networks:
       - "redis"
     restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
     volumes:
       - "redis-data:/data"
   redis-prometheus-exporter:
@@ -45,6 +47,8 @@ services:
       - "prometheus"
       - "redis"
     restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
   redis-redisinsight:
     environment:
       TZ: "${TZ:?err}"
@@ -73,6 +77,8 @@ services:
       - "proxy"
       - "redis"
     restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
     volumes:
       - "redis-redisinsight-data:/data"
 volumes:
