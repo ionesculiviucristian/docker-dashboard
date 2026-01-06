@@ -58,6 +58,13 @@
         icon: "/icons/mongo-express.png"
         server: "my-docker"
         showStats: true
+    - n8n:
+        container: "dev-n8n-1"
+        description: "Fair-code workflow automation platform with native AI capabilities"
+        href: "https://n8n.services.local/"
+        icon: "sh-n8n.png"
+        server: "my-docker"
+        showStats: true
     - Omni Tools:
         container: "dev-omni-tools-1"
         description: "Self-hosted collection of powerful web-based tools for everyday tasks"

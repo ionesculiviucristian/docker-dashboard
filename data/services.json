@@ -108,6 +108,14 @@
     "url": "https://www.mysql.com"
   },
   {
+    "description": "n8n is a workflow automation platform that gives technical teams the flexibility of code with the speed of no-code",
+    "docker_hub_url": "https://hub.docker.com/r/n8nio/n8n",
+    "dockerfile_url": "https://github.com/n8n-io/n8n/blob/master/docker/images/n8n/Dockerfile",
+    "local_url": "https://n8n.services.local",
+    "name": "n8n",
+    "url": "https://n8n.io/"
+  },
+  {
     "dependents": [
       {
         "description": "Open WebUI is an extensible, self-hosted AI interface that adapts to your workflow, all while operating entirely offline",

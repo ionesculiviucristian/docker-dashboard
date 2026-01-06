@@ -28,6 +28,7 @@ Before running the install script make sure [mkcert](https://github.com/FiloSott
 
 - Mealie
 - MinIO
+- n8n
 - pgAdmin4
 - RabbitMQ
 
@@ -66,6 +67,9 @@ The rest of the services are protected by Authentik.
 - [MySQL](null): MySQL is the world's most popular open source database
   - [Docker Hub](https://hub.docker.com/_/mysql)
   - [Dockerfile](https://github.com/docker-library/mysql/blob/master/innovation/Dockerfile.oracle)
+- [n8n](https://n8n.services.local): n8n is a workflow automation platform that gives technical teams the flexibility of code with the speed of no-code
+  - [Docker Hub](https://hub.docker.com/r/n8nio/n8n)
+  - [Dockerfile](https://github.com/n8n-io/n8n/blob/master/docker/images/n8n/Dockerfile)
 - [Ollama](null): Chat & build with open models
   - [Docker Hub](https://hub.docker.com/r/ollama/ollama)
   - [Dockerfile](https://github.com/ollama/ollama/blob/main/Dockerfile)

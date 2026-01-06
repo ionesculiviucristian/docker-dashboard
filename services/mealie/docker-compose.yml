@@ -29,6 +29,6 @@ services:
       - "proxy"
     restart: "unless-stopped"
     volumes:
-      - "mealie-data:/app/data/"
+      - "mealie-data:/app/data"
 volumes:
   mealie-data: null
