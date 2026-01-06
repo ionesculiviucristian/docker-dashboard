@@ -168,6 +168,24 @@
     "url": "https://www.postgresql.org"
   },
   {
+    "dependents": [
+      {
+        "description": "The blackbox exporter allows blackbox probing of endpoints over HTTP, HTTPS, DNS, TCP, ICMP and gRPC",
+        "docker_hub_url": "https://hub.docker.com/r/prom/blackbox-exporter",
+        "dockerfile_url": "https://github.com/prometheus/blackbox_exporter/blob/master/Dockerfile",
+        "local_url": null,
+        "name": "Blackbox Exporter",
+        "url": "https://github.com/prometheus/blackbox_exporter"
+      },
+      {
+        "description": "Prometheus exporter for hardware and OS metrics exposed by *NIX kernels, written in Go with pluggable metric collectors",
+        "docker_hub_url": "https://hub.docker.com/r/prom/node-exporter",
+        "dockerfile_url": "https://github.com/prometheus/node_exporter/blob/master/Dockerfile",
+        "local_url": null,
+        "name": "Node Exporter",
+        "url": "https://github.com/prometheus/node_exporter"
+      }
+    ],
     "description": "Monitor your applications, systems, and services with the leading open source monitoring solution. Instrument, collect, store, and query your metrics for alerting, dashboarding, and other use cases",
     "docker_hub_url": "https://hub.docker.com/r/prom/prometheus",
     "dockerfile_url": "https://github.com/prometheus/prometheus/blob/main/Dockerfile",

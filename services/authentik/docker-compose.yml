@@ -2,6 +2,9 @@ networks:
   authentik:
     external: true
     name: "${AUTHENTIK_NETWORK:?err}"
+  prometheus:
+    external: true
+    name: "${PROMETHEUS_NETWORK:?err}"
   proxy:
     external: true
     name: "${PROXY_NETWORK:?err}"
@@ -71,6 +74,7 @@ services:
       wud.watch: true
     networks:
       - "authentik"
+      - "prometheus"
       - "proxy"
     restart: "unless-stopped"
     security_opt:

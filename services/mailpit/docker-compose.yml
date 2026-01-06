@@ -2,12 +2,16 @@ networks:
   mailpit:
     external: true
     name: "${MAILPIT_NETWORK:?err}"
+  prometheus:
+    external: true
+    name: "${PROMETHEUS_NETWORK:?err}"
   proxy:
     external: true
     name: "${PROXY_NETWORK:?err}"
 services:
   mailpit:
     environment:
+      MP_ENABLE_PROMETHEUS: true
       TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${MAILPIT_VIRTUAL_HOST:?err}"
       VIRTUAL_PORT: "${MAILPIT_VIRTUAL_PORT:?err}"
@@ -32,6 +36,7 @@ services:
       wud.watch: true
     networks:
       - "mailpit"
+      - "prometheus"
       - "proxy"
     restart: "unless-stopped"
     security_opt:

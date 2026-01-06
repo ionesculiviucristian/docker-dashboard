@@ -1,4 +1,7 @@
 networks:
+  prometheus:
+    external: true
+    name: "${PROMETHEUS_NETWORK:?err}"
   proxy:
     external: true
     name: "${PROXY_NETWORK:?err}"
@@ -29,6 +32,11 @@ services:
       - --entrypoints.websecure.forwardedHeaders.insecure=true
       # https://doc.traefik.io/traefik/operations/ping/
       - --ping=true
+      # https://doc.traefik.io/traefik/observability/metrics/prometheus/
+      - --metrics.prometheus=true
+      - --metrics.prometheus.addEntryPointsLabels=true
+      - --metrics.prometheus.addRoutersLabels=true
+      - --metrics.prometheus.addServicesLabels=true
     environment:
       TZ: "${TZ:?err}"
     healthcheck:
@@ -51,6 +59,7 @@ services:
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
+      - "prometheus"
       - "proxy"
     ports:
       - "443:443"

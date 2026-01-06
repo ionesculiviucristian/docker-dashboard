@@ -2,6 +2,45 @@ global:
   scrape_interval: "15s"
 
 scrape_configs:
+  - job_name: "authentik"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ["authentik-server:9300"]
+
+  - job_name: "blackbox-http"
+    metrics_path: "/probe"
+    params:
+      module: ["http_2xx"]
+    static_configs:
+      - targets:
+          - "https://google.com"
+    relabel_configs:
+      - source_labels: ["__address__"]
+        target_label: "__param_target"
+      - source_labels: ["__param_target"]
+        target_label: "instance"
+      - target_label: "__address__"
+        replacement: "prometheus-blackbox-exporter:9115"
+
+  - job_name: "cadvisor"
+    scrape_interval: "5s"
+    static_configs:
+      - targets: ["cadvisor:8080"]
+
+  - job_name: "mailpit"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ["mailpit:8025"]
+
+  - job_name: "minio"
+    metrics_path: "/minio/v2/metrics/cluster"
+    static_configs:
+      - targets: ["minio:9000"]
+
+  - job_name: "mongodb"
+    static_configs:
+      - targets: ["mongo-prometheus-exporter:9216"]
+
   - job_name: "mysql"
     metrics_path: "/probe"
     static_configs:
@@ -15,9 +54,14 @@ scrape_configs:
       - target_label: "__address__"
         replacement: "mysql-prometheus-exporter:9104"
 
-  - job_name: "mongodb"
+  - job_name: "n8n"
+    metrics_path: "/metrics"
     static_configs:
-      - targets: ["mongo-prometheus-exporter:9216"]
+      - targets: ["n8n:5678"]
+
+  - job_name: "node-exporter"
+    static_configs:
+      - targets: ["prometheus-node-exporter:9100"]
 
   - job_name: "postgres"
     static_configs:
@@ -31,7 +75,12 @@ scrape_configs:
     static_configs:
       - targets: ["redis-prometheus-exporter:9121"]
 
-  - job_name: "cadvisor"
-    scrape_interval: "5s"
+  - job_name: "traefik"
+    metrics_path: "/metrics"
     static_configs:
-      - targets: ["cadvisor:8080"]
+      - targets: ["traefik:8080"]
+
+  - job_name: "whatsupdocker"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ["whatsupdocker:3000"]

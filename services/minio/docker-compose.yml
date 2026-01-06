@@ -2,6 +2,9 @@ networks:
   minio:
     external: true
     name: "${MINIO_NETWORK:?err}"
+  prometheus:
+    external: true
+    name: "${PROMETHEUS_NETWORK:?err}"
   proxy:
     external: true
     name: "${PROXY_NETWORK:?err}"
@@ -9,6 +12,7 @@ services:
   minio:
     command: "server /data --console-address ':9001'"
     environment:
+      MINIO_PROMETHEUS_AUTH_TYPE: "public"
       MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD:?err}"
       MINIO_ROOT_USER: "${MINIO_ROOT_USER:?err}"
       TZ: "${TZ:?err}"
@@ -34,6 +38,7 @@ services:
       wud.watch: true
     networks:
       - "minio"
+      - "prometheus"
       - "proxy"
     restart: "unless-stopped"
     volumes:

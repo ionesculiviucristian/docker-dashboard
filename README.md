@@ -120,6 +120,13 @@ The rest of the services are protected by Authentik.
 - [prometheus](https://prometheus.services.local): Monitor your applications, systems, and services with the leading open source monitoring solution. Instrument, collect, store, and query your metrics for alerting, dashboarding, and other use cases
   - [Docker Hub](https://hub.docker.com/r/prom/prometheus)
   - [Dockerfile](https://github.com/prometheus/prometheus/blob/main/Dockerfile)
+  - Additional services:
+    - [Blackbox Exporter](null): The blackbox exporter allows blackbox probing of endpoints over HTTP, HTTPS, DNS, TCP, ICMP and gRPC
+      - [Docker Hub](https://hub.docker.com/r/prom/blackbox-exporter)
+      - [Dockerfile](https://github.com/prometheus/blackbox_exporter/blob/master/Dockerfile)
+    - [Node Exporter](null): Prometheus exporter for hardware and OS metrics exposed by *NIX kernels, written in Go with pluggable metric collectors
+      - [Docker Hub](https://hub.docker.com/r/prom/node-exporter)
+      - [Dockerfile](https://github.com/prometheus/node_exporter/blob/master/Dockerfile)
 
 - [RabbitMQ](https://rabbitmq.services.local): RabbitMQ is a reliable and mature messaging and streaming broker, which is easy to deploy on cloud environments, on-premises, and on your local machine. It is currently used by millions worldwide
   - [Docker Hub](https://hub.docker.com/_/rabbitmq)

@@ -6,6 +6,59 @@ networks:
     external: true
     name: "${PROXY_NETWORK:?err}"
 services:
+  prometheus-blackbox-exporter:
+    command:
+      - "--config.file=/config/blackbox.yml"
+    environment:
+      TZ: "${TZ:?err}"
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "30s"
+      test:
+        - "CMD-SHELL"
+        - "wget --no-verbose --tries=1 --spider http://localhost:9115/health || exit 1"
+      timeout: "10s"
+    image: "prom/blackbox-exporter:${PROMETHEUS_BLACKBOX_EXPORTER_VERSION:?err}"
+    labels:
+      wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
+      wud.watch: true
+    networks:
+      - "prometheus"
+      - "proxy"
+    restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
+    volumes:
+      - "${PWD}/services/prometheus/blackbox.yml:/config/blackbox.yml:ro"
+  prometheus-node-exporter:
+    command:
+      - "--path.rootfs=/host"
+      - "--path.procfs=/host/proc"
+      - "--path.sysfs=/host/sys"
+      - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
+    environment:
+      TZ: "${TZ:?err}"
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "30s"
+      test:
+        - "CMD-SHELL"
+        - "wget --no-verbose --tries=1 --spider http://localhost:9100/metrics || exit 1"
+      timeout: "10s"
+    image: "prom/node-exporter:${PROMETHEUS_NODE_EXPORTER_VERSION:?err}"
+    labels:
+      wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
+      wud.watch: true
+    networks:
+      - "prometheus"
+    pid: "host"
+    restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
+    volumes:
+      - "/:/host:ro,rslave"
   prometheus:
     environment:
       TZ: "${TZ:?err}"

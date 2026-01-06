@@ -1,4 +1,7 @@
 networks:
+  prometheus:
+    external: true
+    name: "${PROMETHEUS_NETWORK:?err}"
   proxy:
     external: true
     name: "${PROXY_NETWORK:?err}"
@@ -7,6 +10,7 @@ services:
     environment:
       GENERIC_TIMEZONE: "${TZ:?err}"
       N8N_LISTEN_ADDRESS: "0.0.0.0"
+      N8N_METRICS: true
       TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${N8N_VIRTUAL_HOST:?err}"
       VIRTUAL_PORT: "${N8N_VIRTUAL_PORT:?err}"
@@ -29,6 +33,7 @@ services:
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
+      - "prometheus"
       - "proxy"
     restart: "unless-stopped"
     security_opt:
