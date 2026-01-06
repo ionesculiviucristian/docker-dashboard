@@ -1,11 +1,18 @@
 <%- include('partials/header.ejs'); -%>
 
 ## List of available services
-<% services.sort(sortServices).forEach(function(service){ %>
+<% services.sort(sortServices).forEach(function(service) { %>
 <%- `- [${service.name}](${service.local_url}): ${service.description}` %>
 <%- `  - [Docker Hub](${service.docker_hub_url})` %>
 <%- `  - [Dockerfile](${service.dockerfile_url})` -%>
+<% if (service.dependents) { %>
+<%- `  - Additional services:` -%>
+<% (service.dependents).sort(sortServices).forEach(function(dependent) { %>
+<%- `    - [${dependent.name}](${dependent.local_url}): ${dependent.description}` %>
+<%- `      - [Docker Hub](${dependent.docker_hub_url})` %>
+<%- `      - [Dockerfile](${dependent.dockerfile_url})` -%>
 <% }); -%>
-
+<% } %>
+<% }); -%>
 
 <%- include('partials/footer.ejs'); -%>
