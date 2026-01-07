@@ -13,6 +13,20 @@
         icon: "sh-cadvisor.png"
         server: "my-docker"
         showStats: true
+    - Grafana:
+        container: "dev-grafana-1"
+        description: "The open and composable observability and data visualization platform"
+        href: "https://grafana.services.local/"
+        icon: "sh-grafana.png"
+        server: "my-docker"
+        showStats: true
+    - Grafana Alloy:
+        container: "dev-grafana-alloy-1"
+        description: "Grafana Alloy is an open source OpenTelemetry collector with built-in Prometheus pipelines and support for metrics, logs, traces, and profiles"
+        href: "https://grafana-alloy.services.local/"
+        icon: "sh-grafana-alloy.png"
+        server: "my-docker"
+        showStats: true
     - IT TOOLS:
         container: "dev-it-tools-1"
         description: "Handy tools for developers"

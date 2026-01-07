@@ -14,11 +14,12 @@ Background from [wallpapercave.com](https://wallpapercave.com/)
 
 ## About this project
 
-A self-hosted Docker Compose stack for local development with databases, monitoring, automation tools, and utilities. All services run locally with SSO authentication and Prometheus metrics.
+A self-hosted Docker Compose stack for local development with databases, monitoring, automation tools, and utilities. All services run locally with SSO authentication and comprehensive observability.
 
 **What's included:**
 
 - Databases with web interfaces (MySQL, PostgreSQL, MongoDB, Redis)
+- Full observability stack with Grafana, Loki, and Alloy for logs, metrics, and visualization
 - Prometheus monitoring with comprehensive metrics collection
 - Authentik for SSO authentication
 - Development tools and utilities
@@ -32,6 +33,7 @@ Before running the install script make sure [mkcert](https://github.com/FiloSott
 
 ⚠️ Note: The following services require manual registration / authentication because they have payed OIDC authentication or will have in the future:
 
+- Grafana
 - Mealie
 - MinIO
 - n8n
@@ -53,6 +55,17 @@ The rest of the services are protected by Authentik.
 - [cAdvisor](https://cadvisor.services.local): Analyzes resource usage and performance characteristics of running containers
   - [Docker Hub](https://hub.docker.com/r/google/cadvisor)
   - [Dockerfile](https://github.com/google/cadvisor/blob/master/deploy/Dockerfile)
+
+- [Grafana](https://grafana.services.local): The open and composable observability and data visualization platform
+  - [Docker Hub](https://hub.docker.com/r/grafana/grafana)
+  - [Dockerfile](https://github.com/grafana/grafana/blob/main/Dockerfile)
+  - Additional services:
+    - [Grafana Alloy](https://grafana-alloy.services.local): Grafana Alloy is an open source OpenTelemetry collector with built-in Prometheus pipelines and support for metrics, logs, traces, and profiles
+      - [Docker Hub](https://hub.docker.com/r/grafana/alloy)
+      - [Dockerfile](https://github.com/grafana/alloy/blob/main/Dockerfile)
+    - [Loki](null): Loki is a horizontally scalable, highly available, multi-tenant log aggregation system inspired by Prometheus
+      - [Docker Hub](https://hub.docker.com/r/grafana/loki)
+      - [Dockerfile](https://github.com/grafana/loki/blob/main/cmd/loki/Dockerfile)
 
 - [homepage](https://homepage.services.local): A highly customizable homepage (or startpage / application dashboard) with Docker and service API integrations
   - [Docker Hub](https://hub.docker.com/r/gethomepage/homepage)

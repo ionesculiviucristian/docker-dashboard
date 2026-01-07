@@ -1,0 +1,89 @@
+networks:
+  prometheus:
+    external: true
+    name: "${PROMETHEUS_NETWORK:?err}"
+  proxy:
+    external: true
+    name: "${PROXY_NETWORK:?err}"
+services:
+  grafana:
+    environment:
+      GF_PATHS_PROVISIONING: "/etc/grafana/provisioning"
+      GF_SECURITY_ADMIN_PASSWORD: "${GRAFANA_GF_SECURITY_ADMIN_PASSWORD:?err}"
+      GF_SECURITY_ADMIN_USER: "${GRAFANA_GF_SECURITY_ADMIN_USER:?err}"
+      GF_SERVER_ROOT_URL: "https://${GRAFANA_VIRTUAL_HOST:?err}"
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${GRAFANA_VIRTUAL_HOST:?err}"
+      VIRTUAL_PORT: "${GRAFANA_VIRTUAL_PORT:?err}"
+    image: "grafana/grafana:${GRAFANA_VERSION:?err}"
+    labels:
+      traefik.docker.network: "${PROXY_NETWORK:?err}"
+      traefik.enable: true
+      traefik.http.routers.grafana.entrypoints: "websecure"
+      traefik.http.routers.grafana.rule: "Host(`${GRAFANA_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.grafana.tls: true
+      traefik.http.services.grafana.loadbalancer.server.port: "${GRAFANA_VIRTUAL_PORT:?err}"
+      wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
+      wud.watch: true
+    networks:
+      - "default"
+      - "prometheus"
+      - "proxy"
+    restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
+    volumes:
+      - "${PWD}/services/grafana/provisioning:/etc/grafana/provisioning:ro"
+      - "grafana-data:/var/lib/grafana"
+  grafana-alloy:
+    command:
+      - "run"
+      - "--server.http.listen-addr=0.0.0.0:${GRAFANA_ALLOY_VIRTUAL_PORT:?err}"
+      - "--storage.path=/var/lib/alloy/data"
+      - "/etc/alloy/config.alloy"
+    environment:
+      ALLOY_LOGGING_LEVEL: "${GRAFANA_ALLOY_LOGGING_LEVEL:?err}"
+      TZ: "${TZ:?err}"
+      VIRTUAL_HOST: "${GRAFANA_ALLOY_VIRTUAL_HOST:?err}"
+      VIRTUAL_PORT: "${GRAFANA_ALLOY_VIRTUAL_PORT:?err}"
+    image: "grafana/alloy:${GRAFANA_ALLOY_VERSION:?err}"
+    labels:
+      traefik.docker.network: "${PROXY_NETWORK:?err}"
+      traefik.enable: true
+      traefik.http.routers.grafana-alloy.entrypoints: "websecure"
+      traefik.http.routers.grafana-alloy.middlewares: "authentik-server@docker"
+      traefik.http.routers.grafana-alloy.rule: "Host(`${GRAFANA_ALLOY_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.grafana-alloy.tls: true
+      traefik.http.services.grafana-alloy.loadbalancer.server.port: "${GRAFANA_ALLOY_VIRTUAL_PORT:?err}"
+      wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
+      wud.watch: true
+    networks:
+      - "default"
+      - "proxy"
+    restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
+    volumes:
+      - "${PWD}/services/grafana/alloy/config.alloy:/etc/alloy/config.alloy:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "grafana-alloy-data:/var/lib/alloy"
+  grafana-loki:
+    command:
+      - "-config.file=/etc/loki/local-config.yaml"
+    environment:
+      TZ: "${TZ:?err}"
+    image: "grafana/loki:${GRAFANA_LOKI_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
+      wud.watch: true
+    networks:
+      - "default"
+    restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
+    volumes:
+      - "grafana-loki-data:/loki"
+volumes:
+  grafana-alloy-data: null
+  grafana-data: null
+  grafana-loki-data: null

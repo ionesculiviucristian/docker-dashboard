@@ -36,6 +36,8 @@ create_docker_network "${REDIS_NETWORK}"
 # Register service domains to /etc/hosts
 ./scripts/register_host.sh "authentik.services.local"
 ./scripts/register_host.sh "cadvisor.services.local"
+./scripts/register_host.sh "grafana.services.local"
+./scripts/register_host.sh "grafana-alloy.services.local"
 ./scripts/register_host.sh "homepage.services.local"
 ./scripts/register_host.sh "it-tools.services.local"
 ./scripts/register_host.sh "mailpit.services.local"

@@ -14,11 +14,12 @@ Background from [wallpapercave.com](https://wallpapercave.com/)
 
 ## About this project
 
-A self-hosted Docker Compose stack for local development with databases, monitoring, automation tools, and utilities. All services run locally with SSO authentication and Prometheus metrics.
+A self-hosted Docker Compose stack for local development with databases, monitoring, automation tools, and utilities. All services run locally with SSO authentication and comprehensive observability.
 
 **What's included:**
 
 - Databases with web interfaces (MySQL, PostgreSQL, MongoDB, Redis)
+- Full observability stack with Grafana, Loki, and Alloy for logs, metrics, and visualization
 - Prometheus monitoring with comprehensive metrics collection
 - Authentik for SSO authentication
 - Development tools and utilities
@@ -32,6 +33,7 @@ Before running the install script make sure [mkcert](https://github.com/FiloSott
 
 ⚠️ Note: The following services require manual registration / authentication because they have payed OIDC authentication or will have in the future:
 
+- Grafana
 - Mealie
 - MinIO
 - n8n

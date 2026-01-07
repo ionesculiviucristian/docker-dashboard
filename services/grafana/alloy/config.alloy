@@ -1,0 +1,67 @@
+// https://grafana.com/docs/alloy/latest/reference/config-blocks/logging/
+logging {
+  level  = sys.env("ALLOY_LOGGING_LEVEL")
+  format = "logfmt"
+}
+
+// https://grafana.com/docs/alloy/latest/reference/components/discovery/discovery.docker/
+discovery.docker "containers" {
+  host = "unix:///var/run/docker.sock"
+}
+
+// https://grafana.com/docs/alloy/latest/reference/components/discovery/discovery.relabel/
+discovery.relabel "docker" {
+  targets = discovery.docker.containers.targets
+
+  rule {
+    source_labels = ["__meta_docker_container_name"]
+    regex         = "/(.*)"
+    target_label  = "container"
+  }
+
+  rule {
+    source_labels = ["__meta_docker_container_id"]
+    target_label  = "container_id"
+  }
+
+  rule {
+    source_labels = ["__meta_docker_container_image"]
+    target_label  = "image"
+  }
+
+  rule {
+    source_labels = ["__meta_docker_container_log_stream"]
+    target_label  = "stream"
+  }
+
+  rule {
+    source_labels = ["__meta_docker_container_label_com_docker_compose_project"]
+    target_label  = "compose_project"
+  }
+
+  rule {
+    source_labels = ["__meta_docker_container_label_com_docker_compose_service"]
+    target_label  = "compose_service"
+  }
+
+  rule {
+    action       = "labelmap"
+    regex        = "__meta_docker_container_label_logging_(.+)"
+    replacement  = "$1"
+  }
+}
+
+// https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.docker/
+loki.source.docker "containers" {
+  host          = "unix:///var/run/docker.sock"
+  targets       = discovery.relabel.docker.output
+  forward_to    = [loki.write.local.receiver]
+  relabel_rules = discovery.relabel.docker.rules
+}
+
+// https://grafana.com/docs/alloy/latest/reference/components/loki/loki.write/
+loki.write "local" {
+  endpoint {
+    url = "http://grafana-loki:3100/loki/api/v1/push"
+  }
+}

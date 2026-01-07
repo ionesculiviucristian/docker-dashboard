@@ -16,6 +16,32 @@
     "url": "https://github.com/google/cadvisor"
   },
   {
+    "dependents": [
+      {
+        "description": "Grafana Alloy is an open source OpenTelemetry collector with built-in Prometheus pipelines and support for metrics, logs, traces, and profiles",
+        "docker_hub_url": "https://hub.docker.com/r/grafana/alloy",
+        "dockerfile_url": "https://github.com/grafana/alloy/blob/main/Dockerfile",
+        "local_url": "https://grafana-alloy.services.local",
+        "name": "Grafana Alloy",
+        "url": "https://grafana.com/oss/alloy-opentelemetry-collector/"
+      },
+      {
+        "description": "Loki is a horizontally scalable, highly available, multi-tenant log aggregation system inspired by Prometheus",
+        "docker_hub_url": "https://hub.docker.com/r/grafana/loki",
+        "dockerfile_url": "https://github.com/grafana/loki/blob/main/cmd/loki/Dockerfile",
+        "local_url": null,
+        "name": "Loki",
+        "url": "https://grafana.com/oss/loki/"
+      }
+    ],
+    "description": "The open and composable observability and data visualization platform",
+    "docker_hub_url": "https://hub.docker.com/r/grafana/grafana",
+    "dockerfile_url": "https://github.com/grafana/grafana/blob/main/Dockerfile",
+    "local_url": "https://grafana.services.local",
+    "name": "Grafana",
+    "url": "https://grafana.com"
+  },
+  {
     "description": "A highly customizable homepage (or startpage / application dashboard) with Docker and service API integrations",
     "docker_hub_url": "https://hub.docker.com/r/gethomepage/homepage",
     "dockerfile_url": "https://github.com/gethomepage/homepage/blob/dev/Dockerfile",
