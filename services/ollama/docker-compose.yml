@@ -34,14 +34,6 @@ services:
       WEBUI_SECRET_KEY: "${OLLAMA_OPEN_WEBUI_WEBUI_SECRET_KEY:?err}"
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    healthcheck:
-      interval: "30s"
-      retries: 5
-      start_period: "60s"
-      test:
-        - "CMD-SHELL"
-        - "curl --fail --silent --show-error http://localhost:8080/health || exit 1"
-      timeout: "10s"
     image: "ghcr.io/open-webui/open-webui:${OLLAMA_OPEN_WEBUI_VERSION:?err}"
     labels:
       traefik.docker.network: "${PROXY_NETWORK:?err}"

@@ -10,14 +10,6 @@ services:
     environment:
       WUD_REGISTRY_CUSTOM_OSGEO_URL: "${WHATSUPDOCKER_WUD_REGISTRY_CUSTOM_OSGEO_URL}"
       WUD_WATCHER_LOCAL_WATCHBYDEFAULT: false
-    healthcheck:
-      interval: "30s"
-      retries: 5
-      start_period: "60s"
-      test:
-        - "CMD-SHELL"
-        - "curl --fail --silent --show-error http://localhost:3000/api/containers || exit 1"
-      timeout: "10s"
     image: "getwud/wud:${WHATSUPDOCKER_VERSION:?err}"
     labels:
       traefik.docker.network: "${PROXY_NETWORK:?err}"

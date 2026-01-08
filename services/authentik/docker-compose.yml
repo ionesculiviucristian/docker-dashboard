@@ -47,14 +47,6 @@ services:
       AUTHENTIK_POSTGRESQL__PASSWORD: "${AUTHENTIK_POSTGRES_USER_PASSWORD:?err}"
       AUTHENTIK_POSTGRESQL__USER: "${AUTHENTIK_POSTGRES_USER:?err}"
       AUTHENTIK_SECRET_KEY: "${AUTHENTIK_SECRET_KEY:?err}"
-    healthcheck:
-      interval: "30s"
-      retries: 5
-      start_period: "90s"
-      test:
-        - "CMD-SHELL"
-        - "curl --fail --silent --show-error http://localhost:9000/-/health/ready/ || exit 1"
-      timeout: "10s"
     image: "authentik/server:${AUTHENTIK_VERSION:?err}"
     labels:
       traefik.docker.network: "${PROXY_NETWORK:?err}"
@@ -91,14 +83,6 @@ services:
       AUTHENTIK_POSTGRESQL__PASSWORD: "${AUTHENTIK_POSTGRES_USER_PASSWORD:?err}"
       AUTHENTIK_POSTGRESQL__USER: "${AUTHENTIK_POSTGRES_USER:?err}"
       AUTHENTIK_SECRET_KEY: "${AUTHENTIK_SECRET_KEY:?err}"
-    healthcheck:
-      interval: "30s"
-      retries: 5
-      start_period: "90s"
-      test:
-        - "CMD-SHELL"
-        - "ak healthcheck || exit 1"
-      timeout: "10s"
     image: "authentik/server:${AUTHENTIK_VERSION:?err}"
     labels:
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"

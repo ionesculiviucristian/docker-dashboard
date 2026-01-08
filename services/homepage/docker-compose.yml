@@ -11,14 +11,6 @@ services:
       HOMEPAGE_ALLOWED_HOSTS: "${HOMEPAGE_HOST}"
       HOMEPAGE_VAR_SERVICES_USER: "${SERVICES_USER:?err}"
       HOMEPAGE_VAR_SERVICES_USER_PASSWORD: "${SERVICES_USER_PASSWORD:?err}"
-    healthcheck:
-      interval: "30s"
-      retries: 5
-      start_period: "60s"
-      test:
-        - "CMD-SHELL"
-        - "wget --no-verbose --tries=1 --spider http://localhost:3000 || exit 1"
-      timeout: "10s"
     image: "ghcr.io/gethomepage/homepage:${HOMEPAGE_VERSION:?err}"
     labels:
       traefik.docker.network: "${PROXY_NETWORK:?err}"

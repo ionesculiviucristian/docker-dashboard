@@ -6,14 +6,6 @@ services:
   cadvisor:
     devices:
       - "/dev/kmsg"
-    healthcheck:
-      interval: "30s"
-      retries: 5
-      start_period: "60s"
-      test:
-        - "CMD-SHELL"
-        - "wget --no-verbose --tries=1 --spider http://localhost:8080/healthz || exit 1"
-      timeout: "10s"
     image: "gcr.io/cadvisor/cadvisor:${CADVISOR_VERSION:?err}"
     labels:
       traefik.docker.network: "${PROXY_NETWORK:?err}"

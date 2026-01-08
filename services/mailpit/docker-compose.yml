@@ -12,14 +12,6 @@ services:
   mailpit:
     environment:
       MP_ENABLE_PROMETHEUS: true
-    healthcheck:
-      interval: "30s"
-      retries: 5
-      start_period: "60s"
-      test:
-        - "CMD-SHELL"
-        - "wget --no-verbose --tries=1 --spider http://localhost:8025/api/v1/info || exit 1"
-      timeout: "10s"
     image: "axllent/mailpit:${MAILPIT_VERSION:?err}"
     labels:
       traefik.docker.network: "${PROXY_NETWORK:?err}"
