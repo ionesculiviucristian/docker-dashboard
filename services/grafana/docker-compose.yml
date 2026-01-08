@@ -39,7 +39,7 @@ services:
       - "--storage.path=/var/lib/alloy/data"
       - "/etc/alloy/config.alloy"
     environment:
-      ALLOY_LOGGING_LEVEL: "${GRAFANA_ALLOY_LOGGING_LEVEL:?err}"
+      LOGGING_LEVEL: "${GRAFANA_ALLOY_LOGGING_LEVEL:?err}"
     image: "grafana/alloy:${GRAFANA_ALLOY_VERSION:?err}"
     labels:
       traefik.docker.network: "${PROXY_NETWORK:?err}"

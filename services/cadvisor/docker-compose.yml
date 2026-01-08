@@ -14,6 +14,7 @@ services:
       traefik.http.routers.cadvisor.middlewares: "authentik-server@docker"
       traefik.http.routers.cadvisor.rule: "Host(`${CADVISOR_HOST:?err}`)"
       traefik.http.routers.cadvisor.tls: true
+      traefik.http.services.cadvisor.loadbalancer.server.port: "${CADVISOR_HOST_PORT:?err}"
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:

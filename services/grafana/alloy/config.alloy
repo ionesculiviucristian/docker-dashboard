@@ -1,6 +1,6 @@
 // https://grafana.com/docs/alloy/latest/reference/config-blocks/logging/
 logging {
-  level  = sys.env("ALLOY_LOGGING_LEVEL")
+  level  = sys.env("LOGGING_LEVEL")
   format = "logfmt"
 }
 

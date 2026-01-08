@@ -47,10 +47,8 @@
               label: "Total"
             - field: "unread"
               label: "Unread"
-          password: "{{HOMEPAGE_VAR_SERVICES_USER_PASSWORD}}"
           type: "customapi"
           url: "http://mailpit:8025/api/v1/messages"
-          username: "{{HOMEPAGE_VAR_SERVICES_USER}}"
     - Mealie:
         container: "dev-mealie-1"
         description: "Mealie is an intuitive and easy to use recipe management app"

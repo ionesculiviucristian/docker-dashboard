@@ -18,6 +18,7 @@ services:
       traefik.http.routers.whatsupdocker.middlewares: "authentik-server@docker"
       traefik.http.routers.whatsupdocker.rule: "Host(`${WHATSUPDOCKER_HOST:?err}`)"
       traefik.http.routers.whatsupdocker.tls: true
+      traefik.http.services.whatsupdocker.loadbalancer.server.port: "${WHATSUPDOCKER_HOST_PORT:?err}"
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:

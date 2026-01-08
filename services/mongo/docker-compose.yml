@@ -57,7 +57,7 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: "${MONGO_INITDB_ROOT_PASSWORD:?err}"
       ME_CONFIG_MONGODB_ADMINUSERNAME: "${MONGO_INITDB_ROOT_USERNAME:?err}"
       ME_CONFIG_MONGODB_SERVER: "mongo"
-      ME_CONFIG_OPTIONS_EDITORTHEME: "${MONGO_ME_CONFIG_OPTIONS_EDITORTHEME}"
+      ME_CONFIG_OPTIONS_EDITORTHEME: "${MONGO_EXPRESS_ME_CONFIG_OPTIONS_EDITORTHEME}"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -66,15 +66,15 @@ services:
         - "CMD-SHELL"
         - "wget --no-verbose --tries=1 --spider http://localhost:8081 || exit 1"
       timeout: "10s"
-    image: "mongo-express:${MONGO_ME_VERSION:?err}"
+    image: "mongo-express:${MONGO_EXPRESS_VERSION:?err}"
     labels:
       traefik.docker.network: "${PROXY_NETWORK:?err}"
       traefik.enable: true
       traefik.http.routers.mongo-mongo-express.entrypoints: "websecure"
       traefik.http.routers.mongo-mongo-express.middlewares: "authentik-server@docker"
-      traefik.http.routers.mongo-mongo-express.rule: "Host(`${MONGO_HOST:?err}`)"
+      traefik.http.routers.mongo-mongo-express.rule: "Host(`${MONGO_EXPRESS_HOST:?err}`)"
       traefik.http.routers.mongo-mongo-express.tls: true
-      traefik.http.services.mongo-mongo-express.loadbalancer.server.port: "${MONGO_HOST_PORT:?err}"
+      traefik.http.services.mongo-mongo-express.loadbalancer.server.port: "${MONGO_EXPRESS_HOST_PORT:?err}"
       wud.tag.include: "^\\d+\\.\\d+$$"
       wud.watch: true
     networks:
