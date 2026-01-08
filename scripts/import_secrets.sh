@@ -1,14 +1,14 @@
 #!/bin/bash
 set -eu
 
-email="$1"
-
-if [ -z "${email}" ]; then
+if [ $# -ne 1 ]; then
   echo "Error: E-mail is required"
   exit 1
 fi
 
-# shellcheck disable=SC1091
+email="$1"
+
+# shellcheck source=../.env
 set -a && source ".env" && set +a
 
 BW_SESSION=$(bw login "${email}" --method 0 --raw)
@@ -19,6 +19,6 @@ bw get attachment "bookmarks.yaml" --itemid "Docker dashboard bookmarks" --raw |
 
 bw logout
 
-docker restart dev-homepage-1
+docker compose restart homepage
 
 exit 0

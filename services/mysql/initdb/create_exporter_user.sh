@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -eu
 
 mysql -uroot -p"${MYSQL_ROOT_PASSWORD}" -e "
   CREATE USER IF NOT EXISTS '${MYSQL_EXPORTER_USER}'@'%'

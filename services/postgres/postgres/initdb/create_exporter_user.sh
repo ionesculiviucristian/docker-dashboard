@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -eu
 
 export PGPASSWORD="${POSTGRES_USER_PASSWORD}"
 

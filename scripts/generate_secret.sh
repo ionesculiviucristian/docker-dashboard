@@ -1,8 +1,8 @@
 #!/bin/bash
-
 set -eu
 
 if [ $# -ne 1 ]; then
+  echo "Error: Variable name is required"
   exit 1
 fi
 

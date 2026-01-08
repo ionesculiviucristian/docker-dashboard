@@ -1,17 +1,13 @@
 #!/bin/bash
-
 set -eu 
-
-# shellcheck disable=SC1091
-source "./scripts/installer.sh"
 
 cp "./.env.example" "./.env"
 
+# Generate secrets
 ./scripts/generate_secret.sh "AUTHENTIK_BOOTSTRAP_TOKEN"
 ./scripts/generate_secret.sh "AUTHENTIK_SECRET_KEY"
 ./scripts/generate_secret.sh "OLLAMA_OPEN_WEBUI_WEBUI_SECRET_KEY"
 
-# shellcheck disable=SC1091
 set -a && source "./.env" && set +a
 
 # Install local certificate authority (CA)
@@ -19,51 +15,52 @@ if ! mkcert -CAROOT >/dev/null; then
   mkcert -install
 fi
 
-# Generate wildcard certificates
-./scripts/generate_cert.sh "services"
-./scripts/generate_cert.sh "projects"
+# Generate domain certs
+./scripts/generate_domain_cert.sh "services.local"
+./scripts/generate_domain_cert.sh "projects.local"
 
 # Create service networks
-create_docker_network "${MAILPIT_NETWORK}"
-create_docker_network "${MINIO_NETWORK}"
-create_docker_network "${MONGO_NETWORK}"
-create_docker_network "${MYSQL_NETWORK}"
-create_docker_network "${POSTGRES_NETWORK}"
-create_docker_network "${PROMETHEUS_NETWORK}"
-create_docker_network "${PROXY_NETWORK}"
-create_docker_network "${RABBITMQ_NETWORK}"
-create_docker_network "${REDIS_NETWORK}"
+./scripts/create_docker_network.sh "${MAILPIT_NETWORK}"
+./scripts/create_docker_network.sh "${MINIO_NETWORK}"
+./scripts/create_docker_network.sh "${MONGO_NETWORK}"
+./scripts/create_docker_network.sh "${MYSQL_NETWORK}"
+./scripts/create_docker_network.sh "${POSTGRES_NETWORK}"
+./scripts/create_docker_network.sh "${PROMETHEUS_NETWORK}"
+./scripts/create_docker_network.sh "${PROXY_NETWORK}"
+./scripts/create_docker_network.sh "${RABBITMQ_NETWORK}"
+./scripts/create_docker_network.sh "${REDIS_NETWORK}"
 
-# Register service domains to /etc/hosts
-./scripts/register_host.sh "authentik.services.local"
-./scripts/register_host.sh "cadvisor.services.local"
-./scripts/register_host.sh "grafana.services.local"
-./scripts/register_host.sh "grafana-alloy.services.local"
-./scripts/register_host.sh "homepage.services.local"
-./scripts/register_host.sh "it-tools.services.local"
-./scripts/register_host.sh "mailpit.services.local"
-./scripts/register_host.sh "mealie.services.local"
-./scripts/register_host.sh "minio.services.local"
-./scripts/register_host.sh "mongo-express.services.local"
-./scripts/register_host.sh "n8n.services.local"
-./scripts/register_host.sh "omni-tools.services.local"
-./scripts/register_host.sh "open-webui.services.local"
-./scripts/register_host.sh "pgadmin4.services.local"
-./scripts/register_host.sh "phpmyadmin.services.local"
-./scripts/register_host.sh "prometheus.services.local"
-./scripts/register_host.sh "rabbitmq.services.local"
-./scripts/register_host.sh "redisinsight.services.local"
-./scripts/register_host.sh "traefik.services.local"
-./scripts/register_host.sh "whatsupdocker.services.local"
-./scripts/register_host.sh "whoami.services.local"
+# Register service hostnames
+./scripts/register_hostname.sh "authentik.services.local"
+./scripts/register_hostname.sh "cadvisor.services.local"
+./scripts/register_hostname.sh "grafana.services.local"
+./scripts/register_hostname.sh "grafana-alloy.services.local"
+./scripts/register_hostname.sh "homepage.services.local"
+./scripts/register_hostname.sh "it-tools.services.local"
+./scripts/register_hostname.sh "mailpit.services.local"
+./scripts/register_hostname.sh "mealie.services.local"
+./scripts/register_hostname.sh "minio.services.local"
+./scripts/register_hostname.sh "mongo-express.services.local"
+./scripts/register_hostname.sh "n8n.services.local"
+./scripts/register_hostname.sh "omni-tools.services.local"
+./scripts/register_hostname.sh "open-webui.services.local"
+./scripts/register_hostname.sh "pgadmin4.services.local"
+./scripts/register_hostname.sh "phpmyadmin.services.local"
+./scripts/register_hostname.sh "prometheus.services.local"
+./scripts/register_hostname.sh "rabbitmq.services.local"
+./scripts/register_hostname.sh "redisinsight.services.local"
+./scripts/register_hostname.sh "traefik.services.local"
+./scripts/register_hostname.sh "whatsupdocker.services.local"
+./scripts/register_hostname.sh "whoami.services.local"
 
 # Pre-setup services
 ./setups/pre/homepage.sh
 ./setups/pre/mongo.sh
 
-./scripts/generate_traefik.sh
+# Generate dynamic Traefik config
+./scripts/generate_traefik_dynamic_config.sh
 
-# Setup services
+# Start services
 docker compose up -d
 
 # Post-setup services

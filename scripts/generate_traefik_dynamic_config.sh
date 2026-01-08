@@ -1,8 +1,8 @@
 #!/bin/bash
 set -eu
 
-certs_dir="./services/traefik/certs"
 dynamic_config_file="./services/traefik/config/tls.yml"
+certs_dir="./services/traefik/certs"
 
 echo "tls:" > "${dynamic_config_file}"
 echo "  certificates:" >> "${dynamic_config_file}"
