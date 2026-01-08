@@ -51,7 +51,7 @@ services:
       traefik.enable: true
       traefik.http.routers.traefik.entrypoints: "websecure"
       traefik.http.routers.traefik.middlewares: "authentik-server@docker"
-      traefik.http.routers.traefik.rule: "Host(`${TRAEFIK_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.traefik.rule: "Host(`${TRAEFIK_HOST:?err}`)"
       traefik.http.routers.traefik.service: "api@internal"
       traefik.http.routers.traefik.tls: true
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
@@ -70,15 +70,13 @@ services:
       - "${PWD}/services/traefik/config:/etc/traefik:ro"
       - "/var/run/docker.sock:/var/run/docker.sock"
   traefik-whoami:
-    environment:
-      VIRTUAL_HOST: "${TRAEFIK_WHOAMI_VIRTUAL_HOST:?err}"
     image: "traefik/whoami:${TRAEFIK_WHOAMI_VERSION:?err}"
     labels:
       traefik.docker.network: "${PROXY_NETWORK:?err}"
       traefik.enable: true
       traefik.http.routers.traefik-whoami.entrypoints: "websecure"
       traefik.http.routers.traefik-whoami.middlewares: "authentik-server@docker"
-      traefik.http.routers.traefik-whoami.rule: "Host(`${TRAEFIK_WHOAMI_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.traefik-whoami.rule: "Host(`${TRAEFIK_WHOAMI_HOST:?err}`)"
       traefik.http.routers.traefik-whoami.tls: true
       wud.tag.include: "^v\\d+\\.\\d+$$"
       wud.watch: true

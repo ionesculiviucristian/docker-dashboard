@@ -10,8 +10,6 @@ services:
     environment:
       N8N_LISTEN_ADDRESS: "0.0.0.0"
       N8N_METRICS: true
-      VIRTUAL_HOST: "${N8N_VIRTUAL_HOST:?err}"
-      VIRTUAL_PORT: "${N8N_VIRTUAL_PORT:?err}"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -25,9 +23,9 @@ services:
       traefik.docker.network: "${PROXY_NETWORK:?err}"
       traefik.enable: true
       traefik.http.routers.n8n.entrypoints: "websecure"
-      traefik.http.routers.n8n.rule: "Host(`${N8N_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.n8n.rule: "Host(`${N8N_HOST:?err}`)"
       traefik.http.routers.n8n.tls: true
-      traefik.http.services.n8n.loadbalancer.server.port: "${N8N_VIRTUAL_PORT:?err}"
+      traefik.http.services.n8n.loadbalancer.server.port: "${N8N_HOST_PORT:?err}"
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:

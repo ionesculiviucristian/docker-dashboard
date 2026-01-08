@@ -11,17 +11,15 @@ services:
       GF_PATHS_PROVISIONING: "/etc/grafana/provisioning"
       GF_SECURITY_ADMIN_PASSWORD: "${GRAFANA_GF_SECURITY_ADMIN_PASSWORD:?err}"
       GF_SECURITY_ADMIN_USER: "${GRAFANA_GF_SECURITY_ADMIN_USER:?err}"
-      GF_SERVER_ROOT_URL: "https://${GRAFANA_VIRTUAL_HOST:?err}"
-      VIRTUAL_HOST: "${GRAFANA_VIRTUAL_HOST:?err}"
-      VIRTUAL_PORT: "${GRAFANA_VIRTUAL_PORT:?err}"
+      GF_SERVER_ROOT_URL: "https://${GRAFANA_HOST:?err}"
     image: "grafana/grafana:${GRAFANA_VERSION:?err}"
     labels:
       traefik.docker.network: "${PROXY_NETWORK:?err}"
       traefik.enable: true
       traefik.http.routers.grafana.entrypoints: "websecure"
-      traefik.http.routers.grafana.rule: "Host(`${GRAFANA_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.grafana.rule: "Host(`${GRAFANA_HOST:?err}`)"
       traefik.http.routers.grafana.tls: true
-      traefik.http.services.grafana.loadbalancer.server.port: "${GRAFANA_VIRTUAL_PORT:?err}"
+      traefik.http.services.grafana.loadbalancer.server.port: "${GRAFANA_HOST_PORT:?err}"
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
@@ -37,22 +35,20 @@ services:
   grafana-alloy:
     command:
       - "run"
-      - "--server.http.listen-addr=0.0.0.0:${GRAFANA_ALLOY_VIRTUAL_PORT:?err}"
+      - "--server.http.listen-addr=0.0.0.0:${GRAFANA_ALLOY_HOST_PORT:?err}"
       - "--storage.path=/var/lib/alloy/data"
       - "/etc/alloy/config.alloy"
     environment:
       ALLOY_LOGGING_LEVEL: "${GRAFANA_ALLOY_LOGGING_LEVEL:?err}"
-      VIRTUAL_HOST: "${GRAFANA_ALLOY_VIRTUAL_HOST:?err}"
-      VIRTUAL_PORT: "${GRAFANA_ALLOY_VIRTUAL_PORT:?err}"
     image: "grafana/alloy:${GRAFANA_ALLOY_VERSION:?err}"
     labels:
       traefik.docker.network: "${PROXY_NETWORK:?err}"
       traefik.enable: true
       traefik.http.routers.grafana-alloy.entrypoints: "websecure"
       traefik.http.routers.grafana-alloy.middlewares: "authentik-server@docker"
-      traefik.http.routers.grafana-alloy.rule: "Host(`${GRAFANA_ALLOY_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.grafana-alloy.rule: "Host(`${GRAFANA_ALLOY_HOST:?err}`)"
       traefik.http.routers.grafana-alloy.tls: true
-      traefik.http.services.grafana-alloy.loadbalancer.server.port: "${GRAFANA_ALLOY_VIRTUAL_PORT:?err}"
+      traefik.http.services.grafana-alloy.loadbalancer.server.port: "${GRAFANA_ALLOY_HOST_PORT:?err}"
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:

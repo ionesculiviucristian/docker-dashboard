@@ -4,8 +4,6 @@ networks:
     name: "${PROXY_NETWORK:?err}"
 services:
   omni-tools:
-    environment:
-      VIRTUAL_HOST: "${OMNI_TOOLS_VIRTUAL_HOST:?err}"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -20,7 +18,7 @@ services:
       traefik.enable: true
       traefik.http.routers.omni-tools.entrypoints: "websecure"
       traefik.http.routers.omni-tools.middlewares: "authentik-server@docker"
-      traefik.http.routers.omni-tools.rule: "Host(`${OMNI_TOOLS_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.omni-tools.rule: "Host(`${OMNI_TOOLS_HOST:?err}`)"
       traefik.http.routers.omni-tools.tls: true
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true

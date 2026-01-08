@@ -8,7 +8,6 @@ networks:
 services:
   whatsupdocker:
     environment:
-      VIRTUAL_HOST: "${WHATSUPDOCKER_VIRTUAL_HOST:?err}"
       WUD_REGISTRY_CUSTOM_OSGEO_URL: "${WHATSUPDOCKER_WUD_REGISTRY_CUSTOM_OSGEO_URL}"
       WUD_WATCHER_LOCAL_WATCHBYDEFAULT: false
     healthcheck:
@@ -25,7 +24,7 @@ services:
       traefik.enable: true
       traefik.http.routers.whatsupdocker.entrypoints: "websecure"
       traefik.http.routers.whatsupdocker.middlewares: "authentik-server@docker"
-      traefik.http.routers.whatsupdocker.rule: "Host(`${WHATSUPDOCKER_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.whatsupdocker.rule: "Host(`${WHATSUPDOCKER_HOST:?err}`)"
       traefik.http.routers.whatsupdocker.tls: true
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true

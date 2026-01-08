@@ -11,16 +11,14 @@ services:
     environment:
       ALLOW_PASSWORD_LOGIN: true
       ALLOW_SIGNUP: false
-      BASE_URL: "https://${MEALIE_VIRTUAL_HOST:?err}:8080"
-      VIRTUAL_HOST: "${MEALIE_VIRTUAL_HOST:?err}"
-      VIRTUAL_PORT: "${MEALIE_VIRTUAL_PORT:?err}"
+      BASE_URL: "https://${MEALIE_HOST:?err}:8080"
     image: "ghcr.io/mealie-recipes/mealie:${MEALIE_VERSION:?err}"
     labels:
       traefik.docker.network: "${PROXY_NETWORK:?err}"
       traefik.enable: true
       traefik.http.routers.mealie.entrypoints: "websecure"
       traefik.http.routers.mealie.middlewares: "authentik-server@docker"
-      traefik.http.routers.mealie.rule: "Host(`${MEALIE_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.mealie.rule: "Host(`${MEALIE_HOST:?err}`)"
       traefik.http.routers.mealie.tls: true
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true

@@ -15,8 +15,6 @@ services:
       MINIO_PROMETHEUS_AUTH_TYPE: "public"
       MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD:?err}"
       MINIO_ROOT_USER: "${MINIO_ROOT_USER:?err}"
-      VIRTUAL_HOST: "${MINIO_VIRTUAL_HOST:?err}"
-      VIRTUAL_PORT: "${MINIO_VIRTUAL_PORT:?err}"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -30,9 +28,9 @@ services:
       traefik.docker.network: "${PROXY_NETWORK:?err}"
       traefik.enable: true
       traefik.http.routers.minio.entrypoints: "websecure"
-      traefik.http.routers.minio.rule: "Host(`${MINIO_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.minio.rule: "Host(`${MINIO_HOST:?err}`)"
       traefik.http.routers.minio.tls: true
-      traefik.http.services.minio.loadbalancer.server.port: "${MINIO_VIRTUAL_PORT:?err}"
+      traefik.http.services.minio.loadbalancer.server.port: "${MINIO_HOST_PORT:?err}"
       wud.tag.include: "^RELEASE\\.\\d+-\\d+-\\d+T\\d+-\\d+-\\d+Z$$"
       wud.watch: true
     networks:

@@ -10,8 +10,6 @@ services:
     environment:
       RABBITMQ_DEFAULT_PASS: "${RABBITMQ_DEFAULT_PASS:?err}"
       RABBITMQ_DEFAULT_USER: "${RABBITMQ_DEFAULT_USER:?err}"
-      VIRTUAL_HOST: "${RABBITMQ_VIRTUAL_HOST:?err}"
-      VIRTUAL_PORT: "${RABBITMQ_VIRTUAL_PORT:?err}"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -26,9 +24,9 @@ services:
       traefik.docker.network: "${PROXY_NETWORK:?err}"
       traefik.enable: true
       traefik.http.routers.rabbitmq.entrypoints: "websecure"
-      traefik.http.routers.rabbitmq.rule: "Host(`${RABBITMQ_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.rabbitmq.rule: "Host(`${RABBITMQ_HOST:?err}`)"
       traefik.http.routers.rabbitmq.tls: true
-      traefik.http.services.rabbitmq.loadbalancer.server.port: "${RABBITMQ_VIRTUAL_PORT:?err}"
+      traefik.http.services.rabbitmq.loadbalancer.server.port: "${RABBITMQ_HOST_PORT:?err}"
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+-management-alpine$$"
       wud.watch: true
     networks:

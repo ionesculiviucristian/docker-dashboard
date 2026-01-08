@@ -56,9 +56,6 @@ services:
     volumes:
       - "/:/host:ro,rslave"
   prometheus:
-    environment:
-      VIRTUAL_HOST: "${PROMETHEUS_VIRTUAL_HOST:?err}"
-      VIRTUAL_PORT: "${PROMETHEUS_VIRTUAL_PORT:?err}"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -73,9 +70,9 @@ services:
       traefik.enable: true
       traefik.http.routers.prometheus.entrypoints: "websecure"
       traefik.http.routers.prometheus.middlewares: "authentik-server@docker"
-      traefik.http.routers.prometheus.rule: "Host(`${PROMETHEUS_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.prometheus.rule: "Host(`${PROMETHEUS_HOST:?err}`)"
       traefik.http.routers.prometheus.tls: true
-      traefik.http.services.prometheus.loadbalancer.server.port: "${PROMETHEUS_VIRTUAL_PORT:?err}"
+      traefik.http.services.prometheus.loadbalancer.server.port: "${PROMETHEUS_HOST_PORT:?err}"
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:

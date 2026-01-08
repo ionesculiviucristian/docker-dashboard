@@ -12,8 +12,6 @@ services:
   mailpit:
     environment:
       MP_ENABLE_PROMETHEUS: true
-      VIRTUAL_HOST: "${MAILPIT_VIRTUAL_HOST:?err}"
-      VIRTUAL_PORT: "${MAILPIT_VIRTUAL_PORT:?err}"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -28,9 +26,9 @@ services:
       traefik.enable: true
       traefik.http.routers.mailpit.entrypoints: "websecure"
       traefik.http.routers.mailpit.middlewares: "authentik-server@docker"
-      traefik.http.routers.mailpit.rule: "Host(`${MAILPIT_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.mailpit.rule: "Host(`${MAILPIT_HOST:?err}`)"
       traefik.http.routers.mailpit.tls: true
-      traefik.http.services.mailpit.loadbalancer.server.port: "${MAILPIT_VIRTUAL_PORT:?err}"
+      traefik.http.services.mailpit.loadbalancer.server.port: "${MAILPIT_HOST_PORT:?err}"
       wud.tag.include: "^v\\d+\\.\\d+$$"
       wud.watch: true
     networks:

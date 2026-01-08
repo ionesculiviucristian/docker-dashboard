@@ -48,9 +48,6 @@ services:
     security_opt:
       - "no-new-privileges:true"
   redis-redisinsight:
-    environment:
-      VIRTUAL_HOST: "${REDIS_VIRTUAL_HOST:?err}"
-      VIRTUAL_PORT: "${REDIS_VIRTUAL_PORT:?err}"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -65,9 +62,9 @@ services:
       traefik.enable: true
       traefik.http.routers.redis-redisinsight.entrypoints: "websecure"
       traefik.http.routers.redis-redisinsight.middlewares: "authentik-server@docker"
-      traefik.http.routers.redis-redisinsight.rule: "Host(`${REDIS_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.redis-redisinsight.rule: "Host(`${REDIS_HOST:?err}`)"
       traefik.http.routers.redis-redisinsight.tls: true
-      traefik.http.services.redis-redisinsight.loadbalancer.server.port: "${REDIS_VIRTUAL_PORT:?err}"
+      traefik.http.services.redis-redisinsight.loadbalancer.server.port: "${REDIS_HOST_PORT:?err}"
       wud.tag.include: "^\\d+\\.\\d+$$"
       wud.watch: true
     networks:

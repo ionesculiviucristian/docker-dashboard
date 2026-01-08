@@ -30,8 +30,6 @@ services:
     environment:
       ENABLE_SIGNUP: false
       OLLAMA_BASE_URL: "http://ollama:11434"
-      VIRTUAL_HOST: "${OLLAMA_OPEN_WEBUI_VIRTUAL_HOST:?err}"
-      VIRTUAL_PORT: "${OLLAMA_OPEN_WEBUI_VIRTUAL_PORT:?err}"
       WEBUI_AUTH: false
       WEBUI_SECRET_KEY: "${OLLAMA_OPEN_WEBUI_WEBUI_SECRET_KEY:?err}"
     extra_hosts:
@@ -50,9 +48,9 @@ services:
       traefik.enable: true
       traefik.http.routers.ollama-open-webui.entrypoints: "websecure"
       traefik.http.routers.ollama-open-webui.middlewares: "authentik-server@docker"
-      traefik.http.routers.ollama-open-webui.rule: "Host(`${OLLAMA_OPEN_WEBUI_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.ollama-open-webui.rule: "Host(`${OLLAMA_OPEN_WEBUI_HOST:?err}`)"
       traefik.http.routers.ollama-open-webui.tls: true
-      traefik.http.services.ollama-open-webui.loadbalancer.server.port: "${OLLAMA_OPEN_WEBUI_VIRTUAL_PORT:?err}"
+      traefik.http.services.ollama-open-webui.loadbalancer.server.port: "${OLLAMA_OPEN_WEBUI_HOST_PORT:?err}"
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:

@@ -6,9 +6,6 @@ services:
   cadvisor:
     devices:
       - "/dev/kmsg"
-    environment:
-      VIRTUAL_HOST: "${CADVISOR_VIRTUAL_HOST:?err}"
-      VIRTUAL_PORT: "${CADVISOR_VIRTUAL_PORT:?err}"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -23,7 +20,7 @@ services:
       traefik.enable: true
       traefik.http.routers.cadvisor.entrypoints: "websecure"
       traefik.http.routers.cadvisor.middlewares: "authentik-server@docker"
-      traefik.http.routers.cadvisor.rule: "Host(`${CADVISOR_VIRTUAL_HOST:?err}`)"
+      traefik.http.routers.cadvisor.rule: "Host(`${CADVISOR_HOST:?err}`)"
       traefik.http.routers.cadvisor.tls: true
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
