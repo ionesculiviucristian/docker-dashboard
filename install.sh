@@ -7,6 +7,7 @@ source "./scripts/installer.sh"
 
 cp "./.env.example" "./.env"
 
+./scripts/generate_secret.sh "AUTHENTIK_BOOTSTRAP_TOKEN"
 ./scripts/generate_secret.sh "AUTHENTIK_SECRET_KEY"
 ./scripts/generate_secret.sh "OLLAMA_OPEN_WEBUI_WEBUI_SECRET_KEY"
 
