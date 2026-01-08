@@ -8,7 +8,6 @@ networks:
 services:
   whatsupdocker:
     environment:
-      TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${WHATSUPDOCKER_VIRTUAL_HOST:?err}"
       WUD_REGISTRY_CUSTOM_OSGEO_URL: "${WHATSUPDOCKER_WUD_REGISTRY_CUSTOM_OSGEO_URL}"
       WUD_WATCHER_LOCAL_WATCHBYDEFAULT: false

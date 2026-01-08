@@ -14,7 +14,6 @@ services:
       MYSQL_EXPORTER_USER: "${MYSQL_EXPORTER_USER:?err}"
       MYSQL_EXPORTER_USER_PASSWORD: "${MYSQL_EXPORTER_USER_PASSWORD:?err}"
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:?err}"
-      TZ: "${TZ:?err}"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -48,7 +47,6 @@ services:
         condition: "service_healthy"
     environment:
       PMA_HOSTS: "mysql"
-      TZ: "${TZ:?err}"
       UPLOAD_LIMIT: "${MYSQL_PHPMYADMIN_PMA_UPLOAD_LIMIT}"
       VIRTUAL_HOST: "${MYSQL_PHPMYADMIN_VIRTUAL_HOST:?err}"
     healthcheck:
@@ -87,7 +85,6 @@ services:
     environment:
       MYSQLD_EXPORTER_PASSWORD: "${MYSQL_EXPORTER_USER_PASSWORD:?err}"
       MYSQL_EXPORTER_USER: "${MYSQL_EXPORTER_USER:?err}"
-      TZ: "${TZ:?err}"
     healthcheck:
       interval: "30s"
       retries: 5

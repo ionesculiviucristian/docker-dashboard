@@ -8,10 +8,8 @@ networks:
 services:
   n8n:
     environment:
-      GENERIC_TIMEZONE: "${TZ:?err}"
       N8N_LISTEN_ADDRESS: "0.0.0.0"
       N8N_METRICS: true
-      TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${N8N_VIRTUAL_HOST:?err}"
       VIRTUAL_PORT: "${N8N_VIRTUAL_PORT:?err}"
     healthcheck:

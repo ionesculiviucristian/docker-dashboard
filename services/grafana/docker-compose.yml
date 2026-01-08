@@ -12,7 +12,6 @@ services:
       GF_SECURITY_ADMIN_PASSWORD: "${GRAFANA_GF_SECURITY_ADMIN_PASSWORD:?err}"
       GF_SECURITY_ADMIN_USER: "${GRAFANA_GF_SECURITY_ADMIN_USER:?err}"
       GF_SERVER_ROOT_URL: "https://${GRAFANA_VIRTUAL_HOST:?err}"
-      TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${GRAFANA_VIRTUAL_HOST:?err}"
       VIRTUAL_PORT: "${GRAFANA_VIRTUAL_PORT:?err}"
     image: "grafana/grafana:${GRAFANA_VERSION:?err}"
@@ -43,7 +42,6 @@ services:
       - "/etc/alloy/config.alloy"
     environment:
       ALLOY_LOGGING_LEVEL: "${GRAFANA_ALLOY_LOGGING_LEVEL:?err}"
-      TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${GRAFANA_ALLOY_VIRTUAL_HOST:?err}"
       VIRTUAL_PORT: "${GRAFANA_ALLOY_VIRTUAL_PORT:?err}"
     image: "grafana/alloy:${GRAFANA_ALLOY_VERSION:?err}"
@@ -70,8 +68,6 @@ services:
   grafana-loki:
     command:
       - "-config.file=/etc/loki/local-config.yaml"
-    environment:
-      TZ: "${TZ:?err}"
     image: "grafana/loki:${GRAFANA_LOKI_VERSION:?err}"
     labels:
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"

@@ -5,7 +5,6 @@ networks:
 services:
   omni-tools:
     environment:
-      TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${OMNI_TOOLS_VIRTUAL_HOST:?err}"
     healthcheck:
       interval: "30s"

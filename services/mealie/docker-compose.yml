@@ -12,7 +12,6 @@ services:
       ALLOW_PASSWORD_LOGIN: true
       ALLOW_SIGNUP: false
       BASE_URL: "https://${MEALIE_VIRTUAL_HOST:?err}:8080"
-      TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${MEALIE_VIRTUAL_HOST:?err}"
       VIRTUAL_PORT: "${MEALIE_VIRTUAL_PORT:?err}"
     image: "ghcr.io/mealie-recipes/mealie:${MEALIE_VERSION:?err}"

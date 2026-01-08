@@ -7,7 +7,6 @@ services:
     devices:
       - "/dev/kmsg"
     environment:
-      TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${CADVISOR_VIRTUAL_HOST:?err}"
       VIRTUAL_PORT: "${CADVISOR_VIRTUAL_PORT:?err}"
     healthcheck:

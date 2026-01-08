@@ -4,8 +4,6 @@ networks:
     name: "${PROXY_NETWORK:?err}"
 services:
   ollama:
-    environment:
-      TZ: "${TZ:?err}"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -32,7 +30,6 @@ services:
     environment:
       ENABLE_SIGNUP: false
       OLLAMA_BASE_URL: "http://ollama:11434"
-      TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${OLLAMA_OPEN_WEBUI_VIRTUAL_HOST:?err}"
       VIRTUAL_PORT: "${OLLAMA_OPEN_WEBUI_VIRTUAL_PORT:?err}"
       WEBUI_AUTH: false

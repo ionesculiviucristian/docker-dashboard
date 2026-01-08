@@ -37,8 +37,6 @@ services:
       - --metrics.prometheus.addEntryPointsLabels=true
       - --metrics.prometheus.addRoutersLabels=true
       - --metrics.prometheus.addServicesLabels=true
-    environment:
-      TZ: "${TZ:?err}"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -73,7 +71,6 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
   traefik-whoami:
     environment:
-      TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${TRAEFIK_WHOAMI_VIRTUAL_HOST:?err}"
     image: "traefik/whoami:${TRAEFIK_WHOAMI_VERSION:?err}"
     labels:

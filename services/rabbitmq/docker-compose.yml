@@ -10,7 +10,6 @@ services:
     environment:
       RABBITMQ_DEFAULT_PASS: "${RABBITMQ_DEFAULT_PASS:?err}"
       RABBITMQ_DEFAULT_USER: "${RABBITMQ_DEFAULT_USER:?err}"
-      TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${RABBITMQ_VIRTUAL_HOST:?err}"
       VIRTUAL_PORT: "${RABBITMQ_VIRTUAL_PORT:?err}"
     healthcheck:

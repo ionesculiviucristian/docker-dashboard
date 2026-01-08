@@ -13,7 +13,6 @@ services:
     command: "redis-server --appendonly yes --save 60 1 --requirepass ${REDIS_PASSWORD}"
     environment:
       REDIS_PASSWORD: "${REDIS_PASSWORD:?err}"
-      TZ: "${TZ:?err}"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -38,7 +37,6 @@ services:
       REDIS_ADDR: "redis:6379"
       REDIS_PASSWORD: "${REDIS_PASSWORD:?err}"
       REDIS_USER: null
-      TZ: "${TZ:?err}"
     image: "oliver006/redis_exporter:${REDIS_EXPORTER_VERSION:?err}"
     labels:
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+-alpine$$"
@@ -51,7 +49,6 @@ services:
       - "no-new-privileges:true"
   redis-redisinsight:
     environment:
-      TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${REDIS_VIRTUAL_HOST:?err}"
       VIRTUAL_PORT: "${REDIS_VIRTUAL_PORT:?err}"
     healthcheck:

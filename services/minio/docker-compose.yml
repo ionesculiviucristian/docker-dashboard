@@ -15,7 +15,6 @@ services:
       MINIO_PROMETHEUS_AUTH_TYPE: "public"
       MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD:?err}"
       MINIO_ROOT_USER: "${MINIO_ROOT_USER:?err}"
-      TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${MINIO_VIRTUAL_HOST:?err}"
       VIRTUAL_PORT: "${MINIO_VIRTUAL_PORT:?err}"
     healthcheck:

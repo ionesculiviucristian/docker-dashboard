@@ -14,7 +14,6 @@ services:
       POSTGRES_DB: "${AUTHENTIK_POSTGRES_DB:?err}"
       POSTGRES_PASSWORD: "${AUTHENTIK_POSTGRES_USER_PASSWORD:?err}"
       POSTGRES_USER: "${AUTHENTIK_POSTGRES_USER:?err}"
-      TZ: "${TZ:?err}"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -48,7 +47,6 @@ services:
       AUTHENTIK_POSTGRESQL__PASSWORD: "${AUTHENTIK_POSTGRES_USER_PASSWORD:?err}"
       AUTHENTIK_POSTGRESQL__USER: "${AUTHENTIK_POSTGRES_USER:?err}"
       AUTHENTIK_SECRET_KEY: "${AUTHENTIK_SECRET_KEY:?err}"
-      TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${AUTHENTIK_VIRTUAL_HOST:?err}"
       VIRTUAL_PORT: "${AUTHENTIK_VIRTUAL_PORT:?err}"
     healthcheck:
@@ -95,7 +93,6 @@ services:
       AUTHENTIK_POSTGRESQL__PASSWORD: "${AUTHENTIK_POSTGRES_USER_PASSWORD:?err}"
       AUTHENTIK_POSTGRESQL__USER: "${AUTHENTIK_POSTGRES_USER:?err}"
       AUTHENTIK_SECRET_KEY: "${AUTHENTIK_SECRET_KEY:?err}"
-      TZ: "${TZ:?err}"
     healthcheck:
       interval: "30s"
       retries: 5

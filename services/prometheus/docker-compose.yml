@@ -9,8 +9,6 @@ services:
   prometheus-blackbox-exporter:
     command:
       - "--config.file=/config/blackbox.yml"
-    environment:
-      TZ: "${TZ:?err}"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -37,8 +35,6 @@ services:
       - "--path.procfs=/host/proc"
       - "--path.sysfs=/host/sys"
       - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
-    environment:
-      TZ: "${TZ:?err}"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -61,7 +57,6 @@ services:
       - "/:/host:ro,rslave"
   prometheus:
     environment:
-      TZ: "${TZ:?err}"
       VIRTUAL_HOST: "${PROMETHEUS_VIRTUAL_HOST:?err}"
       VIRTUAL_PORT: "${PROMETHEUS_VIRTUAL_PORT:?err}"
     healthcheck:
