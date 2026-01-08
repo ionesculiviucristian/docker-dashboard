@@ -28,7 +28,7 @@ services:
     security_opt:
       - "no-new-privileges:true"
     volumes:
-      - "${PWD}/services/prometheus/blackbox.yml:/config/blackbox.yml:ro"
+      - "${PWD}/services/prometheus/blackbox-exporter/blackbox.yml:/config/blackbox.yml:ro"
   prometheus-node-exporter:
     command:
       - "--path.rootfs=/host"
@@ -82,7 +82,7 @@ services:
     security_opt:
       - "no-new-privileges:true"
     volumes:
-      - "${PWD}/services/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro"
+      - "${PWD}/services/prometheus/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro"
       - "prometheus-data:/prometheus"
 volumes:
   prometheus-data: null

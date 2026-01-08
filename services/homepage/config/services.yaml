@@ -105,13 +105,6 @@
         icon: "sh-prometheus.png"
         server: "my-docker"
         showStats: true
-    - Omni Tools:
-        container: "dev-omni-tools-1"
-        description: "Self-hosted collection of powerful web-based tools for everyday tasks"
-        href: "https://omni-tools.services.local/"
-        icon: "sh-omnitools.png"
-        server: "my-docker"
-        showStats: true
     - Open WebUI:
         container: "dev-ollama-open-webui-1"
         description: "Open WebUI is an extensible, self-hosted AI interface that adapts to your workflow, all while operating entirely offline"

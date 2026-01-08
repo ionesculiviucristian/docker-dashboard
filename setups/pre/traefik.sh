@@ -14,3 +14,5 @@ find "${certs_dir}" -maxdepth 1 -type f -name "*.crt" | while read -r cert_file_
       keyFile: "/certs/${cert_file/.crt/.key}"
 EOF
 done
+
+exit 0

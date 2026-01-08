@@ -39,7 +39,7 @@ services:
         hard: 10240
         soft: 10240
     volumes:
-      - "${PWD}/services/mysql/initdb:/docker-entrypoint-initdb.d:ro"
+      - "${PWD}/services/mysql/mysql/initdb:/docker-entrypoint-initdb.d:ro"
       - "mysql-data:/var/lib/mysql"
   mysql-phpmyadmin:
     depends_on:

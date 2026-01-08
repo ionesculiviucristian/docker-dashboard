@@ -1,7 +1,7 @@
 networks:
-  authentik:
+  postgres:
     external: true
-    name: "${AUTHENTIK_NETWORK:?err}"
+    name: "${POSTGRES_NETWORK:?err}"
   prometheus:
     external: true
     name: "${PROMETHEUS_NETWORK:?err}"
@@ -9,40 +9,12 @@ networks:
     external: true
     name: "${PROXY_NETWORK:?err}"
 services:
-  authentik-postgres:
-    environment:
-      POSTGRES_DB: "${AUTHENTIK_POSTGRES_DB:?err}"
-      POSTGRES_PASSWORD: "${AUTHENTIK_POSTGRES_USER_PASSWORD:?err}"
-      POSTGRES_USER: "${AUTHENTIK_POSTGRES_USER:?err}"
-    healthcheck:
-      interval: "30s"
-      retries: 5
-      start_period: "60s"
-      test:
-        - "CMD-SHELL"
-        - "pg_isready -U ${AUTHENTIK_POSTGRES_USER}"
-      timeout: "10s"
-    image: "postgres:${AUTHENTIK_POSTGRES_VERSION:?err}"
-    labels:
-      wud.tag.include: "^\\d+\\.\\d+$$"
-      wud.watch: true
-    networks:
-      - "authentik"
-    restart: "unless-stopped"
-    security_opt:
-      - "no-new-privileges:true"
-    shm_size: "256m"
-    volumes:
-      - "authentik-postgres-data:/var/lib/postgresql"
   authentik-server:
     command: "server"
-    depends_on:
-      authentik-postgres:
-        condition: "service_healthy"
     environment:
       AUTHENTIK_BOOTSTRAP_EMAIL: "${AUTHENTIK_BOOTSTRAP_EMAIL:?err}"
       AUTHENTIK_BOOTSTRAP_PASSWORD: "${AUTHENTIK_BOOTSTRAP_PASSWORD:?err}"
-      AUTHENTIK_POSTGRESQL__HOSTNAME: "authentik-postgres"
+      AUTHENTIK_POSTGRESQL__HOST: "postgres"
       AUTHENTIK_POSTGRESQL__NAME: "${AUTHENTIK_POSTGRES_DB:?err}"
       AUTHENTIK_POSTGRESQL__PASSWORD: "${AUTHENTIK_POSTGRES_USER_PASSWORD:?err}"
       AUTHENTIK_POSTGRESQL__USER: "${AUTHENTIK_POSTGRES_USER:?err}"
@@ -61,7 +33,8 @@ services:
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
-      - "authentik"
+      - "default"
+      - "postgres"
       - "prometheus"
       - "proxy"
     restart: "unless-stopped"
@@ -72,13 +45,10 @@ services:
       - "authentik-templates:/templates"
   authentik-worker:
     command: "worker"
-    depends_on:
-      authentik-postgres:
-        condition: "service_healthy"
     environment:
       AUTHENTIK_BOOTSTRAP_EMAIL: "${AUTHENTIK_BOOTSTRAP_EMAIL:?err}"
       AUTHENTIK_BOOTSTRAP_PASSWORD: "${AUTHENTIK_BOOTSTRAP_PASSWORD:?err}"
-      AUTHENTIK_POSTGRESQL__HOSTNAME: "authentik-postgres"
+      AUTHENTIK_POSTGRESQL__HOST: "postgres"
       AUTHENTIK_POSTGRESQL__NAME: "${AUTHENTIK_POSTGRES_DB:?err}"
       AUTHENTIK_POSTGRESQL__PASSWORD: "${AUTHENTIK_POSTGRES_USER_PASSWORD:?err}"
       AUTHENTIK_POSTGRESQL__USER: "${AUTHENTIK_POSTGRES_USER:?err}"
@@ -88,7 +58,8 @@ services:
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
-      - "authentik"
+      - "default"
+      - "postgres"
     restart: "unless-stopped"
     security_opt:
       - "no-new-privileges:true"
@@ -102,5 +73,4 @@ services:
 volumes:
   authentik-certs: null
   authentik-media: null
-  authentik-postgres-data: null
   authentik-templates: null

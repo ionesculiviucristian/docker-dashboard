@@ -56,14 +56,13 @@ fi
 # Pre-setup services
 ./setups/pre/homepage.sh
 ./setups/pre/mongo.sh
-
-# Generate dynamic Traefik config
-./scripts/generate_traefik_dynamic_config.sh
+./setups/pre/traefik.sh
 
 # Start services
 docker compose up -d
 
 # Post-setup services
+./setups/post/authentik.sh
 ./setups/post/mongo.sh
 ./setups/post/ollama.sh
 ./setups/post/rabbitmq.sh

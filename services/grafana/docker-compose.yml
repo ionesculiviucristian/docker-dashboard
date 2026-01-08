@@ -30,7 +30,7 @@ services:
     security_opt:
       - "no-new-privileges:true"
     volumes:
-      - "${PWD}/services/grafana/provisioning:/etc/grafana/provisioning:ro"
+      - "${PWD}/services/grafana/grafana/provisioning:/etc/grafana/provisioning:ro"
       - "grafana-data:/var/lib/grafana"
   grafana-alloy:
     command:

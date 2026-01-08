@@ -8,7 +8,7 @@ networks:
 services:
   homepage:
     environment:
-      HOMEPAGE_ALLOWED_HOSTNAMES: "${HOMEPAGE_HOSTNAME}"
+      HOMEPAGE_ALLOWED_HOSTS: "${HOMEPAGE_HOSTNAME}"
     image: "ghcr.io/gethomepage/homepage:${HOMEPAGE_VERSION:?err}"
     labels:
       traefik.docker.network: "${PROXY_NETWORK:?err}"

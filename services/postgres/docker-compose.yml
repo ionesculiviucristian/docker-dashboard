@@ -41,6 +41,8 @@ services:
       postgres:
         condition: "service_healthy"
     environment:
+      PGADMIN_CONFIG_ALLOW_SPECIAL_EMAIL_DOMAINS: "['local']"
+      PGADMIN_CONFIG_CHECK_EMAIL_DELIVERABILITY: "False"
       PGADMIN_DEFAULT_EMAIL: "${POSTGRES_PGADMIN4_DEFAULT_EMAIL:?err}"
       PGADMIN_DEFAULT_PASSWORD: "${POSTGRES_PGADMIN4_DEFAULT_PASSWORD:?err}"
       PGADMIN_LISTEN_ADDRESS: "0.0.0.0"
