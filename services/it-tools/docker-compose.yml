@@ -18,9 +18,9 @@ services:
       traefik.enable: true
       traefik.http.routers.it-tools.entrypoints: "websecure"
       traefik.http.routers.it-tools.middlewares: "authentik-server@docker"
-      traefik.http.routers.it-tools.rule: "Host(`${IT_TOOLS_HOST:?err}`)"
+      traefik.http.routers.it-tools.rule: "Host(`${IT_TOOLS_HOSTNAME:?err}`)"
       traefik.http.routers.it-tools.tls: true
-      traefik.http.services.it-tools.loadbalancer.server.port: "${IT_TOOLS_HOST_PORT:?err}"
+      traefik.http.services.it-tools.loadbalancer.server.port: "${IT_TOOLS_HOSTNAME_PORT:?err}"
       wud.tag.include: "latest"
       wud.watch: true
       wud.watch.digest: true

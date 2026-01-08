@@ -40,9 +40,9 @@ services:
       traefik.enable: true
       traefik.http.routers.ollama-open-webui.entrypoints: "websecure"
       traefik.http.routers.ollama-open-webui.middlewares: "authentik-server@docker"
-      traefik.http.routers.ollama-open-webui.rule: "Host(`${OLLAMA_OPEN_WEBUI_HOST:?err}`)"
+      traefik.http.routers.ollama-open-webui.rule: "Host(`${OLLAMA_OPEN_WEBUI_HOSTNAME:?err}`)"
       traefik.http.routers.ollama-open-webui.tls: true
-      traefik.http.services.ollama-open-webui.loadbalancer.server.port: "${OLLAMA_OPEN_WEBUI_HOST_PORT:?err}"
+      traefik.http.services.ollama-open-webui.loadbalancer.server.port: "${OLLAMA_OPEN_WEBUI_HOSTNAME_PORT:?err}"
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:

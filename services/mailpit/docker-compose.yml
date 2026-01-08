@@ -18,9 +18,9 @@ services:
       traefik.enable: true
       traefik.http.routers.mailpit.entrypoints: "websecure"
       traefik.http.routers.mailpit.middlewares: "authentik-server@docker"
-      traefik.http.routers.mailpit.rule: "Host(`${MAILPIT_HOST:?err}`)"
+      traefik.http.routers.mailpit.rule: "Host(`${MAILPIT_HOSTNAME:?err}`)"
       traefik.http.routers.mailpit.tls: true
-      traefik.http.services.mailpit.loadbalancer.server.port: "${MAILPIT_HOST_PORT:?err}"
+      traefik.http.services.mailpit.loadbalancer.server.port: "${MAILPIT_HOSTNAME_PORT:?err}"
       wud.tag.include: "^v\\d+\\.\\d+$$"
       wud.watch: true
     networks:

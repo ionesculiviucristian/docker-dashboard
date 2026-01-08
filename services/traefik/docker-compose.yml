@@ -51,10 +51,10 @@ services:
       traefik.enable: true
       traefik.http.routers.traefik.entrypoints: "websecure"
       traefik.http.routers.traefik.middlewares: "authentik-server@docker"
-      traefik.http.routers.traefik.rule: "Host(`${TRAEFIK_HOST:?err}`)"
+      traefik.http.routers.traefik.rule: "Host(`${TRAEFIK_HOSTNAME:?err}`)"
       traefik.http.routers.traefik.service: "api@internal"
       traefik.http.routers.traefik.tls: true
-      traefik.http.services.traefik.loadbalancer.server.port: "${TRAEFIK_HOST_PORT:?err}"
+      traefik.http.services.traefik.loadbalancer.server.port: "${TRAEFIK_HOSTNAME_PORT:?err}"
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
@@ -77,9 +77,9 @@ services:
       traefik.enable: true
       traefik.http.routers.traefik-whoami.entrypoints: "websecure"
       traefik.http.routers.traefik-whoami.middlewares: "authentik-server@docker"
-      traefik.http.routers.traefik-whoami.rule: "Host(`${TRAEFIK_WHOAMI_HOST:?err}`)"
+      traefik.http.routers.traefik-whoami.rule: "Host(`${TRAEFIK_WHOAMI_HOSTNAME:?err}`)"
       traefik.http.routers.traefik-whoami.tls: true
-      traefik.http.services.traefik-whoami.loadbalancer.server.port: "${TRAEFIK_WHOAMI_HOST_PORT:?err}"
+      traefik.http.services.traefik-whoami.loadbalancer.server.port: "${TRAEFIK_WHOAMI_HOSTNAME_PORT:?err}"
       wud.tag.include: "^v\\d+\\.\\d+$$"
       wud.watch: true
     networks:

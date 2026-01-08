@@ -70,9 +70,9 @@ services:
       traefik.enable: true
       traefik.http.routers.prometheus.entrypoints: "websecure"
       traefik.http.routers.prometheus.middlewares: "authentik-server@docker"
-      traefik.http.routers.prometheus.rule: "Host(`${PROMETHEUS_HOST:?err}`)"
+      traefik.http.routers.prometheus.rule: "Host(`${PROMETHEUS_HOSTNAME:?err}`)"
       traefik.http.routers.prometheus.tls: true
-      traefik.http.services.prometheus.loadbalancer.server.port: "${PROMETHEUS_HOST_PORT:?err}"
+      traefik.http.services.prometheus.loadbalancer.server.port: "${PROMETHEUS_HOSTNAME_PORT:?err}"
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:

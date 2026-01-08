@@ -72,9 +72,9 @@ services:
       traefik.enable: true
       traefik.http.routers.mongo-mongo-express.entrypoints: "websecure"
       traefik.http.routers.mongo-mongo-express.middlewares: "authentik-server@docker"
-      traefik.http.routers.mongo-mongo-express.rule: "Host(`${MONGO_EXPRESS_HOST:?err}`)"
+      traefik.http.routers.mongo-mongo-express.rule: "Host(`${MONGO_EXPRESS_HOSTNAME:?err}`)"
       traefik.http.routers.mongo-mongo-express.tls: true
-      traefik.http.services.mongo-mongo-express.loadbalancer.server.port: "${MONGO_EXPRESS_HOST_PORT:?err}"
+      traefik.http.services.mongo-mongo-express.loadbalancer.server.port: "${MONGO_EXPRESS_HOSTNAME_PORT:?err}"
       wud.tag.include: "^\\d+\\.\\d+$$"
       wud.watch: true
     networks:

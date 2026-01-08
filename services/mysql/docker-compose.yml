@@ -46,7 +46,7 @@ services:
       mysql:
         condition: "service_healthy"
     environment:
-      PMA_HOSTS: "mysql"
+      PMA_HOSTNAMES: "mysql"
       UPLOAD_LIMIT: "${MYSQL_PHPMYADMIN_UPLOAD_LIMIT}"
     healthcheck:
       interval: "30s"
@@ -62,9 +62,9 @@ services:
       traefik.enable: true
       traefik.http.routers.mysql-phpmyadmin.entrypoints: "websecure"
       traefik.http.routers.mysql-phpmyadmin.middlewares: "authentik-server@docker"
-      traefik.http.routers.mysql-phpmyadmin.rule: "Host(`${MYSQL_PHPMYADMIN_HOST:?err}`)"
+      traefik.http.routers.mysql-phpmyadmin.rule: "Host(`${MYSQL_PHPMYADMIN_HOSTNAME:?err}`)"
       traefik.http.routers.mysql-phpmyadmin.tls: true
-      traefik.http.services.mysql-phpmyadmin.loadbalancer.server.port: "${MYSQL_PHPMYADMIN_HOST_PORT:?err}"
+      traefik.http.services.mysql-phpmyadmin.loadbalancer.server.port: "${MYSQL_PHPMYADMIN_HOSTNAME_PORT:?err}"
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:

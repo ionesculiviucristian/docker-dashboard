@@ -18,9 +18,9 @@ services:
       traefik.enable: true
       traefik.http.routers.omni-tools.entrypoints: "websecure"
       traefik.http.routers.omni-tools.middlewares: "authentik-server@docker"
-      traefik.http.routers.omni-tools.rule: "Host(`${OMNI_TOOLS_HOST:?err}`)"
+      traefik.http.routers.omni-tools.rule: "Host(`${OMNI_TOOLS_HOSTNAME:?err}`)"
       traefik.http.routers.omni-tools.tls: true
-      traefik.http.services.omni-tools.loadbalancer.server.port: "${OMNI_TOOLS_HOST_PORT:?err}"
+      traefik.http.services.omni-tools.loadbalancer.server.port: "${OMNI_TOOLS_HOSTNAME_PORT:?err}"
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:

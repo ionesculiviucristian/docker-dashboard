@@ -62,9 +62,9 @@ services:
       traefik.enable: true
       traefik.http.routers.redis-redisinsight.entrypoints: "websecure"
       traefik.http.routers.redis-redisinsight.middlewares: "authentik-server@docker"
-      traefik.http.routers.redis-redisinsight.rule: "Host(`${REDIS_HOST:?err}`)"
+      traefik.http.routers.redis-redisinsight.rule: "Host(`${REDIS_HOSTNAME:?err}`)"
       traefik.http.routers.redis-redisinsight.tls: true
-      traefik.http.services.redis-redisinsight.loadbalancer.server.port: "${REDIS_HOST_PORT:?err}"
+      traefik.http.services.redis-redisinsight.loadbalancer.server.port: "${REDIS_HOSTNAME_PORT:?err}"
       wud.tag.include: "^\\d+\\.\\d+$$"
       wud.watch: true
     networks:
