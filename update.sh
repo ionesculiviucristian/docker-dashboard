@@ -1,26 +1,28 @@
 #!/bin/bash
-set -eu
+set -eu 
 
-if [ -f .env ]; then
-    awk -F= '
-        NR==FNR {
-            if (/^[A-Z_]/ && $2 != "\"\"")
-                e[$1] = substr($0, index($0, "=") + 1)
-            next
-        }
-        /^[A-Z_][A-Z0-9_]*=""$/ && $1 in e {
-            print $1 "=" e[$1]
-            next
-        }
-        { print }
-    ' .env .env.example > .env.tmp
-    mv .env.tmp .env
-else
-    cp .env.example .env
+source "./scripts/helpers.sh"
+
+info_msg "Start updating..."
+
+info_msg "Updating .env file..."
+
+./scripts/update_dot_env.sh
+
+info_msg "Starting services..."
+
+if ! output=$(docker compose up -d 2>&1); then
+  error_msg "${output}"
+  exit 1
 fi
 
-docker compose up -d
+info_msg "Removing unused docker data..."
 
-docker system prune -f
+if ! output=$(docker system prune -f 2>&1); then
+  error_msg "${output}"
+  exit 1
+fi
+
+success_msg "Finished updating"
 
 exit 0

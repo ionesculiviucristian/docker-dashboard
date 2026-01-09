@@ -1,15 +1,18 @@
 #!/bin/bash
 set -eu
 
+# shellcheck source=../.env
+set -a && source ".env" && set +a
+
+#shellcheck source="./helpers.sh"
+source "./scripts/helpers.sh"
+
 if [ $# -ne 1 ]; then
-  echo "Error: E-mail is required"
+  error_msg "E-mail is required"
   exit 1
 fi
 
 email="$1"
-
-# shellcheck source=../.env
-set -a && source ".env" && set +a
 
 BW_SESSION=$(bw login "${email}" --method 0 --raw)
 export BW_SESSION

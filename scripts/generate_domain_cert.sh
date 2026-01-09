@@ -1,8 +1,11 @@
 #!/bin/bash
 set -eu
 
+#shellcheck source="./helpers.sh"
+source "./scripts/helpers.sh"
+
 if [ $# -ne 1 ]; then
-  echo "Error: Domain name is required"
+  error_msg "Domain name is required"
   exit 1
 fi
 
@@ -14,6 +17,8 @@ mkdir -p "${certs_dir}"
 mkcert \
   -cert-file "${certs_dir}/${domain_name}.crt" \
   -key-file "${certs_dir}/${domain_name}.key" \
-  "*.${domain_name}" "${domain_name}"
+  "*.${domain_name}" "${domain_name}" >/dev/null 2>&1
+
+info_msg "Created ${domain_name} domain certificate"
 
 exit 0

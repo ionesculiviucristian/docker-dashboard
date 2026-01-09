@@ -4,11 +4,10 @@ set -eu
 # shellcheck source=../../.env
 set -a && source ".env" && set +a
 
-echo "Waiting for PostgreSQL to be ready..."
-until docker compose exec postgres pg_isready -U "${POSTGRES_USER}" >/dev/null 2>&1; do
-  echo -n "."
-  sleep 2
-done
+#shellcheck source="../../scripts/helpers.sh"
+source "./scripts/helpers.sh"
+
+wait_for_service "postgres" "pg_isready -U '${POSTGRES_USER}'"
 
 ./scripts/create_postgres_db.sh \
   "${AUTHENTIK_POSTGRES_DB}" \

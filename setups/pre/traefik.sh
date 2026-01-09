@@ -1,8 +1,13 @@
 #!/bin/bash
 set -eu
 
-dynamic_config_file="./services/traefik/config/tls.yml"
+#shellcheck source="../../scripts/helpers.sh"
+source "./scripts/helpers.sh"
+
 certs_dir="./services/traefik/certs"
+dynamic_config_file="./services/traefik/config/tls.yml"
+
+debug_msg "Generating ${dynamic_config_file}..."
 
 echo "tls:" > "${dynamic_config_file}"
 echo "  certificates:" >> "${dynamic_config_file}"

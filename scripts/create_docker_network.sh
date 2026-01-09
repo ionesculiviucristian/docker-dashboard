@@ -1,19 +1,21 @@
 #!/bin/bash
 set -eu
 
+#shellcheck source="./helpers.sh"
+source "./scripts/helpers.sh"
+
 if [ $# -ne 1 ]; then
-  echo "Error: Network is required"
+  error_msg "Network name is required"
   exit 1
 fi
 
-network="$1"
+network_name="$1"
 
-if ! docker network inspect "${network}" >/dev/null 2>&1; then
-    docker network create "${network}" >/dev/null
-    echo -e "\u2705 Created network ${network}"
+if ! docker network inspect "${network_name}" >/dev/null 2>&1; then
+    network_id=$(docker network create "${network_name}")
+    success_msg "Created network ${network_name} with ID ${network_id}"
 else
-    echo -e "\u2139 Network ${network} already exists"
+    info_msg "Network ${network_name} already exists"
 fi
 
 exit 0
- 

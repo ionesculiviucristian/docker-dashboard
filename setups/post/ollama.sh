@@ -4,12 +4,16 @@ set -eu
 # shellcheck source=../../.env
 set -a && source "./.env" && set +a
 
-echo "Waiting for Ollama to be ready..."
-until docker compose exec ollama ollama list >/dev/null 2>&1; do
-  echo -n "."
-  sleep 2
-done
+#shellcheck source="../../scripts/helpers.sh"
+source "./scripts/helpers.sh"
 
-docker compose exec ollama ollama pull "${OLLAMA_MODEL}"
+wait_for_service "ollama" "ollama list"
+
+info_msg "Pulling ${OLLAMA_MODEL} model..."
+
+if ! output=$(docker compose exec -T ollama ollama pull "${OLLAMA_MODEL}" 2>&1); then
+  error_msg "${output}"
+  exit 1
+fi
 
 exit 0
