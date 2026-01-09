@@ -41,8 +41,8 @@ services:
       start_period: "30s"
       test:
         - "CMD-SHELL"
-        - "wget --no-verbose --tries=1 --spider http://localhost:9100/metrics || exit 1"
-      timeout: "10s"
+        - "wget --no-verbose --tries=1 -O /dev/null http://localhost:9100/metrics || exit 1"
+      timeout: "30s"
     image: "prom/node-exporter:${PROMETHEUS_NODE_EXPORTER_VERSION:?err}"
     labels:
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"

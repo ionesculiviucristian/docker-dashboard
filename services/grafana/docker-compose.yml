@@ -37,6 +37,7 @@ services:
       - "run"
       - "--server.http.listen-addr=0.0.0.0:${GRAFANA_ALLOY_HOSTNAME_PORT:?err}"
       - "--storage.path=/var/lib/alloy/data"
+      - "--disable-reporting"
       - "/etc/alloy/config.alloy"
     environment:
       LOGGING_LEVEL: "${GRAFANA_ALLOY_LOGGING_LEVEL:?err}"

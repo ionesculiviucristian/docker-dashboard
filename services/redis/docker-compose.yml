@@ -33,6 +33,9 @@ services:
     volumes:
       - "redis-data:/data"
   redis-prometheus-exporter:
+    depends_on:
+      redis:
+        condition: "service_healthy"
     environment:
       REDIS_ADDR: "redis:6379"
       REDIS_PASSWORD: "${REDIS_PASSWORD:?err}"
@@ -48,6 +51,9 @@ services:
     security_opt:
       - "no-new-privileges:true"
   redis-redisinsight:
+    depends_on:
+      redis:
+        condition: "service_healthy"
     healthcheck:
       interval: "30s"
       retries: 5
