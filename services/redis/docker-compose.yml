@@ -65,7 +65,7 @@ services:
       traefik.http.routers.redis-redisinsight.rule: "Host(`${REDIS_HOSTNAME:?err}`)"
       traefik.http.routers.redis-redisinsight.tls: true
       traefik.http.services.redis-redisinsight.loadbalancer.server.port: "${REDIS_HOSTNAME_PORT:?err}"
-      wud.tag.include: "^\\d+\\.\\d+$$"
+      wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
       - "proxy"
