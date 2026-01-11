@@ -9,9 +9,8 @@ source "./scripts/helpers.sh"
 
 wait_for_service "rabbitmq" "rabbitmq-diagnostics ping"
 
-if ! output=$(docker compose exec rabbitmq rabbitmq-plugins enable rabbitmq_prometheus 2>&1); then
-  error_msg "${output}"
-  exit 1
-fi
+info_msg "Enabling RabbitMQ plugins..."
+
+docker compose exec rabbitmq rabbitmq-plugins enable rabbitmq_prometheus >/dev/null
 
 exit 0

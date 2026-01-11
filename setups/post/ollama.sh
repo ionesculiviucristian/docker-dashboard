@@ -11,9 +11,6 @@ wait_for_service "ollama" "ollama list"
 
 info_msg "Pulling ${OLLAMA_MODEL} model..."
 
-if ! output=$(docker compose exec -T ollama ollama pull "${OLLAMA_MODEL}" 2>&1); then
-  error_msg "${output}"
-  exit 1
-fi
+docker compose exec -T ollama ollama pull "${OLLAMA_MODEL}" >/dev/null 2>&1
 
 exit 0
