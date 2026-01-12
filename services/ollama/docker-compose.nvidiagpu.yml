@@ -4,7 +4,7 @@ services:
       resources:
         reservations:
           devices:
-            - driver: ${OLLAMA_OPEN_WEBUI_GPU_DRIVER-nvidia}
+            - driver: "nvidia"
               count: ${OLLAMA_OPEN_WEBUI_GPU_COUNT-1}
               capabilities:
                 - gpu
