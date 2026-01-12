@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eu 
 
-#shellcheck source="../../scripts/helpers.sh"
+# shellcheck source="../../scripts/helpers.sh"
 source "./scripts/helpers.sh"
 
 keyfile="./services/mongo/keyfile"

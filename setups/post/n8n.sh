@@ -4,7 +4,7 @@ set -eu
 # shellcheck source=../../.env
 set -a && source "./.env" && set +a
 
-#shellcheck source="../../scripts/helpers.sh"
+# shellcheck source="../../scripts/helpers.sh"
 source "./scripts/helpers.sh"
 
 info_msg "Configuring n8n owner account..."

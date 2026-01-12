@@ -1,8 +1,6 @@
 #!/bin/bash
-#shellcheck disable=SC2329
+# shellcheck disable=SC2329
 set -eu
-
-#!/bin/bash
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'

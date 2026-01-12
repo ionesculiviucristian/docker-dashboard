@@ -4,7 +4,7 @@ set -eu
 # shellcheck source=../.env
 set -a && source ".env" && set +a
 
-#shellcheck source="./helpers.sh"
+# shellcheck source="./helpers.sh"
 source "./scripts/helpers.sh"
 
 if [ $# -ne 1 ]; then

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eu
 
-#shellcheck source="./helpers.sh"
+# shellcheck source="./helpers.sh"
 source "./scripts/helpers.sh"
 
 if [ -f "./.env" ]; then
