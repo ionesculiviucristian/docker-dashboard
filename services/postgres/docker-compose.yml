@@ -52,7 +52,7 @@ services:
       start_period: "60s"
       test:
         - "CMD-SHELL"
-        - "wget --no-verbose --tries=1 --spider http://localhost/misc/ping || exit 1"
+        - "wget --no-verbose --tries=1 --spider http://127.0.0.1/misc/ping || exit 1"
       timeout: "10s"
     image: "dpage/pgadmin4:${POSTGRES_PGADMIN4_VERSION:?err}"
     labels:
@@ -88,7 +88,7 @@ services:
       start_period: "60s"
       test:
         - "CMD-SHELL"
-        - "wget --no-verbose --tries=1 --spider http://localhost:9187/metrics || exit 1"
+        - "wget --no-verbose --tries=1 --spider http://127.0.0.1:9187/metrics || exit 1"
       timeout: "10s"
     image: "prometheuscommunity/postgres-exporter:${POSTGRES_PROMETHEUS_EXPORTER_VERSION:?err}"
     labels:

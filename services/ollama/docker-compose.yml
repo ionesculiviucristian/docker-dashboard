@@ -10,7 +10,7 @@ services:
       start_period: "60s"
       test:
         - "CMD-SHELL"
-        - "timeout 1 bash -c '</dev/tcp/localhost/11434' || exit 1"
+        - "timeout 1 bash -c '</dev/tcp/127.0.0.1/11434' || exit 1"
       timeout: "10s"
     image: "ollama/ollama:${OLLAMA_VERSION:?err}"
     labels:

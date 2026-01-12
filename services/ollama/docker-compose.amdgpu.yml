@@ -4,3 +4,5 @@ services:
       - "/dev/dri:/dev/dri"
       - "/dev/kfd:/dev/kfd"
     image: "ollama/ollama:${OLLAMA_VERSION:?err}-rocm"
+    environment:
+      HSA_OVERRIDE_GFX_VERSION: "${OLLAMA_OPEN_WEBUI_HSA_OVERRIDE_GFX_VERSION-11.0.0}"

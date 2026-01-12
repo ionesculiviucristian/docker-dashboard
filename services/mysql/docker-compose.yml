@@ -20,7 +20,7 @@ services:
       start_period: "60s"
       test:
         - "CMD-SHELL"
-        - "mysqladmin ping -h localhost -u root -p${MYSQL_ROOT_PASSWORD} || exit 1"
+        - "mysqladmin ping -h 127.0.0.1 -u root -p${MYSQL_ROOT_PASSWORD} || exit 1"
       timeout: "10s"
     image: "mysql:${MYSQL_VERSION:?err}"
     labels:
@@ -54,7 +54,7 @@ services:
       start_period: "60s"
       test:
         - "CMD-SHELL"
-        - "curl --fail --silent --show-error http://localhost/robots.txt || exit 1"
+        - "curl --fail --silent --show-error http://127.0.0.1/robots.txt || exit 1"
       timeout: "10s"
     image: "phpmyadmin:${MYSQL_PHPMYADMIN_VERSION:?err}"
     labels:
@@ -91,7 +91,7 @@ services:
       start_period: "60s"
       test:
         - "CMD-SHELL"
-        - "wget --no-verbose --tries=1 --spider http://localhost:9104/metrics || exit 1"
+        - "wget --no-verbose --tries=1 --spider http://127.0.0.1:9104/metrics || exit 1"
       timeout: "10s"
     image: "prom/mysqld-exporter:${MYSQL_PROMETHEUS_EXPORTER_VERSION:?err}"
     labels:

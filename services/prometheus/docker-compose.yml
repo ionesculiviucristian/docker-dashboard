@@ -15,7 +15,7 @@ services:
       start_period: "30s"
       test:
         - "CMD-SHELL"
-        - "wget --no-verbose --tries=1 --spider http://localhost:9115/health || exit 1"
+        - "wget --no-verbose --tries=1 --spider http://127.0.0.1:9115/health || exit 1"
       timeout: "10s"
     image: "prom/blackbox-exporter:${PROMETHEUS_BLACKBOX_EXPORTER_VERSION:?err}"
     labels:
@@ -41,7 +41,7 @@ services:
       start_period: "30s"
       test:
         - "CMD-SHELL"
-        - "wget --no-verbose --tries=1 -O /dev/null http://localhost:9100/metrics || exit 1"
+        - "wget --no-verbose --tries=1 -O /dev/null http://127.0.0.1:9100/metrics || exit 1"
       timeout: "30s"
     image: "prom/node-exporter:${PROMETHEUS_NODE_EXPORTER_VERSION:?err}"
     labels:
@@ -62,7 +62,7 @@ services:
       start_period: "60s"
       test:
         - "CMD-SHELL"
-        - "wget --no-verbose --tries=1 --spider http://localhost:9090/-/healthy || exit 1"
+        - "wget --no-verbose --tries=1 --spider http://127.0.0.1:9090/-/healthy || exit 1"
       timeout: "10s"
     image: "prom/prometheus:${PROMETHEUS_VERSION:?err}"
     labels:

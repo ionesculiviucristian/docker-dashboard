@@ -10,7 +10,7 @@ services:
       start_period: "60s"
       test:
         - "CMD-SHELL"
-        - "curl --fail --silent --show-error http://localhost || exit 1"
+        - "curl --fail --silent --show-error http://127.0.0.1 || exit 1"
       timeout: "10s"
     image: "iib0011/omni-tools:${OMNI_TOOLS_VERSION:?err}"
     labels:
