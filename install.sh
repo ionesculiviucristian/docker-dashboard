@@ -70,12 +70,15 @@ info_msg "Traefik" | indent_msg && ./setups/pre/traefik.sh | indent_msg 4
 
 info_msg "Starting services..."
 
-docker compose up -d >/dev/null 2>&1
+if ! output=$(docker compose up -d 2>&1); then
+  error_msg "${output}"
+  exit 1
+fi
 
 info_msg "Post-setup services..."
 
 info_msg "Authentik" | indent_msg && ./setups/post/authentik.sh | indent_msg 4
-info_msg "Mealie" | indent_msg && ./setups/post/mealie.sh | indent_msg 4
+info_msg "Mealie" | indent_msg && ./setups/post/mealie/setup.sh | indent_msg 4
 info_msg "MongoDB" | indent_msg && ./setups/post/mongo.sh | indent_msg 4
 info_msg "n8n" | indent_msg && ./setups/post/n8n.sh | indent_msg 4
 info_msg "Ollama" | indent_msg && ./setups/post/ollama.sh | indent_msg 4

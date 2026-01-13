@@ -5,9 +5,7 @@ source "./scripts/helpers.sh"
 
 info_msg "Start updating..."
 
-info_msg "Updating .env file..."
-
-./scripts/update_dot_env.sh
+info_msg "Updating .env file..." && ./scripts/update_dot_env.sh
 
 info_msg "Starting services..."
 
