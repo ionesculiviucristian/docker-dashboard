@@ -1,7 +1,19 @@
 #!/bin/bash
-set -eu 
+set -eu
 
 source "./scripts/helpers.sh"
+
+if [ "${1:-}" = "--reset" ]; then
+  warning_msg "This will remove ALL docker containers, volumes, and networks (images will be kept)"
+  read -r -p "Type 'yes' to continue: " confirmation
+
+  if [ "${confirmation}" != "yes" ]; then
+    info_msg "Aborted"
+    exit 0
+  fi
+
+  ./scripts/reset_docker.sh
+fi
 
 info_msg "Start installing..."
 
