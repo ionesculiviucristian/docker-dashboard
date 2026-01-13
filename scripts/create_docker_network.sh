@@ -11,11 +11,20 @@ fi
 
 network_name="$1"
 
-if ! docker network inspect "${network_name}" >/dev/null 2>&1; then
-    network_id=$(docker network create "${network_name}")
-    success_msg "Created network ${network_name} (${network_id})"
+if inspect_output=$(docker network inspect "${network_name}" 2>&1); then
+  info_msg "Network ${network_name} already exists"
+  exit 0
 else
-    info_msg "Network ${network_name} already exists"
+  if ! echo "${inspect_output}" | grep -q "not found"; then
+    error_msg "${inspect_output}"
+    exit 1
+  fi
 fi
 
-exit 0
+if create_output=$(docker network create "${network_name}" 2>&1); then
+  success_msg "Created network ${network_name} (${create_output})"
+  exit 0
+else
+  error_msg "${create_output}"
+  exit 1
+fi

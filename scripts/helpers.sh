@@ -43,11 +43,20 @@ indent_msg() {
 wait_for_service() {
   local container=$1
   local cmd=$2
+  local timeout=${3:-60}
+  local elapsed=0
 
-  info_msg "Waiting for ${container} service to be ready..."
+  info_msg "Waiting for ${container} service to be ready"
 
-  until docker compose exec -T "$container" sh -c "$cmd" &>/dev/null; do
+  until docker compose exec "${container}" sh -c "${cmd}" &>/dev/null; do
     echo -n "."
     sleep 2
+    elapsed=$((elapsed + 2))
+
+    if [ ${elapsed} -ge "${timeout}" ]; then
+      echo ""
+      error_msg "Timeout waiting for ${container} service to be ready after ${timeout} seconds"
+      exit 1
+    fi
   done
 }

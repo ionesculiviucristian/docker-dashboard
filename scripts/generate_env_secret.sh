@@ -13,6 +13,11 @@ variable_name="$1"
 env_file="./.env"
 secret=$(openssl rand -base64 32)
 
+if [ ! -f "${env_file}" ]; then
+  error_msg "${env_file} not found"
+  exit 1
+fi
+
 if grep -qE "^${variable_name}=(['\"]?)[^'\"[:space:]]+(\1)" "${env_file}"; then
   warning_msg "Variable ${variable_name} is already set"
 elif grep -q "^${variable_name}=" "${env_file}"; then

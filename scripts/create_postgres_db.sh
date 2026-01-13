@@ -8,7 +8,7 @@ set -a && source ".env" && set +a
 source "./scripts/helpers.sh"
 
 if [ $# -ne 3 ]; then
-  error "Database, username and password are required"
+  error_msg "Database, username and password are required"
   exit 1
 fi
 
@@ -17,7 +17,12 @@ username="$2"
 password="$3"
 
 pg_query() {
-  docker compose exec -T postgres psql -U "${POSTGRES_USER}" -tAn -c "$1"
+  if exec_output=$(docker compose exec postgres psql -U "${POSTGRES_USER}" -tAn -c "$1" 2>&1); then
+    echo "${exec_output}"
+  else
+    error_msg "${exec_output}"
+    exit 1
+  fi
 }
 
 user_exists=$(pg_query "SELECT 1 FROM pg_roles WHERE rolname='${username}'")
