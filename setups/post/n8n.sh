@@ -11,7 +11,7 @@ info_msg "Configuring n8n owner account..."
 
 wait_for_service "n8n" "wget --spider -q http://127.0.0.1:5678/healthz"
 
-setup_payload=$(cat <<EOF
+payload=$(cat <<EOF
 {
   "email": "${SERVICES_USER_EMAIL}",
   "password": "${SERVICES_USER_PASSWORD}",
@@ -23,7 +23,7 @@ EOF
 
 response=$(curl -k -s -X POST "https://${N8N_HOSTNAME}/rest/owner/setup" \
   -H "Content-Type: application/json" \
-  -d "${setup_payload}" \
+  -d "${payload}" \
   -w "\n%{http_code}"
 )
 

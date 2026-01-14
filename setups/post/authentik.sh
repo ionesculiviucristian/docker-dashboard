@@ -9,9 +9,12 @@ source "./scripts/helpers.sh"
 
 wait_for_service "postgres" "pg_isready -U '${POSTGRES_USER}'"
 
-./scripts/create_postgres_db.sh \
+if ! output=$(./scripts/create_postgres_db.sh \
   "${AUTHENTIK_POSTGRES_DB}" \
   "${AUTHENTIK_POSTGRES_USER}" \
-  "${AUTHENTIK_POSTGRES_USER_PASSWORD}"
+  "${AUTHENTIK_POSTGRES_USER_PASSWORD}" 2>&1 \
+); then
+  error_msg "${output}"
+fi
 
 exit 0

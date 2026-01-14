@@ -11,6 +11,14 @@ wait_for_service "rabbitmq" "rabbitmq-diagnostics ping"
 
 info_msg "Enabling RabbitMQ plugins..."
 
-docker compose exec rabbitmq rabbitmq-plugins enable rabbitmq_prometheus >/dev/null
+if ! exec_output=$(docker compose exec rabbitmq \
+  rabbitmq-plugins enable rabbitmq_prometheus \
+); then
+  error_msg "${exec_output}"
+else
+  if echo "${exec_output}" | grep "Error"; then
+    error_msg "${exec_output}"
+  fi
+fi
 
 exit 0
