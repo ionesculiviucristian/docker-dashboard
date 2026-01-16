@@ -1,15 +1,13 @@
 # yaml-language-server: $schema=https://goauthentik.io/blueprints/schema.json
 version: 1
-
 metadata:
-  name: "domain-forward-auth-with-searched-flow"
+  name: "traefik-domain-forward-auth"
   labels:
-    purpose: "forward-auth-domain-level"
-
+    purpose: "traefik-forward-auth"
 entries:
   - model: "authentik_providers_proxy.proxyprovider"
     identifiers:
-      name: "traefik-forward-domain"
+      name: "traefik-forward-auth-provider"
     state: "present"
     attrs:
       name: "Traefik Forward Auth (Domain)"
@@ -38,14 +36,14 @@ entries:
   - model: "authentik_core.application"
     state: "present"
     identifiers:
-      name: "traefik-forward-domain-application"
+      name: "traefik-forward-auth"
     attrs:
-      name: "Forward Auth"
+      name: "Traefik Forward Auth"
       policy_engine_mode: "any"
       provider:
         !Find [
           authentik_providers_proxy.proxyprovider,
-          [name, traefik-forward-domain],
+          [name, traefik-forward-auth-provider],
         ]
       slug: "traefik-forward-auth"
     conditions: []
@@ -58,7 +56,7 @@ entries:
         [
           !Find [
             authentik_providers_proxy.proxyprovider,
-            [name, traefik-forward-domain],
+            [name, traefik-forward-auth-provider],
           ],
         ]
       config:
