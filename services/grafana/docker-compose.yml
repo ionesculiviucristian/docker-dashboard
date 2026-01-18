@@ -1,4 +1,7 @@
 networks:
+  grafana:
+    external: true
+    name: "${GRAFANA_NETWORK:?err}"
   prometheus:
     external: true
     name: "${PROMETHEUS_NETWORK:?err}"
@@ -23,7 +26,7 @@ services:
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
-      - "default"
+      - "grafana"
       - "prometheus"
       - "proxy"
     restart: "unless-stopped"
@@ -53,7 +56,7 @@ services:
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
-      - "default"
+      - "grafana"
       - "proxy"
     restart: "unless-stopped"
     security_opt:
@@ -70,7 +73,7 @@ services:
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
-      - "default"
+      - "grafana"
     restart: "unless-stopped"
     security_opt:
       - "no-new-privileges:true"

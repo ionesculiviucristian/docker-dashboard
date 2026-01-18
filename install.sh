@@ -40,10 +40,13 @@ info_msg "Generating domain certs..."
 
 info_msg "Creating service networks..."
 
+./scripts/create_docker_network.sh "${AUTHENTIK_NETWORK}" | indent_msg
+./scripts/create_docker_network.sh "${GRAFANA_NETWORK}" | indent_msg
 ./scripts/create_docker_network.sh "${MAILPIT_NETWORK}" | indent_msg
 ./scripts/create_docker_network.sh "${MINIO_NETWORK}" | indent_msg
 ./scripts/create_docker_network.sh "${MONGO_NETWORK}" | indent_msg
 ./scripts/create_docker_network.sh "${MYSQL_NETWORK}" | indent_msg
+./scripts/create_docker_network.sh "${OLLAMA_NETWORK}" | indent_msg
 ./scripts/create_docker_network.sh "${POSTGRES_NETWORK}" | indent_msg
 ./scripts/create_docker_network.sh "${PROMETHEUS_NETWORK}" | indent_msg
 ./scripts/create_docker_network.sh "${PROXY_NETWORK}" | indent_msg

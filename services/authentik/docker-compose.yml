@@ -1,4 +1,7 @@
 networks:
+  authentik:
+    external: true
+    name: "${AUTHENTIK_NETWORK:?err}"
   postgres:
     external: true
     name: "${POSTGRES_NETWORK:?err}"
@@ -33,7 +36,7 @@ services:
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
-      - "default"
+      - "authentik"
       - "postgres"
       - "prometheus"
       - "proxy"
@@ -41,7 +44,7 @@ services:
     security_opt:
       - "no-new-privileges:true"
     volumes:
-      - "authentik-media:/media"
+      - "authentik-data:/data"
       - "authentik-templates:/templates"
   authentik-worker:
     command: "worker"
@@ -58,7 +61,7 @@ services:
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
-      - "default"
+      - "authentik"
       - "postgres"
     restart: "unless-stopped"
     security_opt:

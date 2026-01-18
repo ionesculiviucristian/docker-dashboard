@@ -10,7 +10,7 @@ services:
           memory: "1000M"
     environment:
       ALLOW_PASSWORD_LOGIN: true
-      BASE_URL: "https://${MEALIE_HOSTNAME:?err}:8080"
+      BASE_URL: "https://${MEALIE_HOSTNAME:?err}:${MEALIE_HOSTNAME_PORT:?err}"
     image: "ghcr.io/mealie-recipes/mealie:${MEALIE_VERSION:?err}"
     labels:
       traefik.docker.network: "${PROXY_NETWORK:?err}"
