@@ -12,6 +12,8 @@ fi
 certs_dir="./services/traefik/certs"
 domain_name="$1"
 
+info_msg "Creating ${domain_name} domain certificate..." true
+
 mkdir -p "${certs_dir}"
 
 if output=$(mkcert \
@@ -19,9 +21,9 @@ if output=$(mkcert \
   -key-file "${certs_dir}/${domain_name}.key" \
   "*.${domain_name}" "${domain_name}" 2>&1 \
 ); then
-  info_msg "Created ${domain_name} domain certificate"
+  status_ok
   exit 0
 else
-  error_msg "${output}"
+  status_fail "${output}"
   exit 1
 fi

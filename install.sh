@@ -50,7 +50,7 @@ info_msg "Creating service networks..."
 ./scripts/create_docker_network.sh "${RABBITMQ_NETWORK}" | indent_msg
 ./scripts/create_docker_network.sh "${REDIS_NETWORK}" | indent_msg
 
-info_msg "Registering service hostnames..."
+info_msg "Registering hostnames..."
 
 ./scripts/register_hostname.sh "authentik.services.local" | indent_msg
 ./scripts/register_hostname.sh "cadvisor.services.local" | indent_msg

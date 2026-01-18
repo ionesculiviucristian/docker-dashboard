@@ -10,23 +10,55 @@ GREY='\033[0;90m'
 NC='\033[0m'
 
 success_msg() {
-  echo -e "${GREEN}[SUCCESS]${NC} $1"
+  if [ "${2:-false}" = "true" ]; then
+    echo -n -e "${GREEN}[SUCCESS]${NC} $1"
+  else
+    echo -e "${GREEN}[SUCCESS]${NC} $1"
+  fi
 }
 
 info_msg() {
-  echo -e "${BLUE}[INFO]${NC} $1"
+  if [ "${2:-false}" = "true" ]; then
+    echo -n -e "${BLUE}[INFO]${NC} $1"
+  else
+    echo -e "${BLUE}[INFO]${NC} $1"
+  fi
 }
 
 warning_msg() {
-  echo -e "${YELLOW}[WARNING]${NC} $1"
+  if [ "${2:-false}" = "true" ]; then
+    echo -n -e "${YELLOW}[WARNING]${NC} $1"
+  else
+    echo -e "${YELLOW}[WARNING]${NC} $1"
+  fi
 }
 
 error_msg() {
-  echo -e "${RED}[ERROR]${NC} $1"
+  if [ "${2:-false}" = "true" ]; then
+    echo -n -e "${RED}[ERROR]${NC} $1"
+  else
+    echo -e "${RED}[ERROR]${NC} $1"
+  fi
 }
 
 debug_msg() {
-  echo -e "${GREY}[DEBUG]${NC} $1"
+  if [ "${2:-false}" = "true" ]; then
+    echo -n -e "${GREY}[DEBUG]${NC} $1"
+  else
+    echo -e "${GREY}[DEBUG]${NC} $1"
+  fi
+}
+
+status_ok() {
+  echo -e " ${GREEN}ok${NC}"
+}
+
+status_skip() {
+  echo -e " ${YELLOW}skip${NC}"
+}
+
+status_fail() {
+  echo -e " ${RED}$1${NC}"
 }
 
 indent_msg() {

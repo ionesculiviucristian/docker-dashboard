@@ -5,26 +5,28 @@ set -eu
 source "./scripts/helpers.sh"
 
 if [ $# -ne 1 ]; then
-  error_msg "Network name is required"
+  error_msg "Docker network name is required"
   exit 1
 fi
 
-network_name="$1"
+name="$1"
 
-if inspect_output=$(docker network inspect "${network_name}" 2>&1); then
-  info_msg "Network ${network_name} already exists"
+info_msg "Creating ${name} docker network..." true
+
+if inspect_output=$(docker network inspect "${name}" 2>&1); then
+  status_skip
   exit 0
 else
   if ! echo "${inspect_output}" | grep -q "not found"; then
-    error_msg "${inspect_output}"
+    status_fail "${inspect_output}"
     exit 1
   fi
 fi
 
-if create_output=$(docker network create "${network_name}" 2>&1); then
-  success_msg "Created network ${network_name} (${create_output})"
+if create_output=$(docker network create "${name}" 2>&1); then
+  status_ok
   exit 0
 else
-  error_msg "${create_output}"
+  status_fail "${create_output}"
   exit 1
 fi

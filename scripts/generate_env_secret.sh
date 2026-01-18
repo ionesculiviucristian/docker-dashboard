@@ -22,10 +22,10 @@ if grep -qE "^${variable_name}=(['\"]?)[^'\"[:space:]]+(\1)" "${env_file}"; then
   warning_msg "Variable ${variable_name} is already set"
 elif grep -q "^${variable_name}=" "${env_file}"; then
   sed -i "s|^${variable_name}=.*|${variable_name}=\"${secret}\"|" "${env_file}"
-  info_msg "Updated ${variable_name} variable"
+  success_msg "Updated ${variable_name} variable"
 else
   echo "${variable_name}=\"${secret}\"" >> "${env_file}"
-  info_msg "Added ${variable_name} variable"
+  success_msg "Added ${variable_name} variable"
 fi
 
 exit 0

@@ -16,6 +16,8 @@ database="$1"
 username="$2"
 password="$3"
 
+info_msg "Creating ${database} PostgreSQL database for user ${username}..."
+
 pg_query() {
   if exec_output=$(docker compose exec postgres psql -U "${POSTGRES_USER}" -tAn -c "$1" 2>&1); then
     echo "${exec_output}"
@@ -31,7 +33,7 @@ if [ "${user_exists}" == "1" ]; then
   info_msg "User ${username} already exists"
 else
   pg_query "CREATE USER ${username} WITH PASSWORD '${password}'" >/dev/null
-  success_msg "Created $username user"
+  success_msg "Created ${username} user"
 fi
 
 db_exists=$(pg_query "SELECT 1 FROM pg_database WHERE datname='${database}'")
@@ -44,6 +46,6 @@ else
 fi
 
 pg_query "GRANT ALL PRIVILEGES ON DATABASE ${database} TO ${username}" >/dev/null
-debug_msg "Granted all privileges for '$username' on '${database}'"
+success_msg "Granted all privileges for ${username} on ${database}"
 
 exit 0

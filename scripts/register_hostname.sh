@@ -12,11 +12,16 @@ fi
 hostname="$1"
 hosts_file="/etc/hosts"
 
+info_msg "Registering ${hostname} hostname..." true
+
 if ! grep -q "${hostname}" "${hosts_file}"; then
-  echo "127.0.0.1 ${hostname}" | sudo tee -a "${hosts_file}" >/dev/null
-  success_msg "Registered ${hostname} hostname"
+  if output=$(echo "127.0.0.1 ${hostname}" | sudo tee -a "${hosts_file}" 2>&1); then
+    status_ok
+  else
+    status_fail "${output}"
+  fi
 else
-  info_msg "Hostname ${hostname} is already registered"
+  status_skip
 fi
 
 exit 0
