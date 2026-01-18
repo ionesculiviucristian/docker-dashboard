@@ -1,41 +1,41 @@
 - Services:
     - authentik:
-        container: "dev-traefik-1"
+        container: "ddp-traefik-1"
         description: "The authentication glue you need"
         href: "https://authentik.services.local/"
         icon: "sh-authentik.png"
         server: "my-docker"
         showStats: true
     - cAdvisor:
-        container: "dev-cadvisor-1"
+        container: "ddp-cadvisor-1"
         description: "Analyzes resource usage and performance characteristics of running containers"
         href: "https://cadvisor.services.local/"
         icon: "sh-cadvisor.png"
         server: "my-docker"
         showStats: true
     - Grafana:
-        container: "dev-grafana-1"
+        container: "ddp-grafana-1"
         description: "The open and composable observability and data visualization platform"
         href: "https://grafana.services.local/"
         icon: "sh-grafana.png"
         server: "my-docker"
         showStats: true
     - Grafana Alloy:
-        container: "dev-grafana-alloy-1"
+        container: "ddp-grafana-alloy-1"
         description: "Grafana Alloy is an open source OpenTelemetry collector with built-in Prometheus pipelines and support for metrics, logs, traces, and profiles"
         href: "https://grafana-alloy.services.local/"
         icon: "sh-grafana-alloy.png"
         server: "my-docker"
         showStats: true
     - IT TOOLS:
-        container: "dev-it-tools-1"
+        container: "ddp-it-tools-1"
         description: "Handy tools for developers"
         href: "https://it-tools.services.local/"
         icon: "sh-it-tools.png"
         server: "my-docker"
         showStats: true
     - Mailpit:
-        container: "dev-mailpit-1"
+        container: "ddp-mailpit-1"
         description: "Mailpit - email & SMTP testing tool with API for developers"
         href: "https://mailpit.services.local/"
         icon: "sh-mailpit.png"
@@ -50,84 +50,84 @@
           type: "customapi"
           url: "http://mailpit:8025/api/v1/messages"
     - Mealie:
-        container: "dev-mealie-1"
+        container: "ddp-mealie-1"
         description: "Mealie is an intuitive and easy to use recipe management app"
         href: "https://mealie.services.local/"
         icon: "sh-mealie.png"
         server: "my-docker"
         showStats: true
     - MinIO:
-        container: "dev-minio-1"
+        container: "ddp-minio-1"
         description: "MinIO is a High Performance Object Storage. It is API compatible with Amazon S3 cloud storage service"
         href: "https://minio.services.local/"
         icon: "/icons/minio.png"
         server: "my-docker"
         showStats: true
     - Mongo Express:
-        container: "dev-mongo-mongo-express-1"
+        container: "ddp-mongo-mongo-express-1"
         description: "A web-based MongoDB admin interface written with Node.js, Express, and Bootstrap 5"
         href: "https://mongo-express.services.local/"
         icon: "/icons/mongo-express.png"
         server: "my-docker"
         showStats: true
     - n8n:
-        container: "dev-n8n-1"
+        container: "ddp-n8n-1"
         description: "Fair-code workflow automation platform with native AI capabilities"
         href: "https://n8n.services.local/"
         icon: "sh-n8n.png"
         server: "my-docker"
         showStats: true
     - Omni Tools:
-        container: "dev-omni-tools-1"
+        container: "ddp-omni-tools-1"
         description: "Self-hosted collection of powerful web-based tools for everyday tasks"
         href: "https://omni-tools.services.local/"
         icon: "sh-omnitools.png"
         server: "my-docker"
         showStats: true
     - pgAdmin4:
-        container: "dev-postgres-pgadmin4-1"
+        container: "ddp-postgres-pgadmin4-1"
         description: "pgAdmin is the most popular and feature rich Open Source administration and development platform for PostgreSQL"
         href: "https://pgadmin4.services.local/"
         icon: "/icons/pgadmin4.ico"
         server: "my-docker"
         showStats: true
     - phpMyAdmin:
-        container: "dev-mysql-phpmyadmin-1"
+        container: "ddp-mysql-phpmyadmin-1"
         description: "phpMyAdmin is a free software tool written in PHP, intended to handle the administration of MySQL over the Web"
         href: "https://phpmyadmin.services.local/"
         icon: "/icons/phpmyadmin.ico"
         server: "my-docker"
         showStats: true
     - Prometheus:
-        container: "dev-prometheus-1"
+        container: "ddp-prometheus-1"
         description: "Monitor your applications, systems, and services with the leading open source monitoring solution. Instrument, collect, store, and query your metrics for alerting, dashboarding, and other use cases"
         href: "https://prometheus.services.local/"
         icon: "sh-prometheus.png"
         server: "my-docker"
         showStats: true
     - Open WebUI:
-        container: "dev-ollama-open-webui-1"
+        container: "ddp-ollama-open-webui-1"
         description: "Open WebUI is an extensible, self-hosted AI interface that adapts to your workflow, all while operating entirely offline"
         href: "https://open-webui.services.local/"
         icon: "sh-open-webui.png"
         server: "my-docker"
         showStats: true
     - RabbitMQ:
-        container: "dev-rabbitmq-1"
+        container: "ddp-rabbitmq-1"
         description: "RabbitMQ is a reliable and mature messaging and streaming broker, which is easy to deploy on cloud environments, on-premises, and on your local machine"
         href: "https://rabbitmq.services.local/"
         icon: "sh-rabbitmq.png"
         server: "my-docker"
         showStats: true
     - Redis Insight:
-        container: "dev-redis-redisinsight-1"
+        container: "ddp-redis-redisinsight-1"
         description: "Redis Insight is a powerful tool for visualizing and optimizing data in Redis or Redis Stack, making real-time application development easier and more fun than ever before"
         href: "https://redisinsight.services.local/"
         icon: "/icons/redisinsight.png"
         server: "my-docker"
         showStats: true
     - Traefik:
-        container: "dev-traefik-1"
+        container: "ddp-traefik-1"
         description: "Traefik is a leading modern open source reverse proxy and ingress controller that makes deploying services and APIs easy"
         href: "https://traefik.services.local/"
         icon: "sh-traefik.png"
@@ -137,7 +137,7 @@
           type: "traefik"
           url: "http://traefik:8080"
     - What's up Docker?:
-        container: "dev-whatsupdocker-1"
+        container: "ddp-whatsupdocker-1"
         description: "Keep your containers up-to-date!"
         href: "https://whatsupdocker.services.local"
         icon: "/icons/wud.svg"
@@ -147,7 +147,7 @@
           type: "whatsupdocker"
           url: "http://whatsupdocker:3000"
     - whoami:
-        container: "dev-traefik-whoami-1"
+        container: "ddp-traefik-whoami-1"
         description: "Tiny Go webserver that prints OS information and HTTP request to output"
         href: "https://whoami.services.local/"
         icon: "/icons/whoami.png"

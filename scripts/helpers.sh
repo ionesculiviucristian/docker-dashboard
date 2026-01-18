@@ -78,7 +78,7 @@ wait_for_service() {
   local timeout=${3:-60}
   local elapsed=0
 
-  info_msg "Waiting for ${container} service to be ready"
+  info_msg "Waiting for ${container} service to be ready..." true
 
   until docker compose exec "${container}" sh -c "${cmd}" &>/dev/null; do
     echo -n "."
@@ -91,4 +91,6 @@ wait_for_service() {
       exit 1
     fi
   done
+
+  status_ok
 }

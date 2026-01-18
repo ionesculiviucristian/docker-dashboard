@@ -12,7 +12,7 @@ wait_for_service "ollama" "ollama list"
 info_msg "Pulling ${OLLAMA_MODEL} model..."
 
 if ! exec_output=$(docker compose exec ollama \
-  ollama pull "${OLLAMA_MODEL}1" 2>&1 | sed 's/\x1b\[[0-9;]*[a-zA-Z]//g' \
+  ollama pull "${OLLAMA_MODEL}" 2>&1 | sed 's/\x1b\[[0-9;]*[a-zA-Z]//g' \
 ); then
   error_msg "${exec_output}"
 else

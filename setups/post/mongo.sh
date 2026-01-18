@@ -18,9 +18,6 @@ if exec_output=$(docker compose exec mongo mongosh \
     info_msg "MongoDB replica set is already initiated"
     exit 0
   fi
-else
-  error_msg "${exec_output}"
-  exit 0
 fi
 
 if exec_output=$(docker compose exec mongo mongosh \
