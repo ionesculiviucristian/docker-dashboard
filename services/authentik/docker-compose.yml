@@ -68,9 +68,9 @@ services:
       - "${PWD}/services/authentik/blueprints/traefik.yaml:/blueprints/traefik.yaml:ro"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "authentik-certs:/certs"
-      - "authentik-media:/media"
+      - "authentik-data:/data"
       - "authentik-templates:/templates"
 volumes:
   authentik-certs: null
-  authentik-media: null
+  authentik-data: null
   authentik-templates: null
