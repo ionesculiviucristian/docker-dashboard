@@ -16,6 +16,14 @@
     "url": "https://github.com/google/cadvisor"
   },
   {
+    "description": "Real-time Docker log viewer with a web UI",
+    "docker_hub_url": "https://hub.docker.com/r/amir20/dozzle",
+    "dockerfile_url": "https://github.com/amir20/dozzle/blob/master/Dockerfile",
+    "local_url": "https://dozzle.services.local",
+    "name": "Dozzle",
+    "url": "https://dozzle.dev/"
+  },
+  {
     "dependents": [
       {
         "description": "Grafana Alloy is an open source OpenTelemetry collector with built-in Prometheus pipelines and support for metrics, logs, traces, and profiles",

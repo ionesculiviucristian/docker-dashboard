@@ -1,0 +1,37 @@
+networks:
+  proxy:
+    external: true
+    name: "${PROXY_NETWORK:?err}"
+services:
+  dozzle:
+    environment:
+      DOZZLE_ENABLE_ACTIONS: true
+      DOZZLE_ENABLE_SHELL: true
+      DOZZLE_NO_ANALYTICS: true
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "30s"
+      test:
+        - "CMD"
+        - "/dozzle"
+        - "healthcheck"
+      timeout: "10s"
+    image: "amir20/dozzle:${DOZZLE_VERSION:?err}"
+    labels:
+      traefik.docker.network: "${PROXY_NETWORK:?err}"
+      traefik.enable: true
+      traefik.http.routers.dozzle.entrypoints: "websecure"
+      traefik.http.routers.dozzle.middlewares: "authentik-server@docker"
+      traefik.http.routers.dozzle.rule: "Host(`${DOZZLE_HOSTNAME:?err}`)"
+      traefik.http.routers.dozzle.tls: true
+      traefik.http.services.dozzle.loadbalancer.server.port: "${DOZZLE_HOSTNAME_PORT:?err}"
+      wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
+      wud.watch: true
+    networks:
+      - "proxy"
+    restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"

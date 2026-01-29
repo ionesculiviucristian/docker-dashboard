@@ -13,6 +13,13 @@
         icon: "sh-cadvisor.png"
         server: "my-docker"
         showStats: true
+    - Dozzle:
+        container: "ddp-dozzle-1"
+        description: "Simple Container Monitoring and Logging"
+        href: "https://dozzle.services.local/"
+        icon: "sh-dozzle.png"
+        server: "my-docker"
+        showStats: true
     - Grafana:
         container: "ddp-grafana-1"
         description: "The open and composable observability and data visualization platform"

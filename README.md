@@ -56,6 +56,10 @@ The rest of the services are protected by Authentik.
   - [Docker Hub](https://hub.docker.com/r/google/cadvisor)
   - [Dockerfile](https://github.com/google/cadvisor/blob/master/deploy/Dockerfile)
 
+- [Dozzle](https://dozzle.services.local): Real-time Docker log viewer with a web UI
+  - [Docker Hub](https://hub.docker.com/r/amir20/dozzle)
+  - [Dockerfile](https://github.com/amir20/dozzle/blob/master/Dockerfile)
+
 - [Grafana](https://grafana.services.local): The open and composable observability and data visualization platform
   - [Docker Hub](https://hub.docker.com/r/grafana/grafana)
   - [Dockerfile](https://github.com/grafana/grafana/blob/main/Dockerfile)

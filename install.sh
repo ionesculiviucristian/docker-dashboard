@@ -57,6 +57,7 @@ info_msg "Registering hostnames..."
 
 ./scripts/register_hostname.sh "authentik.services.local" | indent_msg
 ./scripts/register_hostname.sh "cadvisor.services.local" | indent_msg
+./scripts/register_hostname.sh "dozzle.services.local" | indent_msg
 ./scripts/register_hostname.sh "grafana.services.local" | indent_msg
 ./scripts/register_hostname.sh "grafana-alloy.services.local" | indent_msg
 ./scripts/register_hostname.sh "homepage.services.local" | indent_msg
