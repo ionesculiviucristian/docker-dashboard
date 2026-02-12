@@ -1,8 +1,12 @@
 services:
   ollama:
+    deploy:
+      resources:
+        limits:
+          memory: "16G"
     devices:
       - "/dev/dri:/dev/dri"
       - "/dev/kfd:/dev/kfd"
     image: "ollama/ollama:${OLLAMA_VERSION:?err}-rocm"
     environment:
-      HSA_OVERRIDE_GFX_VERSION: "${OLLAMA_OPEN_WEBUI_HSA_OVERRIDE_GFX_VERSION-11.0.0}"
+      HSA_OVERRIDE_GFX_VERSION: "${OLLAMA_OPEN_WEBUI_HSA_OVERRIDE_GFX_VERSION-12.0.0}"
