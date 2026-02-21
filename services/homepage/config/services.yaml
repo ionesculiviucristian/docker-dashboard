@@ -6,6 +6,10 @@
         icon: "sh-authentik.png"
         server: "my-docker"
         showStats: true
+        widget:
+          type: "authentik"
+          key: "{{HOMEPAGE_VAR_AUTHENTIK_TOKEN}}"
+          url: "http://authentik-server:9000"
     - cAdvisor:
         container: "ddp-cadvisor-1"
         description: "Analyzes resource usage and performance characteristics of running containers"
@@ -27,6 +31,10 @@
         icon: "sh-gotify.png"
         server: "my-docker"
         showStats: true
+        widget:
+          type: "gotify"
+          key: "{{HOMEPAGE_VAR_GOTIFY_TOKEN}}"
+          url: "http://gotify:80"
     - Grafana:
         container: "ddp-grafana-1"
         description: "The open and composable observability and data visualization platform"
@@ -34,6 +42,11 @@
         icon: "sh-grafana.png"
         server: "my-docker"
         showStats: true
+        widget:
+          type: "grafana"
+          url: "http://grafana:3000"
+          username: "{{HOMEPAGE_VAR_GRAFANA_USER}}"
+          password: "{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}"
     - Grafana Alloy:
         container: "ddp-grafana-alloy-1"
         description: "Grafana Alloy is an open source OpenTelemetry collector with built-in Prometheus pipelines and support for metrics, logs, traces, and profiles"
@@ -70,6 +83,11 @@
         icon: "sh-mealie.png"
         server: "my-docker"
         showStats: true
+        widget:
+          type: "mealie"
+          key: "{{HOMEPAGE_VAR_MEALIE_TOKEN}}"
+          url: "http://mealie:9000"
+          version: 2
     - MinIO:
         container: "ddp-minio-1"
         description: "MinIO is a High Performance Object Storage. It is API compatible with Amazon S3 cloud storage service"
@@ -119,6 +137,9 @@
         icon: "sh-prometheus.png"
         server: "my-docker"
         showStats: true
+        widget:
+          type: "prometheus"
+          url: "http://prometheus:9090"
     - Open WebUI:
         container: "ddp-ollama-open-webui-1"
         description: "Open WebUI is an extensible, self-hosted AI interface that adapts to your workflow, all while operating entirely offline"

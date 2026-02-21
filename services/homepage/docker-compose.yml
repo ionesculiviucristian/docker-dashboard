@@ -1,4 +1,7 @@
 networks:
+  authentik:
+    external: true
+    name: "${AUTHENTIK_NETWORK:?err}"
   mailpit:
     external: true
     name: "${MAILPIT_NETWORK:?err}"
@@ -9,6 +12,11 @@ services:
   homepage:
     environment:
       HOMEPAGE_ALLOWED_HOSTS: "${HOMEPAGE_HOSTNAME}"
+      HOMEPAGE_VAR_AUTHENTIK_TOKEN: "${AUTHENTIK_BOOTSTRAP_TOKEN}"
+      HOMEPAGE_VAR_GOTIFY_TOKEN: "${HOMEPAGE_GOTIFY_TOKEN}"
+      HOMEPAGE_VAR_GRAFANA_PASSWORD: "${GRAFANA_GF_SECURITY_ADMIN_PASSWORD}"
+      HOMEPAGE_VAR_GRAFANA_USER: "${GRAFANA_GF_SECURITY_ADMIN_USER}"
+      HOMEPAGE_VAR_MEALIE_TOKEN: "${HOMEPAGE_MEALIE_TOKEN}"
     image: "ghcr.io/gethomepage/homepage:${HOMEPAGE_VERSION:?err}"
     labels:
       traefik.docker.network: "${PROXY_NETWORK:?err}"
@@ -21,6 +29,7 @@ services:
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
+      - "authentik"
       - "mailpit"
       - "proxy"
     restart: "unless-stopped"

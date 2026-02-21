@@ -95,6 +95,7 @@ fi
 info_msg "Post-setup services..."
 
 info_msg "Authentik" | indent_msg && ./setups/post/authentik.sh | indent_msg 4
+info_msg "Homepage" | indent_msg && ./setups/post/homepage.sh | indent_msg 4
 info_msg "Mealie" | indent_msg && ./setups/post/mealie/setup.sh | indent_msg 4
 info_msg "MongoDB" | indent_msg && ./setups/post/mongo.sh | indent_msg 4
 info_msg "n8n" | indent_msg && ./setups/post/n8n.sh | indent_msg 4
