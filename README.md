@@ -60,6 +60,10 @@ The rest of the services are protected by Authentik.
   - [Docker Hub](https://hub.docker.com/r/amir20/dozzle)
   - [Dockerfile](https://github.com/amir20/dozzle/blob/master/Dockerfile)
 
+- [Gotify](https://gotify.services.local): A simple server for sending and receiving messages in real-time per WebSocket
+  - [Docker Hub](https://hub.docker.com/r/gotify/server)
+  - [Dockerfile](https://github.com/gotify/server/blob/master/docker/Dockerfile)
+
 - [Grafana](https://grafana.services.local): The open and composable observability and data visualization platform
   - [Docker Hub](https://hub.docker.com/r/grafana/grafana)
   - [Dockerfile](https://github.com/grafana/grafana/blob/main/Dockerfile)

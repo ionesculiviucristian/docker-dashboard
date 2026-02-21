@@ -58,6 +58,7 @@ info_msg "Registering hostnames..."
 ./scripts/register_hostname.sh "authentik.services.local" | indent_msg
 ./scripts/register_hostname.sh "cadvisor.services.local" | indent_msg
 ./scripts/register_hostname.sh "dozzle.services.local" | indent_msg
+./scripts/register_hostname.sh "gotify.services.local" | indent_msg
 ./scripts/register_hostname.sh "grafana.services.local" | indent_msg
 ./scripts/register_hostname.sh "grafana-alloy.services.local" | indent_msg
 ./scripts/register_hostname.sh "homepage.services.local" | indent_msg
@@ -99,6 +100,7 @@ info_msg "MongoDB" | indent_msg && ./setups/post/mongo.sh | indent_msg 4
 info_msg "n8n" | indent_msg && ./setups/post/n8n.sh | indent_msg 4
 info_msg "Ollama" | indent_msg && ./setups/post/ollama.sh | indent_msg 4
 info_msg "RabbitMQ" | indent_msg && ./setups/post/rabbitmq.sh | indent_msg 4
+info_msg "What's up Docker" | indent_msg && ./setups/post/whatsupdocker.sh | indent_msg 4
 
 success_msg "Finished installing"
 

@@ -20,6 +20,13 @@
         icon: "sh-dozzle.png"
         server: "my-docker"
         showStats: true
+    - Gotify:
+        container: "ddp-gotify-1"
+        description: "A simple server for sending and receiving messages"
+        href: "https://gotify.services.local/"
+        icon: "sh-gotify.png"
+        server: "my-docker"
+        showStats: true
     - Grafana:
         container: "ddp-grafana-1"
         description: "The open and composable observability and data visualization platform"

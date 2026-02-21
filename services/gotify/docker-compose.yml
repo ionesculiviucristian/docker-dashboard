@@ -1,0 +1,29 @@
+networks:
+  proxy:
+    external: true
+    name: "${PROXY_NETWORK:?err}"
+services:
+  gotify:
+    environment:
+      GOTIFY_DEFAULTUSER_NAME: "${GOTIFY_DEFAULTUSER_NAME:?err}"
+      GOTIFY_DEFAULTUSER_PASS: "${GOTIFY_DEFAULTUSER_PASS:?err}"
+    image: "gotify/server:${GOTIFY_VERSION:?err}"
+    labels:
+      traefik.docker.network: "${PROXY_NETWORK:?err}"
+      traefik.enable: true
+      traefik.http.routers.gotify.entrypoints: "websecure"
+      traefik.http.routers.gotify.middlewares: "authentik-server@docker"
+      traefik.http.routers.gotify.rule: "Host(`${GOTIFY_HOSTNAME:?err}`)"
+      traefik.http.routers.gotify.tls: true
+      traefik.http.services.gotify.loadbalancer.server.port: "${GOTIFY_HOSTNAME_PORT:?err}"
+      wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
+      wud.watch: true
+    networks:
+      - "proxy"
+    restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
+    volumes:
+      - "gotify-data:/app/data"
+volumes:
+  gotify-data: null
