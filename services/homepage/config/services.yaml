@@ -1,70 +1,70 @@
 - Services:
     - authentik:
-        container: "ddp-traefik-1"
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-traefik-1"
         description: "The authentication glue you need"
-        href: "https://authentik.services.local/"
+        href: "https://{{HOMEPAGE_VAR_AUTHENTIK_HOSTNAME}}/"
         icon: "sh-authentik.png"
         server: "my-docker"
         showStats: true
         widget:
           type: "authentik"
           key: "{{HOMEPAGE_VAR_AUTHENTIK_TOKEN}}"
-          url: "http://authentik-server:9000"
+          url: "http://authentik-server:{{HOMEPAGE_VAR_AUTHENTIK_PORT}}"
     - cAdvisor:
-        container: "ddp-cadvisor-1"
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-cadvisor-1"
         description: "Analyzes resource usage and performance characteristics of running containers"
-        href: "https://cadvisor.services.local/"
+        href: "https://{{HOMEPAGE_VAR_CADVISOR_HOSTNAME}}/"
         icon: "sh-cadvisor.png"
         server: "my-docker"
         showStats: true
     - Dozzle:
-        container: "ddp-dozzle-1"
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-dozzle-1"
         description: "Simple Container Monitoring and Logging"
-        href: "https://dozzle.services.local/"
+        href: "https://{{HOMEPAGE_VAR_DOZZLE_HOSTNAME}}/"
         icon: "sh-dozzle.png"
         server: "my-docker"
         showStats: true
     - Gotify:
-        container: "ddp-gotify-1"
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-gotify-1"
         description: "A simple server for sending and receiving messages"
-        href: "https://gotify.services.local/"
+        href: "https://{{HOMEPAGE_VAR_GOTIFY_HOSTNAME}}/"
         icon: "sh-gotify.png"
         server: "my-docker"
         showStats: true
         widget:
           type: "gotify"
           key: "{{HOMEPAGE_VAR_GOTIFY_TOKEN}}"
-          url: "http://gotify:80"
+          url: "http://gotify:{{HOMEPAGE_VAR_GOTIFY_PORT}}"
     - Grafana:
-        container: "ddp-grafana-1"
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-grafana-1"
         description: "The open and composable observability and data visualization platform"
-        href: "https://grafana.services.local/"
+        href: "https://{{HOMEPAGE_VAR_GRAFANA_HOSTNAME}}/"
         icon: "sh-grafana.png"
         server: "my-docker"
         showStats: true
         widget:
           type: "grafana"
-          url: "http://grafana:3000"
+          url: "http://grafana:{{HOMEPAGE_VAR_GRAFANA_PORT}}"
           username: "{{HOMEPAGE_VAR_GRAFANA_USER}}"
           password: "{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}"
     - Grafana Alloy:
-        container: "ddp-grafana-alloy-1"
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-grafana-alloy-1"
         description: "Grafana Alloy is an open source OpenTelemetry collector with built-in Prometheus pipelines and support for metrics, logs, traces, and profiles"
-        href: "https://grafana-alloy.services.local/"
+        href: "https://{{HOMEPAGE_VAR_GRAFANA_ALLOY_HOSTNAME}}/"
         icon: "sh-grafana-alloy.png"
         server: "my-docker"
         showStats: true
     - IT TOOLS:
-        container: "ddp-it-tools-1"
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-it-tools-1"
         description: "Handy tools for developers"
-        href: "https://it-tools.services.local/"
+        href: "https://{{HOMEPAGE_VAR_IT_TOOLS_HOSTNAME}}/"
         icon: "sh-it-tools.png"
         server: "my-docker"
         showStats: true
     - Mailpit:
-        container: "ddp-mailpit-1"
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-mailpit-1"
         description: "Mailpit - email & SMTP testing tool with API for developers"
-        href: "https://mailpit.services.local/"
+        href: "https://{{HOMEPAGE_VAR_MAILPIT_HOSTNAME}}/"
         icon: "sh-mailpit.png"
         server: "my-docker"
         showStats: true
@@ -75,116 +75,116 @@
             - field: "unread"
               label: "Unread"
           type: "customapi"
-          url: "http://mailpit:8025/api/v1/messages"
+          url: "http://mailpit:{{HOMEPAGE_VAR_MAILPIT_PORT}}/api/v1/messages"
     - Mealie:
-        container: "ddp-mealie-1"
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-mealie-1"
         description: "Mealie is an intuitive and easy to use recipe management app"
-        href: "https://mealie.services.local/"
+        href: "https://{{HOMEPAGE_VAR_MEALIE_HOSTNAME}}/"
         icon: "sh-mealie.png"
         server: "my-docker"
         showStats: true
         widget:
           type: "mealie"
           key: "{{HOMEPAGE_VAR_MEALIE_TOKEN}}"
-          url: "http://mealie:9000"
+          url: "http://mealie:{{HOMEPAGE_VAR_MEALIE_PORT}}"
           version: 2
     - MinIO:
-        container: "ddp-minio-1"
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-minio-1"
         description: "MinIO is a High Performance Object Storage. It is API compatible with Amazon S3 cloud storage service"
-        href: "https://minio.services.local/"
+        href: "https://{{HOMEPAGE_VAR_MINIO_HOSTNAME}}/"
         icon: "/icons/minio.png"
         server: "my-docker"
         showStats: true
     - Mongo Express:
-        container: "ddp-mongo-mongo-express-1"
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-mongo-mongo-express-1"
         description: "A web-based MongoDB admin interface written with Node.js, Express, and Bootstrap 5"
-        href: "https://mongo-express.services.local/"
+        href: "https://{{HOMEPAGE_VAR_MONGO_EXPRESS_HOSTNAME}}/"
         icon: "/icons/mongo-express.png"
         server: "my-docker"
         showStats: true
     - n8n:
-        container: "ddp-n8n-1"
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-n8n-1"
         description: "Fair-code workflow automation platform with native AI capabilities"
-        href: "https://n8n.services.local/"
+        href: "https://{{HOMEPAGE_VAR_N8N_HOSTNAME}}/"
         icon: "sh-n8n.png"
         server: "my-docker"
         showStats: true
     - Omni Tools:
-        container: "ddp-omni-tools-1"
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-omni-tools-1"
         description: "Self-hosted collection of powerful web-based tools for everyday tasks"
-        href: "https://omni-tools.services.local/"
+        href: "https://{{HOMEPAGE_VAR_OMNI_TOOLS_HOSTNAME}}/"
         icon: "sh-omnitools.png"
         server: "my-docker"
         showStats: true
     - pgAdmin4:
-        container: "ddp-postgres-pgadmin4-1"
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-postgres-pgadmin4-1"
         description: "pgAdmin is the most popular and feature rich Open Source administration and development platform for PostgreSQL"
-        href: "https://pgadmin4.services.local/"
+        href: "https://{{HOMEPAGE_VAR_PGADMIN4_HOSTNAME}}/"
         icon: "/icons/pgadmin4.ico"
         server: "my-docker"
         showStats: true
     - phpMyAdmin:
-        container: "ddp-mysql-phpmyadmin-1"
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-mysql-phpmyadmin-1"
         description: "phpMyAdmin is a free software tool written in PHP, intended to handle the administration of MySQL over the Web"
-        href: "https://phpmyadmin.services.local/"
+        href: "https://{{HOMEPAGE_VAR_PHPMYADMIN_HOSTNAME}}/"
         icon: "/icons/phpmyadmin.ico"
         server: "my-docker"
         showStats: true
     - Prometheus:
-        container: "ddp-prometheus-1"
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-prometheus-1"
         description: "Monitor your applications, systems, and services with the leading open source monitoring solution. Instrument, collect, store, and query your metrics for alerting, dashboarding, and other use cases"
-        href: "https://prometheus.services.local/"
+        href: "https://{{HOMEPAGE_VAR_PROMETHEUS_HOSTNAME}}/"
         icon: "sh-prometheus.png"
         server: "my-docker"
         showStats: true
         widget:
           type: "prometheus"
-          url: "http://prometheus:9090"
+          url: "http://prometheus:{{HOMEPAGE_VAR_PROMETHEUS_PORT}}"
     - Open WebUI:
-        container: "ddp-ollama-open-webui-1"
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-ollama-open-webui-1"
         description: "Open WebUI is an extensible, self-hosted AI interface that adapts to your workflow, all while operating entirely offline"
-        href: "https://open-webui.services.local/"
+        href: "https://{{HOMEPAGE_VAR_OPEN_WEBUI_HOSTNAME}}/"
         icon: "sh-open-webui.png"
         server: "my-docker"
         showStats: true
     - RabbitMQ:
-        container: "ddp-rabbitmq-1"
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-rabbitmq-1"
         description: "RabbitMQ is a reliable and mature messaging and streaming broker, which is easy to deploy on cloud environments, on-premises, and on your local machine"
-        href: "https://rabbitmq.services.local/"
+        href: "https://{{HOMEPAGE_VAR_RABBITMQ_HOSTNAME}}/"
         icon: "sh-rabbitmq.png"
         server: "my-docker"
         showStats: true
     - Redis Insight:
-        container: "ddp-redis-redisinsight-1"
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-redis-redisinsight-1"
         description: "Redis Insight is a powerful tool for visualizing and optimizing data in Redis or Redis Stack, making real-time application development easier and more fun than ever before"
-        href: "https://redisinsight.services.local/"
+        href: "https://{{HOMEPAGE_VAR_REDIS_HOSTNAME}}/"
         icon: "/icons/redisinsight.png"
         server: "my-docker"
         showStats: true
     - Traefik:
-        container: "ddp-traefik-1"
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-traefik-1"
         description: "Traefik is a leading modern open source reverse proxy and ingress controller that makes deploying services and APIs easy"
-        href: "https://traefik.services.local/"
+        href: "https://{{HOMEPAGE_VAR_TRAEFIK_HOSTNAME}}/"
         icon: "sh-traefik.png"
         server: "my-docker"
         showStats: true
         widget:
           type: "traefik"
-          url: "http://traefik:8080"
+          url: "http://traefik:{{HOMEPAGE_VAR_TRAEFIK_PORT}}"
     - What's up Docker?:
-        container: "ddp-whatsupdocker-1"
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-whatsupdocker-1"
         description: "Keep your containers up-to-date!"
-        href: "https://whatsupdocker.services.local"
+        href: "https://{{HOMEPAGE_VAR_WHATSUPDOCKER_HOSTNAME}}/"
         icon: "/icons/wud.svg"
         server: "my-docker"
         showStats: true
         widget:
           type: "whatsupdocker"
-          url: "http://whatsupdocker:3000"
+          url: "http://whatsupdocker:{{HOMEPAGE_VAR_WHATSUPDOCKER_PORT}}"
     - whoami:
-        container: "ddp-traefik-whoami-1"
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-traefik-whoami-1"
         description: "Tiny Go webserver that prints OS information and HTTP request to output"
-        href: "https://whoami.services.local/"
+        href: "https://{{HOMEPAGE_VAR_WHOAMI_HOSTNAME}}/"
         icon: "/icons/whoami.png"
         server: "my-docker"
         showStats: true
