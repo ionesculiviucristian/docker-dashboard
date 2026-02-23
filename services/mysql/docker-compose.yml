@@ -24,7 +24,7 @@ services:
       timeout: "10s"
     image: "mysql:${MYSQL_VERSION:?err}"
     labels:
-      wud.tag.include: "^\\d+\\.\\d+$$"
+      wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
       - "mysql"

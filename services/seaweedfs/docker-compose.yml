@@ -1,0 +1,42 @@
+networks:
+  prometheus:
+    external: true
+    name: "${PROMETHEUS_NETWORK:?err}"
+  proxy:
+    external: true
+    name: "${PROXY_NETWORK:?err}"
+  seaweedfs:
+    external: true
+    name: "${SEAWEEDFS_NETWORK:?err}"
+services:
+  seaweedfs:
+    command: "server -ip=0.0.0.0 -dir=/data -s3 -s3.config=/etc/seaweedfs/s3.json -metricsPort=9327"
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "60s"
+      test:
+        - "CMD-SHELL"
+        - "wget -qO- http://localhost:9333/cluster/healthz || exit 1"
+      timeout: "10s"
+    image: "chrislusf/seaweedfs:${SEAWEEDFS_VERSION:?err}"
+    labels:
+      traefik.docker.network: "${PROXY_NETWORK:?err}"
+      traefik.enable: true
+      traefik.http.routers.seaweedfs.entrypoints: "websecure"
+      traefik.http.routers.seaweedfs.middlewares: "authentik-server@docker"
+      traefik.http.routers.seaweedfs.rule: "Host(`${SEAWEEDFS_HOSTNAME:?err}`)"
+      traefik.http.routers.seaweedfs.tls: true
+      traefik.http.services.seaweedfs.loadbalancer.server.port: "${SEAWEEDFS_HOSTNAME_PORT:?err}"
+      wud.tag.include: "^\\d+\\.\\d+$$"
+      wud.watch: true
+    networks:
+      - "prometheus"
+      - "proxy"
+      - "seaweedfs"
+    restart: "unless-stopped"
+    volumes:
+      - "${PWD}/services/seaweedfs/s3.json:/etc/seaweedfs/s3.json:ro"
+      - "seaweedfs-data:/data"
+volumes:
+  seaweedfs-data: null

@@ -1,0 +1,2 @@
+auth-file: "/var/lib/ntfy/auth.db"
+auth-default-access: "deny-all"

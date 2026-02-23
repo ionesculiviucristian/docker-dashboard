@@ -1,7 +1,7 @@
 [
   {
     "description": "authentik is an IdP (Identity Provider) and SSO (Single Sign On) platform that is built with security at the forefront of every piece of code, every feature, with an emphasis on flexibility and versatility",
-    "docker_hub_url": "https://hub.docker.com/r/authentik/server",
+    "docker_hub_url": "https://github.com/goauthentik/authentik/pkgs/container/server",
     "dockerfile_url": "https://github.com/goauthentik/authentik/blob/main/lifecycle/container/Dockerfile",
     "local_url": "https://authentik.services.local",
     "name": "authentik",
@@ -9,7 +9,7 @@
   },
   {
     "description": "Analyzes resource usage and performance characteristics of running containers",
-    "docker_hub_url": "https://hub.docker.com/r/google/cadvisor",
+    "docker_hub_url": "https://github.com/google/cadvisor/pkgs/container/cadvisor",
     "dockerfile_url": "https://github.com/google/cadvisor/blob/master/deploy/Dockerfile",
     "local_url": "https://cadvisor.services.local",
     "name": "cAdvisor",
@@ -22,14 +22,6 @@
     "local_url": "https://dozzle.services.local",
     "name": "Dozzle",
     "url": "https://dozzle.dev/"
-  },
-  {
-    "description": "A simple server for sending and receiving messages in real-time per WebSocket",
-    "docker_hub_url": "https://hub.docker.com/r/gotify/server",
-    "dockerfile_url": "https://github.com/gotify/server/blob/master/docker/Dockerfile",
-    "local_url": "https://gotify.services.local",
-    "name": "Gotify",
-    "url": "https://gotify.net/"
   },
   {
     "dependents": [
@@ -90,14 +82,6 @@
     "url": "https://mealie.io/"
   },
   {
-    "description": "MinIO is a high-performance, S3 compatible object store, open sourced under GNU AGPLv3 license",
-    "docker_hub_url": "https://hub.docker.com/r/minio/minio",
-    "dockerfile_url": "https://github.com/minio/minio/blob/master/Dockerfile",
-    "local_url": "https://minio.services.local",
-    "name": "MinIO",
-    "url": "https://min.io"
-  },
-  {
     "dependents": [
       {
         "description": "Web-based MongoDB admin interface, written with Node.js and Express",
@@ -156,6 +140,14 @@
     "local_url": "https://n8n.services.local",
     "name": "n8n",
     "url": "https://n8n.io/"
+  },
+  {
+    "description": "ntfy (pronounced notify) is a simple HTTP-based pub-sub notification service. It allows you to send notifications to your phone or desktop via scripts from any computer, and/or using a REST API",
+    "docker_hub_url": "https://hub.docker.com/r/binwiederhier/ntfy",
+    "dockerfile_url": "https://github.com/binwiederhier/ntfy/blob/main/Dockerfile",
+    "local_url": "https://ntfy.services.local",
+    "name": "ntfy",
+    "url": "https://ntfy.sh/"
   },
   {
     "dependents": [
@@ -260,6 +252,14 @@
     "local_url": null,
     "name": "Redis",
     "url": "https://redis.io"
+  },
+  {
+    "description": "Enterprise-Grade Distributed Storage with Self-Healing",
+    "docker_hub_url": "https://hub.docker.com/r/corentinth/it-tools",
+    "dockerfile_url": "https://github.com/seaweedfs/seaweedfs/blob/master/docker/Dockerfile.local",
+    "local_url": "https://seaweedfs.services.local",
+    "name": "SeaweedFS",
+    "url": "https://seaweedfs.com/"
   },
   {
     "description": "Traefik is your all-in-one, self-hosted, cloud-native, GitOps-driven application proxy, API gateway, and API management platform",

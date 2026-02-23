@@ -1,0 +1,40 @@
+networks:
+  proxy:
+    external: true
+    name: "${PROXY_NETWORK:?err}"
+services:
+  ntfy:
+    command: "serve"
+    environment:
+      NTFY_BASE_URL: "https://${NTFY_HOSTNAME:?err}"
+    healthcheck:
+      interval: "60s"
+      retries: 3
+      start_period: "40s"
+      test:
+        - "CMD-SHELL"
+        - "wget -q --tries=1 http://localhost:80/v1/health -O - | grep -Eo '\"healthy\"\\s*:\\s*true' || exit 1"
+      timeout: "10s"
+    image: "binwiederhier/ntfy:${NTFY_VERSION:?err}"
+    init: true
+    labels:
+      traefik.docker.network: "${PROXY_NETWORK:?err}"
+      traefik.enable: true
+      traefik.http.routers.ntfy.entrypoints: "websecure"
+      traefik.http.routers.ntfy.rule: "Host(`${NTFY_HOSTNAME:?err}`)"
+      traefik.http.routers.ntfy.tls: true
+      traefik.http.services.ntfy.loadbalancer.server.port: "${NTFY_HOSTNAME_PORT:?err}"
+      wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
+      wud.watch: true
+    networks:
+      - "proxy"
+    restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
+    volumes:
+      - "${PWD}/services/ntfy/server.yml:/etc/ntfy/server.yml:ro"
+      - "ntfy-cache:/var/cache/ntfy"
+      - "ntfy-data:/var/lib/ntfy"
+volumes:
+  ntfy-cache: null
+  ntfy-data: null

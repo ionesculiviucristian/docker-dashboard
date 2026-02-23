@@ -23,7 +23,7 @@ services:
       AUTHENTIK_POSTGRESQL__PASSWORD: "${AUTHENTIK_POSTGRES_USER_PASSWORD:?err}"
       AUTHENTIK_POSTGRESQL__USER: "${AUTHENTIK_POSTGRES_USER:?err}"
       AUTHENTIK_SECRET_KEY: "${AUTHENTIK_SECRET_KEY:?err}"
-    image: "authentik/server:${AUTHENTIK_VERSION:?err}"
+    image: "ghcr.io/goauthentik/server:${AUTHENTIK_VERSION:?err}"
     labels:
       traefik.docker.network: "${PROXY_NETWORK:?err}"
       traefik.enable: true
@@ -58,7 +58,7 @@ services:
       AUTHENTIK_POSTGRESQL__PASSWORD: "${AUTHENTIK_POSTGRES_USER_PASSWORD:?err}"
       AUTHENTIK_POSTGRESQL__USER: "${AUTHENTIK_POSTGRES_USER:?err}"
       AUTHENTIK_SECRET_KEY: "${AUTHENTIK_SECRET_KEY:?err}"
-    image: "authentik/server:${AUTHENTIK_VERSION:?err}"
+    image: "ghcr.io/goauthentik/server:${AUTHENTIK_VERSION:?err}"
     labels:
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true

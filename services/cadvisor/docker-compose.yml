@@ -6,7 +6,7 @@ services:
   cadvisor:
     devices:
       - "/dev/kmsg"
-    image: "gcr.io/cadvisor/cadvisor:${CADVISOR_VERSION:?err}"
+    image: "ghcr.io/google/cadvisor:${CADVISOR_VERSION:?err}"
     labels:
       traefik.docker.network: "${PROXY_NETWORK:?err}"
       traefik.enable: true
@@ -15,7 +15,7 @@ services:
       traefik.http.routers.cadvisor.rule: "Host(`${CADVISOR_HOSTNAME:?err}`)"
       traefik.http.routers.cadvisor.tls: true
       traefik.http.services.cadvisor.loadbalancer.server.port: "${CADVISOR_HOSTNAME_PORT:?err}"
-      wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
+      wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
       - "proxy"

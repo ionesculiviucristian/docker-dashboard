@@ -35,7 +35,6 @@ Before running the install script make sure [mkcert](https://github.com/FiloSott
 
 - Grafana
 - Mealie
-- MinIO
 - n8n
 - pgAdmin4
 - RabbitMQ
@@ -49,20 +48,16 @@ The rest of the services are protected by Authentik.
 ## List of available services
 
 - [authentik](https://authentik.services.local): authentik is an IdP (Identity Provider) and SSO (Single Sign On) platform that is built with security at the forefront of every piece of code, every feature, with an emphasis on flexibility and versatility
-  - [Docker Hub](https://hub.docker.com/r/authentik/server)
+  - [Docker Hub](https://github.com/goauthentik/authentik/pkgs/container/server)
   - [Dockerfile](https://github.com/goauthentik/authentik/blob/main/lifecycle/container/Dockerfile)
 
 - [cAdvisor](https://cadvisor.services.local): Analyzes resource usage and performance characteristics of running containers
-  - [Docker Hub](https://hub.docker.com/r/google/cadvisor)
+  - [Docker Hub](https://github.com/google/cadvisor/pkgs/container/cadvisor)
   - [Dockerfile](https://github.com/google/cadvisor/blob/master/deploy/Dockerfile)
 
 - [Dozzle](https://dozzle.services.local): Real-time Docker log viewer with a web UI
   - [Docker Hub](https://hub.docker.com/r/amir20/dozzle)
   - [Dockerfile](https://github.com/amir20/dozzle/blob/master/Dockerfile)
-
-- [Gotify](https://gotify.services.local): A simple server for sending and receiving messages in real-time per WebSocket
-  - [Docker Hub](https://hub.docker.com/r/gotify/server)
-  - [Dockerfile](https://github.com/gotify/server/blob/master/docker/Dockerfile)
 
 - [Grafana](https://grafana.services.local): The open and composable observability and data visualization platform
   - [Docker Hub](https://hub.docker.com/r/grafana/grafana)
@@ -91,10 +86,6 @@ The rest of the services are protected by Authentik.
   - [Docker Hub](https://github.com/mealie-recipes/mealie/pkgs/container/mealie)
   - [Dockerfile](https://github.com/mealie-recipes/mealie/blob/mealie-next/docker/Dockerfile)
 
-- [MinIO](https://minio.services.local): MinIO is a high-performance, S3 compatible object store, open sourced under GNU AGPLv3 license
-  - [Docker Hub](https://hub.docker.com/r/minio/minio)
-  - [Dockerfile](https://github.com/minio/minio/blob/master/Dockerfile)
-
 - [MongoDB](null): MongoDB is a document database with the scalability and flexibility that you want with the querying and indexing that you need
   - [Docker Hub](https://hub.docker.com/_/mongo)
   - [Dockerfile](https://github.com/docker-library/mongo/blob/master/8.0/Dockerfile)
@@ -120,6 +111,10 @@ The rest of the services are protected by Authentik.
 - [n8n](https://n8n.services.local): n8n is a workflow automation platform that gives technical teams the flexibility of code with the speed of no-code
   - [Docker Hub](https://hub.docker.com/r/n8nio/n8n)
   - [Dockerfile](https://github.com/n8n-io/n8n/blob/master/docker/images/n8n/Dockerfile)
+
+- [ntfy](https://ntfy.services.local): ntfy (pronounced notify) is a simple HTTP-based pub-sub notification service. It allows you to send notifications to your phone or desktop via scripts from any computer, and/or using a REST API
+  - [Docker Hub](https://hub.docker.com/r/binwiederhier/ntfy)
+  - [Dockerfile](https://github.com/binwiederhier/ntfy/blob/main/Dockerfile)
 
 - [Ollama](null): Chat & build with open models
   - [Docker Hub](https://hub.docker.com/r/ollama/ollama)
@@ -166,6 +161,10 @@ The rest of the services are protected by Authentik.
     - [Redis Insight](https://redisinsight.services.local): Redis GUI by Redis
       - [Docker Hub](https://hub.docker.com/r/redis/redisinsight)
       - [Dockerfile](https://github.com/RedisInsight/RedisInsight/blob/main/Dockerfile)
+
+- [SeaweedFS](https://seaweedfs.services.local): Enterprise-Grade Distributed Storage with Self-Healing
+  - [Docker Hub](https://hub.docker.com/r/corentinth/it-tools)
+  - [Dockerfile](https://github.com/seaweedfs/seaweedfs/blob/master/docker/Dockerfile.local)
 
 - [Traefik](https://traefik.services.local): Traefik is your all-in-one, self-hosted, cloud-native, GitOps-driven application proxy, API gateway, and API management platform
   - [Docker Hub](https://hub.docker.com/_/traefik)

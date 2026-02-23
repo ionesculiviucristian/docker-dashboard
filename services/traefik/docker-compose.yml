@@ -80,7 +80,7 @@ services:
       traefik.http.routers.traefik-whoami.rule: "Host(`${TRAEFIK_WHOAMI_HOSTNAME:?err}`)"
       traefik.http.routers.traefik-whoami.tls: true
       traefik.http.services.traefik-whoami.loadbalancer.server.port: "${TRAEFIK_WHOAMI_HOSTNAME_PORT:?err}"
-      wud.tag.include: "^v\\d+\\.\\d+$$"
+      wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
       - "proxy"

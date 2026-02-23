@@ -24,17 +24,6 @@
         icon: "sh-dozzle.png"
         server: "my-docker"
         showStats: true
-    - Gotify:
-        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-gotify-1"
-        description: "A simple server for sending and receiving messages"
-        href: "https://{{HOMEPAGE_VAR_GOTIFY_HOSTNAME}}/"
-        icon: "sh-gotify.png"
-        server: "my-docker"
-        showStats: true
-        widget:
-          type: "gotify"
-          key: "{{HOMEPAGE_VAR_GOTIFY_TOKEN}}"
-          url: "http://gotify:{{HOMEPAGE_VAR_GOTIFY_PORT}}"
     - Grafana:
         container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-grafana-1"
         description: "The open and composable observability and data visualization platform"
@@ -88,13 +77,6 @@
           key: "{{HOMEPAGE_VAR_MEALIE_TOKEN}}"
           url: "http://mealie:{{HOMEPAGE_VAR_MEALIE_PORT}}"
           version: 2
-    - MinIO:
-        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-minio-1"
-        description: "MinIO is a High Performance Object Storage. It is API compatible with Amazon S3 cloud storage service"
-        href: "https://{{HOMEPAGE_VAR_MINIO_HOSTNAME}}/"
-        icon: "/icons/minio.png"
-        server: "my-docker"
-        showStats: true
     - Mongo Express:
         container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-mongo-mongo-express-1"
         description: "A web-based MongoDB admin interface written with Node.js, Express, and Bootstrap 5"
@@ -107,6 +89,13 @@
         description: "Fair-code workflow automation platform with native AI capabilities"
         href: "https://{{HOMEPAGE_VAR_N8N_HOSTNAME}}/"
         icon: "sh-n8n.png"
+        server: "my-docker"
+        showStats: true
+    - ntfy:
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-ntfy-1"
+        description: "ntfy (pronounced notify) is a simple HTTP-based pub-sub notification service. It allows you to send notifications to your phone or desktop via scripts from any computer, and/or using a REST API"
+        href: "https://{{HOMEPAGE_VAR_NTFY_HOSTNAME}}/"
+        icon: "sh-ntfy.png"
         server: "my-docker"
         showStats: true
     - Omni Tools:
@@ -159,6 +148,13 @@
         description: "Redis Insight is a powerful tool for visualizing and optimizing data in Redis or Redis Stack, making real-time application development easier and more fun than ever before"
         href: "https://{{HOMEPAGE_VAR_REDIS_HOSTNAME}}/"
         icon: "/icons/redisinsight.png"
+        server: "my-docker"
+        showStats: true
+    - seaweedFS:
+        container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-seaweedfs-1"
+        description: "Enterprise-Grade Distributed Storage with Self-Healing"
+        href: "https://{{HOMEPAGE_VAR_SEAWEEDFS_HOSTNAME}}/"
+        icon: "sh-seaweedfs.png"
         server: "my-docker"
         showStats: true
     - Traefik:

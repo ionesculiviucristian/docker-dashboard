@@ -7,12 +7,6 @@ set -a && source "./.env" && set +a
 # shellcheck source="../../scripts/helpers.sh"
 source "./scripts/helpers.sh"
 
-# ./scripts/create_gotify_client.sh \
-#   "client" \
-#   "Homepage" \
-#   "HOMEPAGE_GOTIFY_TOKEN" |
-#   indent_msg
-
 if [ -z "$(grep "^HOMEPAGE_MEALIE_TOKEN=" "./.env" | cut -d'"' -f2)" ]; then
   wait_for_service "mealie" "python -m mealie.scripts.healthcheck" 60
 

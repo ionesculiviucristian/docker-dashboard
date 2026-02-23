@@ -1,0 +1,14 @@
+[Unit]
+Description=ntfy desktop notifications for Docker updates
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Environment=DISPLAY=:0
+Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/%U/bus
+ExecStart=ntfy subscribe --user ${NTFY_SUBSCRIBE_USER}:${NTFY_SUBSCRIBE_PASSWORD} https://${NTFY_HOSTNAME}/${WHATSUPDOCKER_WUD_TRIGGER_NTFY_LOCAL_TOPIC} "notify-send --app-name=ntfy \"$$NTFY_TITLE\" \"$$NTFY_MESSAGE\""
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target
