@@ -1,0 +1,6 @@
+name: Dozzle
+description: "Real-time Docker log viewer with a web UI"
+url: "https://dozzle.dev/"
+local_url: "https://dozzle.services.local"
+docker_hub_url: "https://hub.docker.com/r/amir20/dozzle"
+dockerfile_url: "https://github.com/amir20/dozzle/blob/master/Dockerfile"

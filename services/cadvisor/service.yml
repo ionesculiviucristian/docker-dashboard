@@ -1,0 +1,6 @@
+name: cAdvisor
+description: Analyzes resource usage and performance characteristics of running containers
+url: "https://github.com/google/cadvisor"
+local_url: "https://cadvisor.services.local"
+docker_hub_url: "https://github.com/google/cadvisor/pkgs/container/cadvisor"
+dockerfile_url: "https://github.com/google/cadvisor/blob/master/deploy/Dockerfile"

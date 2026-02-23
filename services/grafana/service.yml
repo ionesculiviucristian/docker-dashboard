@@ -1,0 +1,19 @@
+name: Grafana
+description: The open and composable observability and data visualization platform
+url: "https://grafana.com"
+local_url: "https://grafana.services.local"
+docker_hub_url: "https://hub.docker.com/r/grafana/grafana"
+dockerfile_url: "https://github.com/grafana/grafana/blob/main/Dockerfile"
+dependents:
+  - name: Grafana Alloy
+    description: "Grafana Alloy is an open source OpenTelemetry collector with built-in Prometheus pipelines and support for metrics, logs, traces, and profiles"
+    url: "https://grafana.com/oss/alloy-opentelemetry-collector/"
+    local_url: "https://grafana-alloy.services.local"
+    docker_hub_url: "https://hub.docker.com/r/grafana/alloy"
+    dockerfile_url: "https://github.com/grafana/alloy/blob/main/Dockerfile"
+  - name: Loki
+    description: "Loki is a horizontally scalable, highly available, multi-tenant log aggregation system inspired by Prometheus"
+    url: "https://grafana.com/oss/loki/"
+    local_url: null
+    docker_hub_url: "https://hub.docker.com/r/grafana/loki"
+    dockerfile_url: "https://github.com/grafana/loki/blob/main/cmd/loki/Dockerfile"

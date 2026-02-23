@@ -1,0 +1,13 @@
+name: Ollama
+description: Chat & build with open models
+url: "https://ollama.com/"
+local_url: null
+docker_hub_url: "https://hub.docker.com/r/ollama/ollama"
+dockerfile_url: "https://github.com/ollama/ollama/blob/main/Dockerfile"
+dependents:
+  - name: Open WebUI
+    description: "Open WebUI is an extensible, self-hosted AI interface that adapts to your workflow, all while operating entirely offline"
+    url: "https://openwebui.com/"
+    local_url: "https://open-webui.services.local"
+    docker_hub_url: "https://github.com/open-webui/open-webui/pkgs/container/open-webui"
+    dockerfile_url: "https://github.com/open-webui/open-webui/blob/main/Dockerfile"

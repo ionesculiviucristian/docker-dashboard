@@ -1,0 +1,6 @@
+name: Mailpit
+description: An email and SMTP testing tool with API for developers
+url: "https://mailpit.axllent.org"
+local_url: "https://mailpit.services.local"
+docker_hub_url: "https://hub.docker.com/r/axllent/mailpit"
+dockerfile_url: "https://github.com/axllent/mailpit/blob/master/Dockerfile"

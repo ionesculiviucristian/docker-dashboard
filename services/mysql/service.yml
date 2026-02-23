@@ -1,0 +1,19 @@
+name: MySQL
+description: "MySQL is the world's most popular open source database"
+url: "https://www.mysql.com"
+local_url: null
+docker_hub_url: "https://hub.docker.com/_/mysql"
+dockerfile_url: "https://github.com/docker-library/mysql/blob/master/innovation/Dockerfile.oracle"
+dependents:
+  - name: phpMyAdmin
+    description: A web interface for MySQL and MariaDB
+    url: "https://www.phpmyadmin.net"
+    local_url: "https://phpmyadmin.services.local"
+    docker_hub_url: "https://hub.docker.com/_/phpmyadmin"
+    dockerfile_url: "https://github.com/phpmyadmin/docker/blob/master/apache/Dockerfile"
+  - name: MySQL Server Exporter
+    description: A Exporter for MySQL server metrics
+    url: "https://github.com/prometheus/mysqld_exporter"
+    local_url: null
+    docker_hub_url: "https://hub.docker.com/r/prom/mysqld-exporter"
+    dockerfile_url: "https://github.com/prometheus/mysqld_exporter/blob/main/Dockerfile"

@@ -1,0 +1,19 @@
+name: prometheus
+description: "Monitor your applications, systems, and services with the leading open source monitoring solution. Instrument, collect, store, and query your metrics for alerting, dashboarding, and other use cases"
+url: "https://prometheus.io/"
+local_url: "https://prometheus.services.local"
+docker_hub_url: "https://hub.docker.com/r/prom/prometheus"
+dockerfile_url: "https://github.com/prometheus/prometheus/blob/main/Dockerfile"
+dependents:
+  - name: Blackbox Exporter
+    description: "The blackbox exporter allows blackbox probing of endpoints over HTTP, HTTPS, DNS, TCP, ICMP and gRPC"
+    url: "https://github.com/prometheus/blackbox_exporter"
+    local_url: null
+    docker_hub_url: "https://hub.docker.com/r/prom/blackbox-exporter"
+    dockerfile_url: "https://github.com/prometheus/blackbox_exporter/blob/master/Dockerfile"
+  - name: Node Exporter
+    description: "Prometheus exporter for hardware and OS metrics exposed by *NIX kernels, written in Go with pluggable metric collectors"
+    url: "https://github.com/prometheus/node_exporter"
+    local_url: null
+    docker_hub_url: "https://hub.docker.com/r/prom/node-exporter"
+    dockerfile_url: "https://github.com/prometheus/node_exporter/blob/master/Dockerfile"

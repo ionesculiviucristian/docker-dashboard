@@ -1,0 +1,6 @@
+name: "What's up Docker?"
+description: "Keep your containers up-to-date!"
+url: "https://getwud.github.io/wud/#"
+local_url: "https://whatsupdocker.services.local"
+docker_hub_url: "https://hub.docker.com/r/getwud/wud"
+dockerfile_url: "https://github.com/getwud/wud/blob/main/Dockerfile"

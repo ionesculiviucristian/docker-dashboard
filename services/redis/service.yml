@@ -1,0 +1,13 @@
+name: Redis
+description: "Redis is the world's fastest in-memory database"
+url: "https://redis.io"
+local_url: null
+docker_hub_url: "https://hub.docker.com/_/redis"
+dockerfile_url: "https://github.com/redis/docker-library-redis/blob/master/7.4/alpine/Dockerfile"
+dependents:
+  - name: Redis Insight
+    description: Redis GUI by Redis
+    url: "https://redis.io/insight"
+    local_url: "https://redisinsight.services.local"
+    docker_hub_url: "https://hub.docker.com/r/redis/redisinsight"
+    dockerfile_url: "https://github.com/RedisInsight/RedisInsight/blob/main/Dockerfile"

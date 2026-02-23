@@ -1,0 +1,19 @@
+name: MongoDB
+description: MongoDB is a document database with the scalability and flexibility that you want with the querying and indexing that you need
+url: "https://www.mongodb.com"
+local_url: null
+docker_hub_url: "https://hub.docker.com/_/mongo"
+dockerfile_url: "https://github.com/docker-library/mongo/blob/master/8.0/Dockerfile"
+dependents:
+  - name: "mongo-express"
+    description: "Web-based MongoDB admin interface, written with Node.js and Express"
+    url: "https://github.com/mongo-express/mongo-express"
+    local_url: "https://mongo-express.services.local"
+    docker_hub_url: "https://hub.docker.com/_/mongo-express"
+    dockerfile_url: "https://github.com/mongo-express/mongo-express/blob/master/Dockerfile"
+  - name: MongoDB exporter
+    description: "A Prometheus exporter for MongoDB including sharding, replication and storage engines"
+    url: "https://github.com/percona/mongodb_exporter"
+    local_url: null
+    docker_hub_url: "hhttps://hub.docker.com/r/percona/mongodb_exporter"
+    dockerfile_url: "https://github.com/percona/mongodb_exporter/blob/main/Dockerfile"

@@ -1,0 +1,100 @@
+authentik:
+  install: true
+  depends_on:
+    - postgres
+    - traefik
+cadvisor:
+  install: true
+  depends_on:
+    - traefik
+    - authentik
+dozzle:
+  install: true
+  depends_on:
+    - traefik
+    - authentik
+grafana:
+  install: true
+  depends_on:
+    - traefik
+    - authentik
+    - prometheus
+homepage:
+  install: true
+  depends_on:
+    - traefik
+    - authentik
+    - mailpit
+it-tools:
+  install: true
+  depends_on:
+    - traefik
+    - authentik
+mailpit:
+  install: true
+  depends_on:
+    - traefik
+    - authentik
+mealie:
+  install: true
+  depends_on:
+    - traefik
+mongo:
+  install: true
+  depends_on:
+    - traefik
+    - authentik
+mysql:
+  install: true
+  depends_on:
+    - traefik
+    - authentik
+n8n:
+  install: true
+  depends_on:
+    - traefik
+ntfy:
+  install: true
+  depends_on:
+    - traefik
+ollama:
+  install: true
+  depends_on:
+    - traefik
+    - authentik
+omni-tools:
+  install: true
+  depends_on:
+    - traefik
+    - authentik
+postgres:
+  install: true
+  depends_on:
+    - traefik
+prometheus:
+  install: true
+  depends_on:
+    - traefik
+    - authentik
+rabbitmq:
+  install: true
+  depends_on:
+    - traefik
+redis:
+  install: true
+  depends_on:
+    - traefik
+    - authentik
+seaweedfs:
+  install: true
+  depends_on:
+    - traefik
+    - authentik
+traefik:
+  install: true
+whatsupdocker:
+  install: true
+  depends_on:
+    - traefik
+    - authentik
+    - ntfy

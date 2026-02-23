@@ -1,0 +1,6 @@
+name: homepage
+description: A highly customizable homepage (or startpage / application dashboard) with Docker and service API integrations
+url: "https://gethomepage.dev"
+local_url: "https://homepage.services.local"
+docker_hub_url: "https://hub.docker.com/r/gethomepage/homepage"
+dockerfile_url: "https://github.com/gethomepage/homepage/blob/dev/Dockerfile"

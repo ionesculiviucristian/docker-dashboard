@@ -1,0 +1,6 @@
+name: Omni Tools
+description: "Self-hosted collection of powerful web-based tools for everyday tasks. No ads, no tracking, just fast, accessible utilities right from your browser!"
+url: "https://omnitools.app"
+local_url: "https://omni-tools.services.local"
+docker_hub_url: "https://hub.docker.com/r/iib0011/omni-tools"
+dockerfile_url: "https://github.com/iib0011/omni-tools/blob/main/Dockerfile"

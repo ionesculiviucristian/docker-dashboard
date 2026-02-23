@@ -1,0 +1,6 @@
+name: Traefik
+description: "Traefik is your all-in-one, self-hosted, cloud-native, GitOps-driven application proxy, API gateway, and API management platform"
+url: "https://traefik.io/"
+local_url: "https://traefik.services.local"
+docker_hub_url: "https://hub.docker.com/_/traefik"
+dockerfile_url: "https://github.com/traefik/traefik/blob/master/Dockerfile"

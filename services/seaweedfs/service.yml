@@ -1,0 +1,6 @@
+name: SeaweedFS
+description: "Enterprise-Grade Distributed Storage with Self-Healing"
+url: "https://seaweedfs.com/"
+local_url: "https://seaweedfs.services.local"
+docker_hub_url: "https://hub.docker.com/r/corentinth/it-tools"
+dockerfile_url: "https://github.com/seaweedfs/seaweedfs/blob/master/docker/Dockerfile.local"

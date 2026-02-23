@@ -1,7 +1,22 @@
 import fs from "fs";
+import path from "path";
+import { execSync } from "child_process";
 import ejs from "ejs";
 
-let services = JSON.parse(fs.readFileSync("./data/services.json", "utf-8"));
+const servicesDir = "./services";
+const services = fs
+  .readdirSync(servicesDir)
+  .filter((d) => {
+    const ymlPath = path.join(servicesDir, d, "service.yml");
+    return fs.existsSync(ymlPath);
+  })
+  .map((d) => {
+    const ymlPath = path.join(servicesDir, d, "service.yml");
+    const json = execSync(`yq -o=json '.' '${ymlPath}'`, {
+      encoding: "utf-8",
+    });
+    return JSON.parse(json);
+  });
 
 const sortServices = (a, b) => a.name.toLowerCase().localeCompare(b.name);
 

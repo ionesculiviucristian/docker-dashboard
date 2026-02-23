@@ -1,0 +1,19 @@
+name: PostgreSQL
+description: "PostgreSQL is a powerful, open source object-relational database system with over 35 years of active development that has earned it a strong reputation for reliability, feature robustness, and performance"
+url: "https://www.postgresql.org"
+local_url: null
+docker_hub_url: "https://hub.docker.com/_/postgres"
+dockerfile_url: "https://github.com/docker-library/postgres/blob/master/17/bookworm/Dockerfile"
+dependents:
+  - name: pgadmin4
+    description: "pgAdmin is the most popular and feature rich Open Source administration and development platform for PostgreSQL, the most advanced Open Source database in the world"
+    url: "https://www.pgadmin.org"
+    local_url: "https://pgadmin4.services.local"
+    docker_hub_url: "https://hub.docker.com/r/dpage/pgadmin4"
+    dockerfile_url: "https://github.com/pgadmin-org/pgadmin4/blob/master/Dockerfile"
+  - name: PostgreSQL Server Exporter
+    description: A PostgreSQL metric exporter for Prometheus
+    url: "https://github.com/prometheus-community/postgres_exporter"
+    local_url: null
+    docker_hub_url: "https://hub.docker.com/r/prometheuscommunity/postgres-exporter"
+    dockerfile_url: "https://github.com/prometheus-community/postgres_exporter/blob/master/Dockerfile"

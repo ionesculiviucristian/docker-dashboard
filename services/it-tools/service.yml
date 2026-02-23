@@ -1,0 +1,6 @@
+name: "IT - TOOLS"
+description: "Collection of handy online tools for developers, with great UX"
+url: "https://it-tools.tech"
+local_url: "https://it-tools.services.local"
+docker_hub_url: "https://hub.docker.com/r/corentinth/it-tools"
+dockerfile_url: "https://github.com/CorentinTh/it-tools/blob/main/Dockerfile"

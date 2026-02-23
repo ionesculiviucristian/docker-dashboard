@@ -1,0 +1,6 @@
+name: RabbitMQ
+description: "RabbitMQ is a reliable and mature messaging and streaming broker, which is easy to deploy on cloud environments, on-premises, and on your local machine. It is currently used by millions worldwide"
+url: "https://www.rabbitmq.com"
+local_url: "https://rabbitmq.services.local"
+docker_hub_url: "https://hub.docker.com/_/rabbitmq"
+dockerfile_url: "https://github.com/docker-library/rabbitmq/blob/master/4.0/alpine/Dockerfile"
