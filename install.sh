@@ -5,7 +5,7 @@ source "./scripts/helpers.sh"
 
 is_service_enabled() {
   local service="$1"
-  [ "$(yq -r ".\"${service}\".install // true" "./services.yml")" = "true" ]
+  [ "$(yq -r ".\"${service}\" // true" "./services.yml")" = "true" ]
 }
 
 if [ "${1:-}" = "--reset" ]; then

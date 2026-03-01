@@ -1,0 +1,22 @@
+services:
+  authentik: true
+  cadvisor: true
+  dozzle: true
+  grafana: true
+  homepage: false
+  it-tools: true
+  mailpit: true
+  mealie: true
+  mongo: true
+  mysql: true
+  n8n: true
+  ntfy: true
+  ollama: true
+  omni-tools: true
+  postgres: true
+  prometheus: true
+  rabbitmq: true
+  redis: true
+  seaweedfs: true
+  traefik: true
+  whatsupdocker: true
