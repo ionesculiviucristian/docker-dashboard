@@ -10,10 +10,17 @@ networks:
     name: "${PROXY_NETWORK:?err}"
 services:
   mailpit:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
     environment:
       MP_ENABLE_PROMETHEUS: true
     image: "axllent/mailpit:${MAILPIT_VERSION:?err}"
     labels:
+      prometheus.port: "8025"
+      prometheus.scrape: true
       traefik.docker.network: "${PROXY_NETWORK:?err}"
       traefik.enable: true
       traefik.http.routers.mailpit.entrypoints: "websecure"

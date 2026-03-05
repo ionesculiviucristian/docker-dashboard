@@ -2,11 +2,19 @@ networks:
   proxy:
     external: true
     name: "${PROXY_NETWORK:?err}"
+  socket-proxy:
+    external: true
+    name: "${SOCKET_PROXY_NETWORK:?err}"
 services:
   dozzle:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "256M"
     environment:
+      DOCKER_HOST: "tcp://socket-proxy:2375"
       DOZZLE_ENABLE_ACTIONS: true
-      DOZZLE_ENABLE_SHELL: true
       DOZZLE_NO_ANALYTICS: true
     healthcheck:
       interval: "30s"
@@ -19,6 +27,10 @@ services:
       timeout: "10s"
     image: "amir20/dozzle:${DOZZLE_VERSION:?err}"
     labels:
+      # Logs, stats and events of every container, plus the start, stop and restart actions.
+      socket-proxy.allow.get: "(/v1\\.\\d+)?/(version|info|events|containers/json|containers/[a-zA-Z0-9_.-]+/(json|logs|stats))"
+      socket-proxy.allow.head: "/_ping"
+      socket-proxy.allow.post: "(/v1\\.\\d+)?/containers/[a-zA-Z0-9_.-]+/(start|stop|restart)"
       traefik.docker.network: "${PROXY_NETWORK:?err}"
       traefik.enable: true
       traefik.http.routers.dozzle.entrypoints: "websecure"
@@ -30,8 +42,7 @@ services:
       wud.watch: true
     networks:
       - "proxy"
+      - "socket-proxy"
     restart: "unless-stopped"
     security_opt:
       - "no-new-privileges:true"
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"

@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../schemas/service.schema.json
 name: Redis
 description: "Redis is the world's fastest in-memory database"
 url: "https://redis.io"
@@ -11,3 +12,12 @@ dependents:
     local_url: "https://redisinsight.services.local"
     docker_hub_url: "https://hub.docker.com/r/redis/redisinsight"
     dockerfile_url: "https://github.com/RedisInsight/RedisInsight/blob/main/Dockerfile"
+
+homepage:
+  - name: Redis Insight
+    container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-redis-redisinsight-1"
+    description: "Redis Insight is a powerful tool for visualizing and optimizing data in Redis or Redis Stack, making real-time application development easier and more fun than ever before"
+    href: "https://{{HOMEPAGE_VAR_REDIS_HOSTNAME}}/"
+    icon: "/icons/redisinsight.png"
+    server: "my-docker"
+    showStats: true

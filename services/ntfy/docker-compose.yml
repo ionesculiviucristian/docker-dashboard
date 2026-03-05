@@ -5,6 +5,11 @@ networks:
 services:
   ntfy:
     command: "serve"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "256M"
     environment:
       NTFY_BASE_URL: "https://${NTFY_HOSTNAME:?err}"
     healthcheck:

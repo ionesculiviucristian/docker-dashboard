@@ -1,6 +1,0 @@
-name: Mealie
-description: Mealie is an intuitive and easy to use recipe management app
-url: "https://mealie.io/"
-local_url: "https://mealie.services.local"
-docker_hub_url: "https://github.com/mealie-recipes/mealie/pkgs/container/mealie"
-dockerfile_url: "https://github.com/mealie-recipes/mealie/blob/mealie-next/docker/Dockerfile"

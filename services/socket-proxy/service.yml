@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../schemas/service.schema.json
+name: Socket Proxy
+description: "A lightweight, secure-by-default unix socket proxy that filters Docker API requests per client"
+url: "https://github.com/wollomatic/socket-proxy"
+local_url: null
+docker_hub_url: "https://hub.docker.com/r/wollomatic/socket-proxy"
+dockerfile_url: "https://github.com/wollomatic/socket-proxy/blob/main/Dockerfile"

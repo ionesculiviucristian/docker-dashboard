@@ -1,9 +1,19 @@
 networks:
+  prometheus:
+    external: true
+    name: "${PROMETHEUS_NETWORK:?err}"
   proxy:
     external: true
     name: "${PROXY_NETWORK:?err}"
 services:
   cadvisor:
+    command:
+      - "--housekeeping_interval=30s"
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: "512M"
     devices:
       - "/dev/kmsg"
     image: "ghcr.io/google/cadvisor:${CADVISOR_VERSION:?err}"
@@ -14,10 +24,15 @@ services:
       traefik.http.routers.cadvisor.middlewares: "authentik-server@docker"
       traefik.http.routers.cadvisor.rule: "Host(`${CADVISOR_HOSTNAME:?err}`)"
       traefik.http.routers.cadvisor.tls: true
+      prometheus.interval: "5s"
+      prometheus.timeout: "5s"
+      prometheus.port: "${CADVISOR_HOSTNAME_PORT:?err}"
+      prometheus.scrape: true
       traefik.http.services.cadvisor.loadbalancer.server.port: "${CADVISOR_HOSTNAME_PORT:?err}"
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
+      - "prometheus"
       - "proxy"
     privileged: true
     restart: "unless-stopped"

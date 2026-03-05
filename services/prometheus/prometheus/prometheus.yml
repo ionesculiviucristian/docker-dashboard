@@ -1,86 +1,178 @@
 global:
+  # How often every target is scraped, unless a target overrides it with prometheus.interval.
   scrape_interval: "15s"
 
-scrape_configs:
-  - job_name: "authentik"
-    metrics_path: "/metrics"
-    static_configs:
-      - targets: ["authentik-server:9300"]
+# How relabeling works here: Docker service discovery turns every container label into a
+# __meta_docker_container_label_<name> label, with dots and dashes replaced by underscores, so
+# prometheus.port becomes __meta_docker_container_label_prometheus_port. Each rule below copies
+# one of them into a label Prometheus acts on. Labels starting with __ drive the scrape itself
+# (__address__ is where to connect, __metrics_path__ the path, __param_<name> a query parameter)
+# and are dropped once the target is built; the rest end up on every stored series.
+#
+# Rules with regex "(.+)" apply only when the container carries the label. A missing label reads
+# as an empty string, which does not match, so the target keeps the default set before it.
 
-  - job_name: "blackbox-http"
+scrape_configs:
+  # Services register themselves with labels; Prometheus discovers them through the Docker API.
+  # Scraped containers must join the prometheus network and carry:
+  #   prometheus.scrape: true
+  #   prometheus.port: <port>
+  #   prometheus.path: <path>            optional, defaults to /metrics
+  #   prometheus.scheme: <http|https>    optional, defaults to http
+  #   prometheus.interval: <duration>    optional, defaults to the global interval
+  #   prometheus.timeout: <duration>     optional, must not exceed the interval
+  #   prometheus.module: <name>          optional, module query param (blackbox style probes)
+  #   prometheus.address: <host:port>    optional, scrapes a shared exporter instead of the container,
+  #                                      which then needs no network membership
+  #   prometheus.target: <host:port>     optional, target query param and instance (multi-target exporters)
+  #   prometheus.job: <name>             optional, defaults to the compose service name
+  #
+  # A plain exporter:
+  #   prometheus.scrape: true
+  #   prometheus.port: "9100"
+  #   -> GET http://<service>:9100/metrics
+  #
+  # A database probed by a shared multi-target exporter, labels on the database container:
+  #   prometheus.scrape: true
+  #   prometheus.address: "mysql-prometheus-exporter:9104"
+  #   prometheus.path: "/probe"
+  #   prometheus.target: "mysql:3306"
+  #   prometheus.job: "mysql"
+  #   -> GET http://mysql-prometheus-exporter:9104/probe?target=mysql:3306, instance="mysql:3306"
+  - job_name: "docker"
+    docker_sd_configs:
+      # Prometheus lists containers through the socket proxy, which only lets it read.
+      - host: "tcp://socket-proxy:2375"
+        # How often the container list is refreshed, so a new service shows up within 30s.
+        refresh_interval: "30s"
+        # Only containers that opted in become targets; everything else is ignored.
+        filters:
+          - name: "label"
+            values: ["prometheus.scrape=true"]
+    # Some services (n8n, whatsupdocker) protect their metrics endpoints with the shared services
+    # user. Targets that do not require authentication ignore the header.
+    # Docker materializes these from the environment, so no credential is ever written to disk.
+    basic_auth:
+      username_file: "/run/secrets/services_user"
+      password_file: "/run/secrets/services_user_password"
+    relabel_configs:
+      # Where to connect: <compose service>:<prometheus.port>, e.g. "n8n:5678".
+      # Docker service discovery reports a single network per container, which is not necessarily
+      # the shared one, so targets are addressed by compose service name and resolved through DNS.
+      - source_labels: ["__meta_docker_container_label_com_docker_compose_service", "__meta_docker_container_label_prometheus_port"]
+        separator: ":"
+        target_label: "__address__"
+      # Where to connect, overridden: a container that exposes no metrics itself (a database)
+      # points at the exporter that reports on its behalf.
+      - source_labels: ["__meta_docker_container_label_prometheus_address"]
+        regex: "(.+)"
+        target_label: "__address__"
+      # Which path to request, /metrics unless overridden.
+      - source_labels: ["__meta_docker_container_label_prometheus_path"]
+        regex: "(.+)"
+        target_label: "__metrics_path__"
+      # Whether to speak http or https, http unless overridden.
+      - source_labels: ["__meta_docker_container_label_prometheus_scheme"]
+        regex: "(.+)"
+        target_label: "__scheme__"
+      # How often to scrape this target, the global interval unless overridden.
+      - source_labels: ["__meta_docker_container_label_prometheus_interval"]
+        regex: "(.+)"
+        target_label: "__scrape_interval__"
+      # How long to wait for this target before marking the scrape failed.
+      - source_labels: ["__meta_docker_container_label_prometheus_timeout"]
+        regex: "(.+)"
+        target_label: "__scrape_timeout__"
+      # Appends ?module=<name>, for exporters that select what to collect by module.
+      - source_labels: ["__meta_docker_container_label_prometheus_module"]
+        regex: "(.+)"
+        target_label: "__param_module"
+      # Appends ?target=<host:port>, telling a multi-target exporter which server to query.
+      # One exporter then serves any number of servers, each registered by its own labels.
+      - source_labels: ["__meta_docker_container_label_prometheus_target"]
+        regex: "(.+)"
+        target_label: "__param_target"
+      # Names the series after the server queried rather than the exporter, otherwise every
+      # server behind a shared exporter would carry the same instance and be indistinguishable.
+      - source_labels: ["__meta_docker_container_label_prometheus_target"]
+        regex: "(.+)"
+        target_label: "instance"
+      # Groups the series under the compose service name...
+      - source_labels: ["__meta_docker_container_label_com_docker_compose_service"]
+        target_label: "job"
+      # ...unless the service picks a job name, e.g. so several servers share one job.
+      - source_labels: ["__meta_docker_container_label_prometheus_job"]
+        regex: "(.+)"
+        target_label: "job"
+
+  # Services register probes the same way; Prometheus never holds their addresses.
+  # A probe checks from the outside that a service answers, the way a user would reach it,
+  # rather than collecting its internal metrics. Every probe is performed by the blackbox exporter.
+  # Probed containers need no network membership and must carry:
+  #   prometheus.probe: true
+  #   prometheus.hostname: <hostname>    public hostname, routed through the proxy
+  #   prometheus.target: <url>           optional, probes this address instead of the proxy
+  #   prometheus.path: <path>            optional, defaults to /
+  #   prometheus.module: <name>          optional, defaults to http_2xx
+  #   prometheus.job: <name>             optional, defaults to the compose service name
+  #
+  # A service published through the proxy:
+  #   prometheus.probe: true
+  #   prometheus.hostname: "grafana.example.test"
+  #   -> GET https://traefik/ with Host grafana.example.test, instance="https://grafana.example.test"
+  - job_name: "blackbox"
+    # The blackbox exporter performs a probe when asked on /probe.
     metrics_path: "/probe"
+    # Appends ?module=http_2xx: request the page and expect a 2xx answer, see blackbox.yml.
     params:
       module: ["http_2xx"]
-    static_configs:
-      - targets:
-          - "https://google.com"
+    docker_sd_configs:
+      - host: "tcp://socket-proxy:2375"
+        refresh_interval: "30s"
+        # Only containers that opted in to probing; independent of prometheus.scrape.
+        filters:
+          - name: "label"
+            values: ["prometheus.probe=true"]
     relabel_configs:
-      - source_labels: ["__address__"]
+      # Public hostnames resolve to the host, which containers cannot reach, so the proxy is
+      # dialed by container name instead. The hostname parameter carries the Host header the
+      # router matches and the server name the certificate is verified against.
+      # The proxy is named rather than configured because this file is read as is: Prometheus
+      # does not expand environment variables in it, and "traefik" is the compose service name
+      # of the proxy, which no environment variable changes.
+      - source_labels: ["__meta_docker_container_label_prometheus_hostname"]
+        target_label: "__param_hostname"
+      # What to probe: the proxy's https entrypoint, at the root path...
+      - target_label: "__param_target"
+        replacement: "https://traefik"
+      # ...or at the path the service asks for, e.g. a health endpoint.
+      - source_labels: ["__meta_docker_container_label_prometheus_path"]
+        regex: "(.+)"
+        replacement: "https://traefik${1}"
         target_label: "__param_target"
-      - source_labels: ["__param_target"]
+      # What to probe, overridden: an address outside the proxy, e.g. an external site.
+      - source_labels: ["__meta_docker_container_label_prometheus_target"]
+        regex: "(.+)"
+        target_label: "__param_target"
+      # The instance is what was probed, not the exporter every probe is scraped from.
+      - source_labels: ["__meta_docker_container_label_prometheus_hostname"]
+        regex: "(.+)"
+        replacement: "https://${1}"
         target_label: "instance"
+      - source_labels: ["__meta_docker_container_label_prometheus_target"]
+        regex: "(.+)"
+        target_label: "instance"
+      # How to probe, http_2xx unless overridden, e.g. tcp_connect for a port check.
+      - source_labels: ["__meta_docker_container_label_prometheus_module"]
+        regex: "(.+)"
+        target_label: "__param_module"
+      # Groups the series under the compose service name, unless the service picks a job name.
+      - source_labels: ["__meta_docker_container_label_com_docker_compose_service"]
+        target_label: "job"
+      - source_labels: ["__meta_docker_container_label_prometheus_job"]
+        regex: "(.+)"
+        target_label: "job"
+      # Where to connect: every probe goes to the blackbox exporter, which performs it and
+      # reports the result.
       - target_label: "__address__"
         replacement: "prometheus-blackbox-exporter:9115"
-
-  - job_name: "cadvisor"
-    scrape_interval: "5s"
-    static_configs:
-      - targets: ["cadvisor:8080"]
-
-  - job_name: "mailpit"
-    metrics_path: "/metrics"
-    static_configs:
-      - targets: ["mailpit:8025"]
-
-  - job_name: "seaweedfs"
-    metrics_path: "/metrics"
-    static_configs:
-      - targets: ["seaweedfs:9327"]
-
-  - job_name: "mongodb"
-    static_configs:
-      - targets: ["mongo-prometheus-exporter:9216"]
-
-  - job_name: "mysql"
-    metrics_path: "/probe"
-    static_configs:
-      - targets:
-          - "mysql:3306"
-    relabel_configs:
-      - source_labels: ["__address__"]
-        target_label: "__param_target"
-      - source_labels: ["__param_target"]
-        target_label: "instance"
-      - target_label: "__address__"
-        replacement: "mysql-prometheus-exporter:9104"
-
-  - job_name: "n8n"
-    metrics_path: "/metrics"
-    static_configs:
-      - targets: ["n8n:5678"]
-
-  - job_name: "node-exporter"
-    static_configs:
-      - targets: ["prometheus-node-exporter:9100"]
-
-  - job_name: "postgres"
-    static_configs:
-      - targets: ["postgres-prometheus-exporter:9187"]
-
-  - job_name: "rabbitmq"
-    static_configs:
-      - targets: ["rabbitmq:15692"]
-
-  - job_name: "redis"
-    static_configs:
-      - targets: ["redis-prometheus-exporter:9121"]
-
-  - job_name: "traefik"
-    metrics_path: "/metrics"
-    static_configs:
-      - targets: ["traefik:8080"]
-
-  - job_name: "whatsupdocker"
-    metrics_path: "/metrics"
-    static_configs:
-      - targets: ["whatsupdocker:3000"]

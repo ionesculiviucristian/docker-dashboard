@@ -4,6 +4,11 @@ networks:
     name: "${PROXY_NETWORK:?err}"
 services:
   omni-tools:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "256M"
     healthcheck:
       interval: "30s"
       retries: 5

@@ -2,6 +2,8 @@ services:
   ollama:
     deploy:
       resources:
+        limits:
+          memory: "2G"
         reservations:
           devices:
             - driver: "nvidia"

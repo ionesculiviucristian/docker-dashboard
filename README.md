@@ -29,20 +29,27 @@ No tracking, no external dependencies—just a local development environment you
 
 ## Installation
 
-Before running the install script make sure [mkcert](https://github.com/FiloSottile/mkcert?tab=readme-ov-file#linux) is installed.
+Before running the installer make sure [uv](https://docs.astral.sh/uv/), [mkcert](https://github.com/FiloSottile/mkcert?tab=readme-ov-file#linux) and Docker are installed.
 
-⚠️ Note: The following services require manual registration / authentication because they have payed OIDC authentication or will have in the future:
-
-- Grafana
-- Mealie
-- n8n
-- pgAdmin4
-- RabbitMQ
-
-The rest of the services are protected by Authentik.
+> Note: The following services require manual registration / authentication because they have payed OIDC authentication or will have in the future:
+>
+> - Grafana
+> - Mealie
+> - n8n
+> - pgAdmin4
+> - RabbitMQ
+>
+> The rest of the services are protected by Authentik.
 
 ```bash
-./install.sh
+# Deploy all enabled services
+uv run dashboard.py deploy
+
+# Update .env and restart services
+uv run dashboard.py update
+
+# Stop and remove all containers, volumes, and networks
+uv run dashboard.py reset
 ```
 
 ## List of available services
@@ -82,10 +89,6 @@ The rest of the services are protected by Authentik.
   - [Docker Hub](https://hub.docker.com/r/axllent/mailpit)
   - [Dockerfile](https://github.com/axllent/mailpit/blob/master/Dockerfile)
 
-- [Mealie](https://mealie.services.local): Mealie is an intuitive and easy to use recipe management app
-  - [Docker Hub](https://github.com/mealie-recipes/mealie/pkgs/container/mealie)
-  - [Dockerfile](https://github.com/mealie-recipes/mealie/blob/mealie-next/docker/Dockerfile)
-
 - [MongoDB](null): MongoDB is a document database with the scalability and flexibility that you want with the querying and indexing that you need
   - [Docker Hub](https://hub.docker.com/_/mongo)
   - [Dockerfile](https://github.com/docker-library/mongo/blob/master/8.0/Dockerfile)
@@ -94,7 +97,7 @@ The rest of the services are protected by Authentik.
       - [Docker Hub](https://hub.docker.com/_/mongo-express)
       - [Dockerfile](https://github.com/mongo-express/mongo-express/blob/master/Dockerfile)
     - [MongoDB exporter](null): A Prometheus exporter for MongoDB including sharding, replication and storage engines
-      - [Docker Hub](hhttps://hub.docker.com/r/percona/mongodb_exporter)
+      - [Docker Hub](https://hub.docker.com/r/percona/mongodb_exporter)
       - [Dockerfile](https://github.com/percona/mongodb_exporter/blob/main/Dockerfile)
 
 - [MySQL](null): MySQL is the world's most popular open source database
@@ -166,6 +169,10 @@ The rest of the services are protected by Authentik.
   - [Docker Hub](https://hub.docker.com/r/corentinth/it-tools)
   - [Dockerfile](https://github.com/seaweedfs/seaweedfs/blob/master/docker/Dockerfile.local)
 
+- [Socket Proxy](null): A lightweight, secure-by-default unix socket proxy that filters Docker API requests per client
+  - [Docker Hub](https://hub.docker.com/r/wollomatic/socket-proxy)
+  - [Dockerfile](https://github.com/wollomatic/socket-proxy/blob/main/Dockerfile)
+
 - [Traefik](https://traefik.services.local): Traefik is your all-in-one, self-hosted, cloud-native, GitOps-driven application proxy, API gateway, and API management platform
   - [Docker Hub](https://hub.docker.com/_/traefik)
   - [Dockerfile](https://github.com/traefik/traefik/blob/master/Dockerfile)
@@ -177,11 +184,12 @@ The rest of the services are protected by Authentik.
 ## Import Bitwarden secrets
 
 ```bash
-./scripts/secrets.sh bitwarden@mail.com
+uv run dashboard.py import-secrets bitwarden@mail.com
 ```
 
 ## Development
 
 ```bash
+uv sync
 npm i
 ```

@@ -5,6 +5,9 @@ networks:
   proxy:
     external: true
     name: "${PROXY_NETWORK:?err}"
+  socket-proxy:
+    external: true
+    name: "${SOCKET_PROXY_NETWORK:?err}"
 services:
   traefik:
     command:
@@ -14,7 +17,7 @@ services:
       - --log.level=INFO
       # https://doc.traefik.io/traefik/reference/install-configuration/providers/docker/
       - --providers.docker=true
-      - --providers.docker.endpoint=unix:///var/run/docker.sock
+      - --providers.docker.endpoint=tcp://socket-proxy:2375
       - --providers.docker.watch=true
       - --providers.docker.exposedbydefault=false
       # https://doc.traefik.io/traefik/reference/install-configuration/providers/others/file/
@@ -37,6 +40,11 @@ services:
       - --metrics.prometheus.addEntryPointsLabels=true
       - --metrics.prometheus.addRoutersLabels=true
       - --metrics.prometheus.addServicesLabels=true
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "512M"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -47,6 +55,11 @@ services:
       timeout: "10s"
     image: "traefik:${TRAEFIK_VERSION:?err}"
     labels:
+      prometheus.port: "8080"
+      prometheus.scrape: true
+      # The Docker provider reads container labels and follows events to pick up changes.
+      socket-proxy.allow.get: "(/v1\\.\\d+)?/(version|containers/json|containers/[a-zA-Z0-9_.-]+/json|events)"
+      socket-proxy.allow.head: "/_ping"
       traefik.docker.network: "${PROXY_NETWORK:?err}"
       traefik.enable: true
       traefik.http.routers.traefik.entrypoints: "websecure"
@@ -60,6 +73,7 @@ services:
     networks:
       - "prometheus"
       - "proxy"
+      - "socket-proxy"
     ports:
       - "443:443"
       - "8080:8080"
@@ -69,8 +83,12 @@ services:
     volumes:
       - "${PWD}/services/traefik/certs:/certs:ro"
       - "${PWD}/services/traefik/config:/etc/traefik:ro"
-      - "/var/run/docker.sock:/var/run/docker.sock"
   traefik-whoami:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "64M"
     image: "traefik/whoami:${TRAEFIK_WHOAMI_VERSION:?err}"
     labels:
       traefik.docker.network: "${PROXY_NETWORK:?err}"

@@ -10,7 +10,12 @@ networks:
     name: "${SEAWEEDFS_NETWORK:?err}"
 services:
   seaweedfs:
-    command: "server -ip=0.0.0.0 -dir=/data -s3 -s3.config=/etc/seaweedfs/s3.json -metricsPort=9327"
+    command: "server -ip=0.0.0.0 -dir=/data -s3 -s3.iam=false -s3.config=/etc/seaweedfs/s3.json -metricsPort=9327"
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: "2G"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -21,6 +26,8 @@ services:
       timeout: "10s"
     image: "chrislusf/seaweedfs:${SEAWEEDFS_VERSION:?err}"
     labels:
+      prometheus.port: "9327"
+      prometheus.scrape: true
       traefik.docker.network: "${PROXY_NETWORK:?err}"
       traefik.enable: true
       traefik.http.routers.seaweedfs.entrypoints: "websecure"

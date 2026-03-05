@@ -1,0 +1,48 @@
+networks:
+  socket-proxy:
+    external: true
+    name: "${SOCKET_PROXY_NETWORK:?err}"
+services:
+  # The only container with the Docker socket. Every other service talks to tcp://socket-proxy:2375,
+  # joins the socket-proxy network and declares what it may request with labels, one per method:
+  #   socket-proxy.allow.get: <regex>      matched against the whole request path
+  #   socket-proxy.allow.head: <regex>
+  #   socket-proxy.allow.post: <regex>
+  # Anything not declared is refused, and containers without labels are refused entirely.
+  socket-proxy:
+    cap_drop:
+      - "ALL"
+    command:
+      - "-listenip=0.0.0.0"
+      - "-proxycontainername=${COMPOSE_PROJECT_NAME:?err}-socket-proxy-1"
+      - "-allowhealthcheck"
+      # A Docker engine restart breaks the socket, so the proxy exits and gets restarted with a new one.
+      - "-watchdoginterval=60"
+      - "-stoponwatchdog"
+      - "-shutdowngracetime=5"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "64M"
+    healthcheck:
+      interval: "30s"
+      retries: 5
+      start_period: "10s"
+      test:
+        - "CMD"
+        - "./healthcheck"
+      timeout: "10s"
+    image: "wollomatic/socket-proxy:${SOCKET_PROXY_VERSION:?err}"
+    labels:
+      wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
+      wud.watch: true
+    networks:
+      - "socket-proxy"
+    read_only: true
+    restart: "unless-stopped"
+    security_opt:
+      - "no-new-privileges:true"
+    user: "65534:${DOCKER_GID:?err}"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"

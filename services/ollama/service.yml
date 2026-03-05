@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../schemas/service.schema.json
 name: Ollama
 description: Chat & build with open models
 url: "https://ollama.com/"
@@ -11,3 +12,12 @@ dependents:
     local_url: "https://open-webui.services.local"
     docker_hub_url: "https://github.com/open-webui/open-webui/pkgs/container/open-webui"
     dockerfile_url: "https://github.com/open-webui/open-webui/blob/main/Dockerfile"
+
+homepage:
+  - name: Open WebUI
+    container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-ollama-open-webui-1"
+    description: "Open WebUI is an extensible, self-hosted AI interface that adapts to your workflow, all while operating entirely offline"
+    href: "https://{{HOMEPAGE_VAR_OPEN_WEBUI_HOSTNAME}}/"
+    icon: "sh-open-webui.png"
+    server: "my-docker"
+    showStats: true

@@ -1,6 +1,16 @@
+# yaml-language-server: $schema=../../schemas/service.schema.json
 name: Dozzle
 description: "Real-time Docker log viewer with a web UI"
 url: "https://dozzle.dev/"
 local_url: "https://dozzle.services.local"
 docker_hub_url: "https://hub.docker.com/r/amir20/dozzle"
 dockerfile_url: "https://github.com/amir20/dozzle/blob/master/Dockerfile"
+
+homepage:
+  - name: Dozzle
+    container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-dozzle-1"
+    description: "Simple Container Monitoring and Logging"
+    href: "https://{{HOMEPAGE_VAR_DOZZLE_HOSTNAME}}/"
+    icon: "sh-dozzle.png"
+    server: "my-docker"
+    showStats: true

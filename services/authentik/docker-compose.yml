@@ -14,10 +14,18 @@ networks:
 services:
   authentik-server:
     command: "server"
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: "1G"
     environment:
       AUTHENTIK_BOOTSTRAP_EMAIL: "${AUTHENTIK_BOOTSTRAP_EMAIL:?err}"
       AUTHENTIK_BOOTSTRAP_PASSWORD: "${AUTHENTIK_BOOTSTRAP_PASSWORD:?err}"
       AUTHENTIK_BOOTSTRAP_TOKEN: "${AUTHENTIK_BOOTSTRAP_TOKEN:?err}"
+      AUTHENTIK_LISTEN__HTTP: "0.0.0.0:9000"
+      AUTHENTIK_LISTEN__HTTPS: "0.0.0.0:9443"
+      AUTHENTIK_LISTEN__METRICS: "0.0.0.0:9300"
       AUTHENTIK_POSTGRESQL__HOST: "postgres"
       AUTHENTIK_POSTGRESQL__NAME: "${AUTHENTIK_POSTGRES_DB:?err}"
       AUTHENTIK_POSTGRESQL__PASSWORD: "${AUTHENTIK_POSTGRES_USER_PASSWORD:?err}"
@@ -25,6 +33,9 @@ services:
       AUTHENTIK_SECRET_KEY: "${AUTHENTIK_SECRET_KEY:?err}"
     image: "ghcr.io/goauthentik/server:${AUTHENTIK_VERSION:?err}"
     labels:
+      prometheus.job: "authentik"
+      prometheus.port: "9300"
+      prometheus.scrape: true
       traefik.docker.network: "${PROXY_NETWORK:?err}"
       traefik.enable: true
       traefik.http.middlewares.authentik-server.forwardAuth.address: "http://authentik-server:9000/outpost.goauthentik.io/auth/traefik"
@@ -49,10 +60,18 @@ services:
       - "authentik-templates:/templates"
   authentik-worker:
     command: "worker"
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: "1G"
     environment:
       AUTHENTIK_BOOTSTRAP_EMAIL: "${AUTHENTIK_BOOTSTRAP_EMAIL:?err}"
       AUTHENTIK_BOOTSTRAP_PASSWORD: "${AUTHENTIK_BOOTSTRAP_PASSWORD:?err}"
       AUTHENTIK_BOOTSTRAP_TOKEN: "${AUTHENTIK_BOOTSTRAP_TOKEN:?err}"
+      AUTHENTIK_LISTEN__HTTP: "0.0.0.0:9000"
+      AUTHENTIK_LISTEN__HTTPS: "0.0.0.0:9443"
+      AUTHENTIK_LISTEN__METRICS: "0.0.0.0:9300"
       AUTHENTIK_POSTGRESQL__HOST: "postgres"
       AUTHENTIK_POSTGRESQL__NAME: "${AUTHENTIK_POSTGRES_DB:?err}"
       AUTHENTIK_POSTGRESQL__PASSWORD: "${AUTHENTIK_POSTGRES_USER_PASSWORD:?err}"
@@ -68,10 +87,7 @@ services:
     restart: "unless-stopped"
     security_opt:
       - "no-new-privileges:true"
-    user: "root"
     volumes:
-      - "${PWD}/services/authentik/blueprints/traefik.yaml:/blueprints/traefik.yaml:ro"
-      - "/var/run/docker.sock:/var/run/docker.sock"
       - "authentik-certs:/certs"
       - "authentik-data:/data"
       - "authentik-templates:/templates"

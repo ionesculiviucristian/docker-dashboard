@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../schemas/service.schema.json
 name: Grafana
 description: The open and composable observability and data visualization platform
 url: "https://grafana.com"
@@ -17,3 +18,24 @@ dependents:
     local_url: null
     docker_hub_url: "https://hub.docker.com/r/grafana/loki"
     dockerfile_url: "https://github.com/grafana/loki/blob/main/cmd/loki/Dockerfile"
+
+homepage:
+  - name: Grafana
+    container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-grafana-1"
+    description: "The open and composable observability and data visualization platform"
+    href: "https://{{HOMEPAGE_VAR_GRAFANA_HOSTNAME}}/"
+    icon: "sh-grafana.png"
+    server: "my-docker"
+    showStats: true
+    widget:
+      type: "grafana"
+      url: "http://grafana:{{HOMEPAGE_VAR_GRAFANA_PORT}}"
+      username: "admin"
+      password: "{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}"
+  - name: Grafana Alloy
+    container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-grafana-alloy-1"
+    description: "Grafana Alloy is an open source OpenTelemetry collector with built-in Prometheus pipelines and support for metrics, logs, traces, and profiles"
+    href: "https://{{HOMEPAGE_VAR_GRAFANA_ALLOY_HOSTNAME}}/"
+    icon: "sh-grafana-alloy.png"
+    server: "my-docker"
+    showStats: true

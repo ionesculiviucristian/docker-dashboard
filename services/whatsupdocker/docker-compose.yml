@@ -5,35 +5,63 @@ networks:
   proxy:
     external: true
     name: "${PROXY_NETWORK:?err}"
+  socket-proxy:
+    external: true
+    name: "${SOCKET_PROXY_NETWORK:?err}"
 services:
   whatsupdocker:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
     environment:
+      NODE_EXTRA_CA_CERTS: "${CA_CERTIFICATE_FILE:?err}"
+      WUD_AUTH_ADMIN_PASSWORD: "${SERVICES_USER_PASSWORD:?err}"
+      WUD_AUTH_ADMIN_USER: "${SERVICES_USER:?err}"
+      WUD_AUTH_OIDC_AUTHENTIK_ADMINGROUP: "authentik Admins"
+      WUD_AUTH_OIDC_AUTHENTIK_CLIENTID: "${WHATSUPDOCKER_OIDC_CLIENT_ID:?err}"
+      WUD_AUTH_OIDC_AUTHENTIK_CLIENTSECRET: "${WHATSUPDOCKER_OIDC_CLIENT_SECRET}"
+      WUD_AUTH_OIDC_AUTHENTIK_DISCOVERY: "https://${AUTHENTIK_HOSTNAME:?err}/application/o/whatsupdocker/.well-known/openid-configuration"
+      WUD_AUTH_OIDC_AUTHENTIK_GROUPSCLAIM: "groups"
+      WUD_PUBLIC_URL: "https://${WHATSUPDOCKER_HOSTNAME:?err}"
       WUD_REGISTRY_CUSTOM_OSGEO_URL: "${WHATSUPDOCKER_WUD_REGISTRY_CUSTOM_OSGEO_URL}"
       WUD_TRIGGER_NTFY_LOCAL_AUTH_PASSWORD: "${NTFY_WUD_PASSWORD:?err}"
       WUD_TRIGGER_NTFY_LOCAL_AUTH_USER: "${NTFY_WUD_USER:?err}"
       WUD_TRIGGER_NTFY_LOCAL_PRIORITY: 3
       WUD_TRIGGER_NTFY_LOCAL_TOPIC: "${WHATSUPDOCKER_WUD_TRIGGER_NTFY_LOCAL_TOPIC}"
       WUD_TRIGGER_NTFY_LOCAL_URL: "http://ntfy:${NTFY_HOSTNAME_PORT:?err}"
+      WUD_WATCHER_LOCAL_CRON: "0 4 * * *"
+      WUD_WATCHER_LOCAL_HOST: "socket-proxy"
+      WUD_WATCHER_LOCAL_PORT: 2375
       WUD_WATCHER_LOCAL_WATCHBYDEFAULT: false
+    extra_hosts:
+      - "${AUTHENTIK_HOSTNAME:?err}:host-gateway"
     image: "getwud/wud:${WHATSUPDOCKER_VERSION:?err}"
     labels:
       traefik.docker.network: "${PROXY_NETWORK:?err}"
       traefik.enable: true
       traefik.http.routers.whatsupdocker.entrypoints: "websecure"
-      traefik.http.routers.whatsupdocker.middlewares: "authentik-server@docker"
       traefik.http.routers.whatsupdocker.rule: "Host(`${WHATSUPDOCKER_HOSTNAME:?err}`)"
       traefik.http.routers.whatsupdocker.tls: true
       traefik.http.services.whatsupdocker.loadbalancer.server.port: "${WHATSUPDOCKER_HOSTNAME_PORT:?err}"
+      prometheus.hostname: "${WHATSUPDOCKER_HOSTNAME:?err}"
+      prometheus.port: "${WHATSUPDOCKER_HOSTNAME_PORT:?err}"
+      prometheus.probe: true
+      prometheus.scrape: true
+      # The watcher lists containers, inspects their images and follows events to notice new ones.
+      socket-proxy.allow.get: "(/v1\\.\\d+)?/(version|info|events|containers/json|containers/[a-zA-Z0-9_.-]+/json|images/.+/json)"
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
       - "prometheus"
       - "proxy"
+      - "socket-proxy"
     restart: "unless-stopped"
     security_opt:
       - "no-new-privileges:true"
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "${CA_CERTIFICATE_HOST_FILE:?err}:${CA_CERTIFICATE_FILE:?err}:ro"
       - "whatsupdocker-data:/store"
 volumes:
   whatsupdocker-data: null

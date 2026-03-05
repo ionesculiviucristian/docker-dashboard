@@ -1,4 +1,7 @@
 networks:
+  prometheus:
+    external: true
+    name: "${PROMETHEUS_NETWORK:?err}"
   proxy:
     external: true
     name: "${PROXY_NETWORK:?err}"
@@ -7,6 +10,11 @@ networks:
     name: "${RABBITMQ_NETWORK:?err}"
 services:
   rabbitmq:
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: "1G"
     environment:
       RABBITMQ_DEFAULT_PASS: "${RABBITMQ_DEFAULT_PASS:?err}"
       RABBITMQ_DEFAULT_USER: "${RABBITMQ_DEFAULT_USER:?err}"
@@ -26,10 +34,13 @@ services:
       traefik.http.routers.rabbitmq.entrypoints: "websecure"
       traefik.http.routers.rabbitmq.rule: "Host(`${RABBITMQ_HOSTNAME:?err}`)"
       traefik.http.routers.rabbitmq.tls: true
+      prometheus.port: "15692"
+      prometheus.scrape: true
       traefik.http.services.rabbitmq.loadbalancer.server.port: "${RABBITMQ_HOSTNAME_PORT:?err}"
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+-management-alpine$$"
       wud.watch: true
     networks:
+      - "prometheus"
       - "proxy"
       - "rabbitmq"
     restart: "unless-stopped"

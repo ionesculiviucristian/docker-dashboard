@@ -10,6 +10,11 @@ networks:
     name: "${PROXY_NETWORK:?err}"
 services:
   postgres:
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: "4G"
     environment:
       POSTGRES_EXPORTER_USER: "${POSTGRES_EXPORTER_USER:?err}"
       POSTGRES_EXPORTER_USER_PASSWORD: "${POSTGRES_EXPORTER_USER_PASSWORD:?err}"
@@ -40,19 +45,25 @@ services:
     depends_on:
       postgres:
         condition: "service_healthy"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "768M"
     environment:
       PGADMIN_CONFIG_ALLOW_SPECIAL_EMAIL_DOMAINS: "['local']"
       PGADMIN_CONFIG_CHECK_EMAIL_DELIVERABILITY: "False"
       PGADMIN_DEFAULT_EMAIL: "${POSTGRES_PGADMIN4_DEFAULT_EMAIL:?err}"
       PGADMIN_DEFAULT_PASSWORD: "${POSTGRES_PGADMIN4_DEFAULT_PASSWORD:?err}"
       PGADMIN_LISTEN_ADDRESS: "0.0.0.0"
+      PGADMIN_LISTEN_PORT: "${POSTGRES_PGADMIN4_HOSTNAME_PORT:?err}"
     healthcheck:
       interval: "30s"
       retries: 5
       start_period: "60s"
       test:
         - "CMD-SHELL"
-        - "wget --no-verbose --tries=1 --spider http://127.0.0.1/misc/ping || exit 1"
+        - "wget --no-verbose --tries=1 --spider http://127.0.0.1:${POSTGRES_PGADMIN4_HOSTNAME_PORT:?err}/misc/ping || exit 1"
       timeout: "10s"
     image: "dpage/pgadmin4:${POSTGRES_PGADMIN4_VERSION:?err}"
     labels:
@@ -78,6 +89,11 @@ services:
     depends_on:
       postgres:
         condition: "service_healthy"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "128M"
     environment:
       DATA_SOURCE_PASS: "${POSTGRES_EXPORTER_USER_PASSWORD:?err}"
       DATA_SOURCE_URI: "postgres:5432/postgres?sslmode=disable"
@@ -92,6 +108,9 @@ services:
       timeout: "10s"
     image: "prometheuscommunity/postgres-exporter:${POSTGRES_PROMETHEUS_EXPORTER_VERSION:?err}"
     labels:
+      prometheus.job: "postgres"
+      prometheus.port: "9187"
+      prometheus.scrape: true
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:

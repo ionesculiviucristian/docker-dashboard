@@ -29,18 +29,25 @@ No tracking, no external dependencies—just a local development environment you
 
 ## Installation
 
-Before running the install script make sure [mkcert](https://github.com/FiloSottile/mkcert?tab=readme-ov-file#linux) is installed.
+Before running the installer make sure [uv](https://docs.astral.sh/uv/), [mkcert](https://github.com/FiloSottile/mkcert?tab=readme-ov-file#linux) and Docker are installed.
 
-⚠️ Note: The following services require manual registration / authentication because they have payed OIDC authentication or will have in the future:
-
-- Grafana
-- Mealie
-- n8n
-- pgAdmin4
-- RabbitMQ
-
-The rest of the services are protected by Authentik.
+> Note: The following services require manual registration / authentication because they have payed OIDC authentication or will have in the future:
+>
+> - Grafana
+> - Mealie
+> - n8n
+> - pgAdmin4
+> - RabbitMQ
+>
+> The rest of the services are protected by Authentik.
 
 ```bash
-./install.sh
+# Deploy all enabled services
+uv run dashboard.py deploy
+
+# Update .env and restart services
+uv run dashboard.py update
+
+# Stop and remove all containers, volumes, and networks
+uv run dashboard.py reset
 ```

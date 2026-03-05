@@ -6,7 +6,7 @@ logging {
 
 // https://grafana.com/docs/alloy/latest/reference/components/discovery/discovery.docker/
 discovery.docker "containers" {
-  host = "unix:///var/run/docker.sock"
+  host = "tcp://socket-proxy:2375"
 }
 
 // https://grafana.com/docs/alloy/latest/reference/components/discovery/discovery.relabel/
@@ -53,7 +53,7 @@ discovery.relabel "docker" {
 
 // https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.docker/
 loki.source.docker "containers" {
-  host          = "unix:///var/run/docker.sock"
+  host          = "tcp://socket-proxy:2375"
   targets       = discovery.relabel.docker.output
   forward_to    = [loki.write.local.receiver]
   relabel_rules = discovery.relabel.docker.rules

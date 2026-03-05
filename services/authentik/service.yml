@@ -1,6 +1,21 @@
+# yaml-language-server: $schema=../../schemas/service.schema.json
 name: authentik
 description: "authentik is an IdP (Identity Provider) and SSO (Single Sign On) platform that is built with security at the forefront of every piece of code, every feature, with an emphasis on flexibility and versatility"
 url: "https://goauthentik.io/"
 local_url: "https://authentik.services.local"
 docker_hub_url: "https://github.com/goauthentik/authentik/pkgs/container/server"
 dockerfile_url: "https://github.com/goauthentik/authentik/blob/main/lifecycle/container/Dockerfile"
+
+homepage:
+  - name: authentik
+    container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-traefik-1"
+    description: "The authentication glue you need"
+    href: "https://{{HOMEPAGE_VAR_AUTHENTIK_HOSTNAME}}/"
+    icon: "sh-authentik.png"
+    server: "my-docker"
+    showStats: true
+    widget:
+      type: "authentik"
+      key: "{{HOMEPAGE_VAR_AUTHENTIK_TOKEN}}"
+      url: "http://authentik-server:{{HOMEPAGE_VAR_AUTHENTIK_PORT}}"
+      version: 2

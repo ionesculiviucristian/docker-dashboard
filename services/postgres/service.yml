@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../schemas/service.schema.json
 name: PostgreSQL
 description: "PostgreSQL is a powerful, open source object-relational database system with over 35 years of active development that has earned it a strong reputation for reliability, feature robustness, and performance"
 url: "https://www.postgresql.org"
@@ -17,3 +18,12 @@ dependents:
     local_url: null
     docker_hub_url: "https://hub.docker.com/r/prometheuscommunity/postgres-exporter"
     dockerfile_url: "https://github.com/prometheus-community/postgres_exporter/blob/master/Dockerfile"
+
+homepage:
+  - name: pgAdmin4
+    container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-postgres-pgadmin4-1"
+    description: "pgAdmin is the most popular and feature rich Open Source administration and development platform for PostgreSQL"
+    href: "https://{{HOMEPAGE_VAR_PGADMIN4_HOSTNAME}}/"
+    icon: "/icons/pgadmin4.ico"
+    server: "my-docker"
+    showStats: true

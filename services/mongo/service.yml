@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../schemas/service.schema.json
 name: MongoDB
 description: MongoDB is a document database with the scalability and flexibility that you want with the querying and indexing that you need
 url: "https://www.mongodb.com"
@@ -15,5 +16,14 @@ dependents:
     description: "A Prometheus exporter for MongoDB including sharding, replication and storage engines"
     url: "https://github.com/percona/mongodb_exporter"
     local_url: null
-    docker_hub_url: "hhttps://hub.docker.com/r/percona/mongodb_exporter"
+    docker_hub_url: "https://hub.docker.com/r/percona/mongodb_exporter"
     dockerfile_url: "https://github.com/percona/mongodb_exporter/blob/main/Dockerfile"
+
+homepage:
+  - name: Mongo Express
+    container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-mongo-mongo-express-1"
+    description: "A web-based MongoDB admin interface written with Node.js, Express, and Bootstrap 5"
+    href: "https://{{HOMEPAGE_VAR_MONGO_EXPRESS_HOSTNAME}}/"
+    icon: "/icons/mongo-express.png"
+    server: "my-docker"
+    showStats: true

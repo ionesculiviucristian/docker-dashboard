@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/docker-dashboard/schemas/service.schema.json",
+  "title": "Service",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "name",
+    "description",
+    "url",
+    "local_url",
+    "docker_hub_url",
+    "dockerfile_url"
+  ],
+  "properties": {
+    "name": { "type": "string" },
+    "description": { "type": "string" },
+    "url": { "type": "string" },
+    "local_url": { "type": ["string", "null"] },
+    "docker_hub_url": { "type": "string" },
+    "dockerfile_url": { "type": "string" },
+    "dependents": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/serviceMeta" }
+    },
+    "homepage": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/homepageEntry" }
+    }
+  },
+  "$defs": {
+    "serviceMeta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "description",
+        "url",
+        "local_url",
+        "docker_hub_url",
+        "dockerfile_url"
+      ],
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "url": { "type": "string" },
+        "local_url": { "type": ["string", "null"] },
+        "docker_hub_url": { "type": "string" },
+        "dockerfile_url": { "type": "string" }
+      }
+    },
+    "homepageEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "container", "description", "href", "icon", "server"],
+      "properties": {
+        "name": { "type": "string" },
+        "container": { "type": "string" },
+        "description": { "type": "string" },
+        "href": { "type": "string" },
+        "icon": { "type": "string" },
+        "server": { "type": "string" },
+        "showStats": { "type": "boolean" },
+        "widget": { "$ref": "#/$defs/widget" }
+      }
+    },
+    "widget": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "type": "string" }
+      },
+      "additionalProperties": true
+    }
+  }
+}

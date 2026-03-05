@@ -5,10 +5,20 @@ networks:
   proxy:
     external: true
     name: "${PROXY_NETWORK:?err}"
+  socket-proxy:
+    external: true
+    name: "${SOCKET_PROXY_NETWORK:?err}"
 services:
   prometheus-blackbox-exporter:
     command:
       - "--config.file=/config/blackbox.yml"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "128M"
+    environment:
+      SSL_CERT_DIR: "/certs"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -19,6 +29,9 @@ services:
       timeout: "10s"
     image: "prom/blackbox-exporter:${PROMETHEUS_BLACKBOX_EXPORTER_VERSION:?err}"
     labels:
+      prometheus.job: "internet"
+      prometheus.probe: true
+      prometheus.target: "https://google.com"
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
@@ -28,6 +41,7 @@ services:
     security_opt:
       - "no-new-privileges:true"
     volumes:
+      - "${CA_CERTIFICATE_HOST_FILE:?err}:${CA_CERTIFICATE_FILE:?err}:ro"
       - "${PWD}/services/prometheus/blackbox-exporter/blackbox.yml:/config/blackbox.yml:ro"
   prometheus-node-exporter:
     command:
@@ -35,6 +49,11 @@ services:
       - "--path.procfs=/host/proc"
       - "--path.sysfs=/host/sys"
       - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "128M"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -45,6 +64,9 @@ services:
       timeout: "30s"
     image: "prom/node-exporter:${PROMETHEUS_NODE_EXPORTER_VERSION:?err}"
     labels:
+      prometheus.job: "node-exporter"
+      prometheus.port: "9100"
+      prometheus.scrape: true
       wud.tag.include: "^v\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
@@ -56,6 +78,11 @@ services:
     volumes:
       - "/:/host:ro,rslave"
   prometheus:
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "2G"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -66,6 +93,9 @@ services:
       timeout: "10s"
     image: "prom/prometheus:${PROMETHEUS_VERSION:?err}"
     labels:
+      # Service discovery lists containers and the networks they are attached to.
+      socket-proxy.allow.get: "(/v1\\.\\d+)?/(version|containers/json|networks)"
+      socket-proxy.allow.head: "/_ping"
       traefik.docker.network: "${PROXY_NETWORK:?err}"
       traefik.enable: true
       traefik.http.routers.prometheus.entrypoints: "websecure"
@@ -78,7 +108,11 @@ services:
     networks:
       - "prometheus"
       - "proxy"
+      - "socket-proxy"
     restart: "unless-stopped"
+    secrets:
+      - "services_user"
+      - "services_user_password"
     security_opt:
       - "no-new-privileges:true"
     volumes:
@@ -86,3 +120,8 @@ services:
       - "prometheus-data:/prometheus"
 volumes:
   prometheus-data: null
+secrets:
+  services_user:
+    environment: "SERVICES_USER"
+  services_user_password:
+    environment: "SERVICES_USER_PASSWORD"

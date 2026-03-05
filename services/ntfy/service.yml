@@ -1,6 +1,22 @@
+# yaml-language-server: $schema=../../schemas/service.schema.json
 name: ntfy
 description: "ntfy (pronounced notify) is a simple HTTP-based pub-sub notification service. It allows you to send notifications to your phone or desktop via scripts from any computer, and/or using a REST API"
 url: "https://ntfy.sh/"
 local_url: "https://ntfy.services.local"
 docker_hub_url: "https://hub.docker.com/r/binwiederhier/ntfy"
 dockerfile_url: "https://github.com/binwiederhier/ntfy/blob/main/Dockerfile"
+
+homepage:
+  - name: ntfy
+    container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-ntfy-1"
+    description: "ntfy (pronounced notify) is a simple HTTP-based pub-sub notification service. It allows you to send notifications to your phone or desktop via scripts from any computer, and/or using a REST API"
+    href: "https://{{HOMEPAGE_VAR_NTFY_HOSTNAME}}/"
+    icon: "sh-ntfy.png"
+    server: "my-docker"
+    showStats: true
+    widget:
+      type: "ntfy"
+      url: "http://ntfy:{{HOMEPAGE_VAR_NTFY_PORT}}"
+      topic: "{{HOMEPAGE_VAR_NTFY_TOPIC}}"
+      username: "{{HOMEPAGE_VAR_NTFY_USER}}"
+      password: "{{HOMEPAGE_VAR_NTFY_PASSWORD}}"
