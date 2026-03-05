@@ -7,6 +7,11 @@ networks:
     name: "${RABBITMQ_NETWORK:?err}"
 services:
   rabbitmq:
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: "1G"
     environment:
       RABBITMQ_DEFAULT_PASS: "${RABBITMQ_DEFAULT_PASS:?err}"
       RABBITMQ_DEFAULT_USER: "${RABBITMQ_DEFAULT_USER:?err}"

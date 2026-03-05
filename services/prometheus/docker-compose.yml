@@ -9,6 +9,11 @@ services:
   prometheus-blackbox-exporter:
     command:
       - "--config.file=/config/blackbox.yml"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "128M"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -35,6 +40,11 @@ services:
       - "--path.procfs=/host/proc"
       - "--path.sysfs=/host/sys"
       - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "128M"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -56,6 +66,11 @@ services:
     volumes:
       - "/:/host:ro,rslave"
   prometheus:
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "2G"
     healthcheck:
       interval: "30s"
       retries: 5

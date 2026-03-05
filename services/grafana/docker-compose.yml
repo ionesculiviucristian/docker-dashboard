@@ -1,4 +1,7 @@
 networks:
+  authentik:
+    external: true
+    name: "${AUTHENTIK_NETWORK:?err}"
   grafana:
     external: true
     name: "${GRAFANA_NETWORK:?err}"
@@ -10,11 +13,32 @@ networks:
     name: "${PROXY_NETWORK:?err}"
 services:
   grafana:
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "768M"
     environment:
+      GF_AUTH_DISABLE_LOGIN_FORM: true
+      GF_AUTH_GENERIC_OAUTH_ALLOW_SIGN_UP: true
+      GF_AUTH_GENERIC_OAUTH_API_URL: "http://authentik-server:9000/application/o/userinfo/"
+      GF_AUTH_GENERIC_OAUTH_AUTH_URL: "https://${AUTHENTIK_HOSTNAME:?err}/application/o/authorize/"
+      GF_AUTH_GENERIC_OAUTH_AUTO_LOGIN: true
+      GF_AUTH_GENERIC_OAUTH_CLIENT_ID: "${GRAFANA_GF_AUTH_GENERIC_OAUTH_CLIENT_ID:?err}"
+      GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: "${GRAFANA_GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET}"
+      GF_AUTH_GENERIC_OAUTH_EMAIL_ATTRIBUTE_NAME: "email"
+      GF_AUTH_GENERIC_OAUTH_ENABLED: true
+      GF_AUTH_GENERIC_OAUTH_LOGIN_ATTRIBUTE_PATH: "preferred_username"
+      GF_AUTH_GENERIC_OAUTH_NAME: "Authentik"
+      GF_AUTH_GENERIC_OAUTH_NAME_ATTRIBUTE_PATH: "name"
+      GF_AUTH_GENERIC_OAUTH_SCOPES: "openid profile email"
+      GF_AUTH_GENERIC_OAUTH_SIGNOUT_REDIRECT_URL: "https://${AUTHENTIK_HOSTNAME}/application/o/grafana/end-session/"
+      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: "http://authentik-server:9000/application/o/token/"
       GF_PATHS_PROVISIONING: "/etc/grafana/provisioning"
+      GF_PLUGINS_PREINSTALL_AUTO_UPDATE: false
       GF_SECURITY_ADMIN_PASSWORD: "${GRAFANA_GF_SECURITY_ADMIN_PASSWORD:?err}"
-      GF_SECURITY_ADMIN_USER: "${GRAFANA_GF_SECURITY_ADMIN_USER:?err}"
       GF_SERVER_ROOT_URL: "https://${GRAFANA_HOSTNAME:?err}"
+      GF_USERS_AUTO_ASSIGN_ORG_ROLE: "Admin"
     image: "grafana/grafana:${GRAFANA_VERSION:?err}"
     labels:
       traefik.docker.network: "${PROXY_NETWORK:?err}"
@@ -26,6 +50,7 @@ services:
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
+      - "authentik"
       - "grafana"
       - "prometheus"
       - "proxy"
@@ -33,7 +58,8 @@ services:
     security_opt:
       - "no-new-privileges:true"
     volumes:
-      - "${PWD}/services/grafana/grafana/provisioning:/etc/grafana/provisioning:ro"
+      - "${PWD}/services/grafana/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro"
+      - "${PWD}/services/grafana/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro"
       - "grafana-data:/var/lib/grafana"
   grafana-alloy:
     command:
@@ -42,6 +68,11 @@ services:
       - "--storage.path=/var/lib/alloy/data"
       - "--disable-reporting"
       - "/etc/alloy/config.alloy"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "1G"
     environment:
       LOGGING_LEVEL: "${GRAFANA_ALLOY_LOGGING_LEVEL:?err}"
     image: "grafana/alloy:${GRAFANA_ALLOY_VERSION:?err}"
@@ -68,6 +99,11 @@ services:
   grafana-loki:
     command:
       - "-config.file=/etc/loki/local-config.yaml"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "1G"
     image: "grafana/loki:${GRAFANA_LOKI_VERSION:?err}"
     labels:
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"

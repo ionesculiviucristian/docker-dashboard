@@ -1,11 +1,12 @@
 ## Import Bitwarden secrets
 
 ```bash
-./scripts/secrets.sh bitwarden@mail.com
+uv run dashboard.py import-secrets bitwarden@mail.com
 ```
 
 ## Development
 
 ```bash
+uv sync
 npm i
 ```

@@ -37,6 +37,11 @@ services:
       - --metrics.prometheus.addEntryPointsLabels=true
       - --metrics.prometheus.addRoutersLabels=true
       - --metrics.prometheus.addServicesLabels=true
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "512M"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -71,6 +76,11 @@ services:
       - "${PWD}/services/traefik/config:/etc/traefik:ro"
       - "/var/run/docker.sock:/var/run/docker.sock"
   traefik-whoami:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "64M"
     image: "traefik/whoami:${TRAEFIK_WHOAMI_VERSION:?err}"
     labels:
       traefik.docker.network: "${PROXY_NETWORK:?err}"

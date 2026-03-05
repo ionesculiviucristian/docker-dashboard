@@ -4,6 +4,11 @@ networks:
     name: "${PROXY_NETWORK:?err}"
 services:
   dozzle:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "256M"
     environment:
       DOZZLE_ENABLE_ACTIONS: true
       DOZZLE_ENABLE_SHELL: true

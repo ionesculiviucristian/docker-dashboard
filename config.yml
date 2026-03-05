@@ -1,22 +1,42 @@
-services:
-  authentik: true
-  cadvisor: true
-  dozzle: true
-  grafana: true
-  homepage: false
-  it-tools: true
-  mailpit: true
-  mealie: true
-  mongo: true
-  mysql: true
-  n8n: true
-  ntfy: true
-  ollama: true
-  omni-tools: true
-  postgres: true
-  prometheus: true
-  rabbitmq: true
-  redis: true
-  seaweedfs: true
-  traefik: true
-  whatsupdocker: true
+profiles:
+  default:
+    mongo: 10
+    mysql: 10
+    postgres: 10
+    authentik: 20
+    traefik: 30
+    cadvisor:
+    dozzle:
+    grafana:
+    homepage:
+    it-tools:
+    mailpit:
+    n8n:
+    ntfy:
+    ollama:
+    omni-tools:
+    prometheus:
+    rabbitmq:
+    redis:
+    seaweedfs:
+    whatsupdocker:
+  testing:
+    postgres: 10
+    authentik: 20
+    traefik: 30
+    homepage:
+    ntfy:
+    whatsupdocker:
+  work:
+    mongo: 10
+    mysql: 10
+    postgres: 10
+    authentik: 20
+    traefik: 30
+    homepage:
+    it-tools:
+    mailpit:
+    omni-tools:
+    rabbitmq:
+    redis:
+    seaweedfs:

@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../schemas/service.schema.json
 name: prometheus
 description: "Monitor your applications, systems, and services with the leading open source monitoring solution. Instrument, collect, store, and query your metrics for alerting, dashboarding, and other use cases"
 url: "https://prometheus.io/"
@@ -17,3 +18,15 @@ dependents:
     local_url: null
     docker_hub_url: "https://hub.docker.com/r/prom/node-exporter"
     dockerfile_url: "https://github.com/prometheus/node_exporter/blob/master/Dockerfile"
+
+homepage:
+  - name: Prometheus
+    container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-prometheus-1"
+    description: "Monitor your applications, systems, and services with the leading open source monitoring solution. Instrument, collect, store, and query your metrics for alerting, dashboarding, and other use cases"
+    href: "https://{{HOMEPAGE_VAR_PROMETHEUS_HOSTNAME}}/"
+    icon: "sh-prometheus.png"
+    server: "my-docker"
+    showStats: true
+    widget:
+      type: "prometheus"
+      url: "http://prometheus:{{HOMEPAGE_VAR_PROMETHEUS_PORT}}"

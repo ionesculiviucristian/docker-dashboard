@@ -10,6 +10,11 @@ networks:
     name: "${PROXY_NETWORK:?err}"
 services:
   mysql:
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: "4G"
     environment:
       MYSQL_EXPORTER_USER: "${MYSQL_EXPORTER_USER:?err}"
       MYSQL_EXPORTER_USER_PASSWORD: "${MYSQL_EXPORTER_USER_PASSWORD:?err}"
@@ -45,6 +50,11 @@ services:
     depends_on:
       mysql:
         condition: "service_healthy"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
     environment:
       PMA_HOSTNAMES: "mysql"
       UPLOAD_LIMIT: "${MYSQL_PHPMYADMIN_UPLOAD_LIMIT}"
@@ -82,6 +92,11 @@ services:
     depends_on:
       mysql:
         condition: "service_healthy"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "128M"
     environment:
       MYSQLD_EXPORTER_PASSWORD: "${MYSQL_EXPORTER_USER_PASSWORD:?err}"
       MYSQL_EXPORTER_USER: "${MYSQL_EXPORTER_USER:?err}"

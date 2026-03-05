@@ -7,9 +7,20 @@ networks:
     name: "${PROXY_NETWORK:?err}"
 services:
   n8n:
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: "2G"
     environment:
+      N8N_INSTANCE_OWNER_EMAIL: "${SERVICES_USER_EMAIL:?err}"
+      N8N_INSTANCE_OWNER_FIRST_NAME: "${SERVICES_USER:?err}"
+      N8N_INSTANCE_OWNER_LAST_NAME: "${SERVICES_USER:?err}"
+      N8N_INSTANCE_OWNER_MANAGED_BY_ENV: true
+      N8N_INSTANCE_OWNER_PASSWORD_HASH: "${N8N_INSTANCE_OWNER_PASSWORD_HASH:?err}"
       N8N_LISTEN_ADDRESS: "0.0.0.0"
       N8N_METRICS: true
+      N8N_PYTHON_ENABLED: false
     healthcheck:
       interval: "30s"
       retries: 5

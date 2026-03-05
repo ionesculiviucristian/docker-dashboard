@@ -11,6 +11,11 @@ networks:
 services:
   redis:
     command: "redis-server --appendonly yes --save 60 1 --requirepass ${REDIS_PASSWORD}"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "512M"
     environment:
       REDIS_PASSWORD: "${REDIS_PASSWORD:?err}"
     healthcheck:
@@ -36,6 +41,11 @@ services:
     depends_on:
       redis:
         condition: "service_healthy"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "128M"
     environment:
       REDIS_ADDR: "redis:6379"
       REDIS_PASSWORD: "${REDIS_PASSWORD:?err}"
@@ -54,6 +64,11 @@ services:
     depends_on:
       redis:
         condition: "service_healthy"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "1G"
     healthcheck:
       interval: "30s"
       retries: 5

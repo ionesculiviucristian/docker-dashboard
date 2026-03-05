@@ -11,6 +11,11 @@ networks:
 services:
   mongo:
     command: "mongod --auth --replSet rs0 --bind_ip_all --keyFile=/data/keyfile"
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: "4G"
     environment:
       GLIBC_TUNABLES: "${MONGO_GLIBC_TUNABLES}"
       MONGO_EXPORTER_USER: "${MONGO_EXPORTER_USER:?err}"
@@ -52,6 +57,11 @@ services:
     depends_on:
       mongo:
         condition: "service_healthy"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "256M"
     environment:
       ME_CONFIG_BASICAUTH: false
       ME_CONFIG_MONGODB_ADMINPASSWORD: "${MONGO_INITDB_ROOT_PASSWORD:?err}"
@@ -89,12 +99,17 @@ services:
     depends_on:
       mongo:
         condition: "service_healthy"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "128M"
     environment:
       MONGODB_PASSWORD: "${MONGO_EXPORTER_USER_PASSWORD:?err}"
       MONGODB_USER: "${MONGO_EXPORTER_USER:?err}"
     image: "percona/mongodb_exporter:${MONGO_PROMETHEUS_EXPORTER_VERSION:?err}"
     labels:
-      wud.tag.include: "^\\d+\\.\\d+\\.\\d+$$"
+      wud.tag.include: "^0\\.\\d+\\.\\d+$$"
       wud.watch: true
     networks:
       - "mongo"

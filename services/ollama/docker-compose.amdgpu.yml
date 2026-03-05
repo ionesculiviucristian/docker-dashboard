@@ -3,7 +3,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: "16G"
+          memory: "2G"
     devices:
       - "/dev/dri:/dev/dri"
       - "/dev/kfd:/dev/kfd"

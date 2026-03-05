@@ -1,6 +1,16 @@
+# yaml-language-server: $schema=../../schemas/service.schema.json
 name: "IT - TOOLS"
 description: "Collection of handy online tools for developers, with great UX"
 url: "https://it-tools.tech"
 local_url: "https://it-tools.services.local"
 docker_hub_url: "https://hub.docker.com/r/corentinth/it-tools"
 dockerfile_url: "https://github.com/CorentinTh/it-tools/blob/main/Dockerfile"
+
+homepage:
+  - name: IT TOOLS
+    container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-it-tools-1"
+    description: "Handy tools for developers"
+    href: "https://{{HOMEPAGE_VAR_IT_TOOLS_HOSTNAME}}/"
+    icon: "sh-it-tools.png"
+    server: "my-docker"
+    showStats: true

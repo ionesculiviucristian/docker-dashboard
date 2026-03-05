@@ -7,6 +7,11 @@ networks:
     name: "${PROXY_NETWORK:?err}"
 services:
   ollama:
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: "2G"
     healthcheck:
       interval: "30s"
       retries: 5
@@ -15,12 +20,16 @@ services:
         - "CMD-SHELL"
         - "timeout 1 bash -c '</dev/tcp/127.0.0.1/11434' || exit 1"
       timeout: "10s"
+    environment:
+      OLLAMA_CONTEXT_LENGTH: "${OLLAMA_CONTEXT_LENGTH:?err}"
     image: "ollama/ollama:${OLLAMA_VERSION:?err}"
     labels:
       wud.tag.include: "^\\d+\\.\\d+\\.\\d+-rocm$$"
       wud.watch: true
     networks:
       - "ollama"
+    ports:
+      - "127.0.0.1:${OLLAMA_API_PORT:?err}:11434"
     restart: "unless-stopped"
     security_opt:
       - "no-new-privileges:true"
@@ -30,6 +39,11 @@ services:
     depends_on:
       ollama:
         condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "1G"
     environment:
       ENABLE_SIGNUP: false
       OLLAMA_BASE_URL: "http://ollama:11434"
@@ -42,7 +56,8 @@ services:
       traefik.docker.network: "${PROXY_NETWORK:?err}"
       traefik.enable: true
       traefik.http.routers.ollama-open-webui.entrypoints: "websecure"
-      traefik.http.routers.ollama-open-webui.middlewares: "authentik-server@docker"
+      # temporarily disabled authentik protection
+      # traefik.http.routers.ollama-open-webui.middlewares: "authentik-server@docker"
       traefik.http.routers.ollama-open-webui.rule: "Host(`${OLLAMA_OPEN_WEBUI_HOSTNAME:?err}`)"
       traefik.http.routers.ollama-open-webui.tls: true
       traefik.http.services.ollama-open-webui.loadbalancer.server.port: "${OLLAMA_OPEN_WEBUI_HOSTNAME_PORT:?err}"

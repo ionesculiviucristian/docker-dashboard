@@ -14,6 +14,11 @@ networks:
 services:
   authentik-server:
     command: "server"
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: "1G"
     environment:
       AUTHENTIK_BOOTSTRAP_EMAIL: "${AUTHENTIK_BOOTSTRAP_EMAIL:?err}"
       AUTHENTIK_BOOTSTRAP_PASSWORD: "${AUTHENTIK_BOOTSTRAP_PASSWORD:?err}"
@@ -49,6 +54,11 @@ services:
       - "authentik-templates:/templates"
   authentik-worker:
     command: "worker"
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: "1G"
     environment:
       AUTHENTIK_BOOTSTRAP_EMAIL: "${AUTHENTIK_BOOTSTRAP_EMAIL:?err}"
       AUTHENTIK_BOOTSTRAP_PASSWORD: "${AUTHENTIK_BOOTSTRAP_PASSWORD:?err}"
@@ -70,7 +80,6 @@ services:
       - "no-new-privileges:true"
     user: "root"
     volumes:
-      - "${PWD}/services/authentik/blueprints/traefik.yaml:/blueprints/traefik.yaml:ro"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "authentik-certs:/certs"
       - "authentik-data:/data"

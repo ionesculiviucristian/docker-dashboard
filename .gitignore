@@ -1,4 +1,11 @@
+__pycache__
+.ruff_cache/
+.venv/
 node_modules/
+build/
+dist/
+setup.spec
+
 .env
-install
-services.custom.yml
+.env.custom
+config.custom.yml

@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../schemas/service.schema.json
 name: MySQL
 description: "MySQL is the world's most popular open source database"
 url: "https://www.mysql.com"
@@ -17,3 +18,12 @@ dependents:
     local_url: null
     docker_hub_url: "https://hub.docker.com/r/prom/mysqld-exporter"
     dockerfile_url: "https://github.com/prometheus/mysqld_exporter/blob/main/Dockerfile"
+
+homepage:
+  - name: phpMyAdmin
+    container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-mysql-phpmyadmin-1"
+    description: "phpMyAdmin is a free software tool written in PHP, intended to handle the administration of MySQL over the Web"
+    href: "https://{{HOMEPAGE_VAR_PHPMYADMIN_HOSTNAME}}/"
+    icon: "/icons/phpmyadmin.ico"
+    server: "my-docker"
+    showStats: true

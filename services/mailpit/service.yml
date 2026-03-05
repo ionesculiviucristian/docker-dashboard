@@ -1,6 +1,24 @@
+# yaml-language-server: $schema=../../schemas/service.schema.json
 name: Mailpit
 description: An email and SMTP testing tool with API for developers
 url: "https://mailpit.axllent.org"
 local_url: "https://mailpit.services.local"
 docker_hub_url: "https://hub.docker.com/r/axllent/mailpit"
 dockerfile_url: "https://github.com/axllent/mailpit/blob/master/Dockerfile"
+
+homepage:
+  - name: Mailpit
+    container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-mailpit-1"
+    description: "Mailpit - email & SMTP testing tool with API for developers"
+    href: "https://{{HOMEPAGE_VAR_MAILPIT_HOSTNAME}}/"
+    icon: "sh-mailpit.png"
+    server: "my-docker"
+    showStats: true
+    widget:
+      mappings:
+        - field: "total"
+          label: "Total"
+        - field: "unread"
+          label: "Unread"
+      type: "customapi"
+      url: "http://mailpit:{{HOMEPAGE_VAR_MAILPIT_PORT}}/api/v1/messages"

@@ -7,6 +7,11 @@ networks:
     name: "${PROXY_NETWORK:?err}"
 services:
   whatsupdocker:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
     environment:
       WUD_REGISTRY_CUSTOM_OSGEO_URL: "${WHATSUPDOCKER_WUD_REGISTRY_CUSTOM_OSGEO_URL}"
       WUD_TRIGGER_NTFY_LOCAL_AUTH_PASSWORD: "${NTFY_WUD_PASSWORD:?err}"
@@ -14,6 +19,7 @@ services:
       WUD_TRIGGER_NTFY_LOCAL_PRIORITY: 3
       WUD_TRIGGER_NTFY_LOCAL_TOPIC: "${WHATSUPDOCKER_WUD_TRIGGER_NTFY_LOCAL_TOPIC}"
       WUD_TRIGGER_NTFY_LOCAL_URL: "http://ntfy:${NTFY_HOSTNAME_PORT:?err}"
+      WUD_WATCHER_LOCAL_CRON: "0 4 * * *"
       WUD_WATCHER_LOCAL_WATCHBYDEFAULT: false
     image: "getwud/wud:${WHATSUPDOCKER_VERSION:?err}"
     labels:

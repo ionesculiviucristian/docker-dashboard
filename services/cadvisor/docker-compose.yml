@@ -4,6 +4,13 @@ networks:
     name: "${PROXY_NETWORK:?err}"
 services:
   cadvisor:
+    command:
+      - "--housekeeping_interval=30s"
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: "512M"
     devices:
       - "/dev/kmsg"
     image: "ghcr.io/google/cadvisor:${CADVISOR_VERSION:?err}"

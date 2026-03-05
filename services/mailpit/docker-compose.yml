@@ -10,6 +10,11 @@ networks:
     name: "${PROXY_NETWORK:?err}"
 services:
   mailpit:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
     environment:
       MP_ENABLE_PROMETHEUS: true
     image: "axllent/mailpit:${MAILPIT_VERSION:?err}"

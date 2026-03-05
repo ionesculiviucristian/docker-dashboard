@@ -10,7 +10,12 @@ networks:
     name: "${SEAWEEDFS_NETWORK:?err}"
 services:
   seaweedfs:
-    command: "server -ip=0.0.0.0 -dir=/data -s3 -s3.config=/etc/seaweedfs/s3.json -metricsPort=9327"
+    command: "server -ip=0.0.0.0 -dir=/data -s3 -s3.iam=false -s3.config=/etc/seaweedfs/s3.json -metricsPort=9327"
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: "2G"
     healthcheck:
       interval: "30s"
       retries: 5

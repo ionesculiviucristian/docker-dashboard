@@ -10,6 +10,11 @@ networks:
     name: "${PROXY_NETWORK:?err}"
 services:
   postgres:
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: "4G"
     environment:
       POSTGRES_EXPORTER_USER: "${POSTGRES_EXPORTER_USER:?err}"
       POSTGRES_EXPORTER_USER_PASSWORD: "${POSTGRES_EXPORTER_USER_PASSWORD:?err}"
@@ -40,6 +45,11 @@ services:
     depends_on:
       postgres:
         condition: "service_healthy"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "768M"
     environment:
       PGADMIN_CONFIG_ALLOW_SPECIAL_EMAIL_DOMAINS: "['local']"
       PGADMIN_CONFIG_CHECK_EMAIL_DELIVERABILITY: "False"
@@ -78,6 +88,11 @@ services:
     depends_on:
       postgres:
         condition: "service_healthy"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "128M"
     environment:
       DATA_SOURCE_PASS: "${POSTGRES_EXPORTER_USER_PASSWORD:?err}"
       DATA_SOURCE_URI: "postgres:5432/postgres?sslmode=disable"

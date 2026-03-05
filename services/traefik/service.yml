@@ -1,6 +1,26 @@
+# yaml-language-server: $schema=../../schemas/service.schema.json
 name: Traefik
 description: "Traefik is your all-in-one, self-hosted, cloud-native, GitOps-driven application proxy, API gateway, and API management platform"
 url: "https://traefik.io/"
 local_url: "https://traefik.services.local"
 docker_hub_url: "https://hub.docker.com/_/traefik"
 dockerfile_url: "https://github.com/traefik/traefik/blob/master/Dockerfile"
+
+homepage:
+  - name: Traefik
+    container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-traefik-1"
+    description: "Traefik is a leading modern open source reverse proxy and ingress controller that makes deploying services and APIs easy"
+    href: "https://{{HOMEPAGE_VAR_TRAEFIK_HOSTNAME}}/"
+    icon: "sh-traefik.png"
+    server: "my-docker"
+    showStats: true
+    widget:
+      type: "traefik"
+      url: "http://traefik:{{HOMEPAGE_VAR_TRAEFIK_PORT}}"
+  - name: whoami
+    container: "{{HOMEPAGE_VAR_COMPOSE_PROJECT_NAME}}-traefik-whoami-1"
+    description: "Tiny Go webserver that prints OS information and HTTP request to output"
+    href: "https://{{HOMEPAGE_VAR_WHOAMI_HOSTNAME}}/"
+    icon: "/icons/whoami.png"
+    server: "my-docker"
+    showStats: true
